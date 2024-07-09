@@ -2,6 +2,8 @@ package br.edu.ufape.agiota.negocio.basica;
 
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
@@ -12,7 +14,7 @@ public class Parcela {
     private long id;
 
     private Date dataVencimento;
-    private Double valorVencimento;
+    private BigDecimal valorVencimento;
 
     @ManyToOne
     private Emprestimo emprestimo;
