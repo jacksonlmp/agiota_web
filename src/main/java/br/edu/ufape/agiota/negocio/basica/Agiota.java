@@ -10,13 +10,6 @@ public class Agiota extends Usuario {
     private String metodoCobranca;
     private PeriodoTaxa periodoTaxa;
 
-    enum PeriodoTaxa {
-        DIARIA,
-        SEMANAL,
-        MENSAL,
-        ANUAL
-    }
-
     //Todos
     public void emprestar() {
     }
