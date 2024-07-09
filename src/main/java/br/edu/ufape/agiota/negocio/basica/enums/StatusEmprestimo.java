@@ -1,7 +1,7 @@
 package br.edu.ufape.agiota.negocio.basica.enums;
 
 public enum StatusEmprestimo {
-    AGUARDANDO_APROCACAO,
+    AGUARDANDO_APROVACAO,
     APROVADO,
     QUITADO,
     ATRASADO,
