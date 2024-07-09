@@ -1,6 +1,7 @@
 package br.edu.ufape.agiota.negocio.basica;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -9,6 +10,7 @@ import lombok.Data;
 @Entity
 @Data
 @Inheritance(strategy = InheritanceType.JOINED)
+@EqualsAndHashCode(of = "id")
 public abstract class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
