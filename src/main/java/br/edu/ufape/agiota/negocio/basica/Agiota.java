@@ -1,5 +1,6 @@
 package br.edu.ufape.agiota.negocio.basica;
 
+import br.edu.ufape.agiota.negocio.basica.enums.PeriodoTaxa;
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
