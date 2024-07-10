@@ -64,7 +64,9 @@ public class ClienteService implements UsuarioServiceInterface {
                 .map(clienteRepository::save);
     }
 
-    public boolean delete(long id) {
+    public boolean delete(long id) throws Exception {
+        find(id);
+
         clienteRepository.deleteById(id);
 
         return true;

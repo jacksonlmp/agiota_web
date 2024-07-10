@@ -36,7 +36,7 @@ public class ClienteController {
     }
 
     @DeleteMapping("/{id}")
-    public boolean delete(@PathVariable long id) {
+    public boolean delete(@PathVariable long id) throws Exception {
         return clienteService.delete(id);
     }
 
