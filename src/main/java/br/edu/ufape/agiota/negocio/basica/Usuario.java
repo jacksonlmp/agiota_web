@@ -24,7 +24,7 @@ public abstract class Usuario {
     private String senha;
     private String telefone;
     private String cpf;
-    private String reputacao;
+    private double reputacao;
 
     @OneToOne
     @Cascade(CascadeType.ALL)

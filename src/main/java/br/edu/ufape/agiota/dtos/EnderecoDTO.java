@@ -27,7 +27,12 @@ public class EnderecoDTO {
     @NotBlank
     private String numero;
 
-    public void toEndereco(Cliente cliente) {
-
+    public void toEndereco(Endereco endereco) {
+        endereco.setCep(getCep());
+        endereco.setCidade(getCidade());
+        endereco.setUf(getUf());
+        endereco.setLogradouro(getLogradouro());
+        endereco.setBairro(getBairro());
+        endereco.setNumero(getNumero());
     }
 }

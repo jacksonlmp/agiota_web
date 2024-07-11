@@ -1,6 +1,7 @@
 package br.edu.ufape.agiota.dtos;
 
 import br.edu.ufape.agiota.negocio.basica.Cliente;
+import br.edu.ufape.agiota.negocio.basica.Endereco;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -29,6 +30,7 @@ public class ClienteDTO {
     @NotBlank
     private String localDeTrabalho;
 
+    @NotNull
     private EnderecoDTO endereco;
 
     public void toCliente(Cliente cliente) {
