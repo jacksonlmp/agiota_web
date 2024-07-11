@@ -34,7 +34,7 @@ public class ClienteService implements UsuarioServiceInterface {
         throw new Exception("Cliente com o identificador " + id + " não foi encontrado!");
     }
 
-    public Optional<Cliente> update(Cliente c, long id) throws Exception {
+    public Optional<Cliente> atualizarCliente(Cliente c, long id) throws Exception {
         return clienteRepository.findById(id)
                 .map(currentCliente -> {
                     if (c.getNome() != null) {
