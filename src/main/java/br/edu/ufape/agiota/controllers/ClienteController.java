@@ -21,7 +21,7 @@ public class ClienteController {
     }
 
     @PostMapping
-    public Cliente create(@RequestBody Cliente cliente) throws Exception {
+    public Cliente criarCliente(@RequestBody Cliente cliente) throws Exception {
         return clienteService.create(cliente);
     }
 
