@@ -48,9 +48,9 @@ public class AgiotaService implements AgiotaServiceInterface {
     }
 
     public Agiota buscarAgiota(long id) throws RegistroNaoEncontradoException {
-        Optional<Agiota> clienteOpt = agiotaRepository.findById(id);
+        Optional<Agiota> agiotaOpt = agiotaRepository.findById(id);
 
-        if (clienteOpt.isPresent()) return clienteOpt.get();
+        if (agiotaOpt.isPresent()) return agiotaOpt.get();
 
         throw new RegistroNaoEncontradoException("Agiota com o identificador " + id + " não foi encontrado!");
     }
