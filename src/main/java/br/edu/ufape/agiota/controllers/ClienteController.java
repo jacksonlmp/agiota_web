@@ -16,7 +16,7 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @GetMapping
-    public List<Cliente> index(){
+    public List<Cliente> listarClientes(){
         return clienteService.usuarios();
     }
 
