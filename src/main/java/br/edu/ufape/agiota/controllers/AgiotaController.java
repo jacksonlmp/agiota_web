@@ -25,7 +25,7 @@ public class AgiotaController {
         try {
             Agiota agiota = fachada.criarAgiota(agiotaDTO);
             return ResponseEntity.ok().body(agiota);
-        } catch (RegistroNaoEncontradoException e) {
+        } catch (RegistroJaExistenteException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (SenhaNulaException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
