@@ -1,5 +1,6 @@
 package br.edu.ufape.agiota.negocio.basica;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Cascade;
@@ -18,10 +19,12 @@ public abstract class Usuario {
 
     private String nome;
     private String email;
+
+    @JsonIgnore
     private String senha;
     private String telefone;
     private String cpf;
-    private String reputacao;
+    private double reputacao;
 
     @OneToOne
     @Cascade(CascadeType.ALL)
