@@ -72,7 +72,7 @@ public class ClienteService implements UsuarioServiceInterface {
         return true;
     }
 
-    private Cliente findByEmail(String email)
+    private Cliente buscarClientePorEmail(String email)
     {
         return clienteRepository.findByEmail(email);
     }
