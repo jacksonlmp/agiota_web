@@ -1,11 +1,15 @@
 package br.edu.ufape.agiota.fachada;
 
+import br.edu.ufape.agiota.dtos.AgiotaDTO;
 import br.edu.ufape.agiota.dtos.AvaliacaoDTO;
 import br.edu.ufape.agiota.dtos.ClienteDTO;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
+import br.edu.ufape.agiota.fachada.exceptions.RegistroJaExistenteException;
 import br.edu.ufape.agiota.fachada.exceptions.SenhaNulaException;
+import br.edu.ufape.agiota.negocio.basica.Agiota;
 import br.edu.ufape.agiota.negocio.basica.Avaliacao;
 import br.edu.ufape.agiota.negocio.basica.Cliente;
+import br.edu.ufape.agiota.negocio.services.interfaces.AgiotaServiceInterface;
 import br.edu.ufape.agiota.negocio.services.interfaces.AvaliacaoServiceInterface;
 import br.edu.ufape.agiota.negocio.services.interfaces.ClienteServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +21,9 @@ import java.util.List;
 public class Fachada {
     @Autowired
     private ClienteServiceInterface clienteService;
+
+    @Autowired
+    private AgiotaServiceInterface agiotaService;
 
     @Autowired
     private AvaliacaoServiceInterface avaliacaoService;
@@ -35,6 +42,21 @@ public class Fachada {
 
     public Cliente atualizarCliente(ClienteDTO clienteDTO, long id) throws RegistroNaoEncontradoException {
         return clienteService.atualizarCliente(clienteDTO, id);
+    }
+
+    public List<Agiota> listarAgiotas() {
+        return agiotaService.listarAgiotas();
+    }
+    public Agiota criarAgiota(AgiotaDTO agiotaDTO) throws RegistroJaExistenteException, SenhaNulaException {
+        return agiotaService.criarAgiota(agiotaDTO);
+    }
+
+    public Agiota buscarAgiota(long id) throws RegistroNaoEncontradoException {
+        return agiotaService.buscarAgiota(id);
+    }
+
+    public Agiota atualizarAgiota(AgiotaDTO agiotaDTO, long id) throws RegistroNaoEncontradoException {
+        return agiotaService.atualizarAgiota(agiotaDTO, id);
     }
 
     public Avaliacao avaliarUsuario(AvaliacaoDTO avaliacaoDTO) {

@@ -14,7 +14,7 @@ public class Agiota extends Usuario {
     private Double taxaDeJuros;
     private String metodoCobranca;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private PeriodoTaxa periodoTaxa;
 
 }

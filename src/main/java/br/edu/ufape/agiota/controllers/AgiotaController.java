@@ -1,10 +1,11 @@
 package br.edu.ufape.agiota.controllers;
 
-import br.edu.ufape.agiota.dtos.ClienteDTO;
+import br.edu.ufape.agiota.dtos.AgiotaDTO;
 import br.edu.ufape.agiota.fachada.Fachada;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
+import br.edu.ufape.agiota.fachada.exceptions.RegistroJaExistenteException;
 import br.edu.ufape.agiota.fachada.exceptions.SenhaNulaException;
-import br.edu.ufape.agiota.negocio.basica.Cliente;
+import br.edu.ufape.agiota.negocio.basica.Agiota;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,47 +15,46 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/clientes")
-public class ClienteController {
-
+@RequestMapping("/agiotas")
+public class AgiotaController {
     @Autowired
     private Fachada fachada;
 
-    @GetMapping
-    public List<Cliente> listarClientes() {
-        return fachada.listarClientes();
-    }
-
     @PostMapping
-    public ResponseEntity<?> criarCliente(@RequestBody @Valid ClienteDTO clienteDTO) {
+    public ResponseEntity<?> criarAgiota(@RequestBody @Valid AgiotaDTO agiotaDTO) throws RegistroJaExistenteException, SenhaNulaException {
         try {
-            Cliente cliente = fachada.criarCliente(clienteDTO);
-            return ResponseEntity.ok().body(cliente);
-        } catch (RegistroNaoEncontradoException e) {
+            Agiota agiota = fachada.criarAgiota(agiotaDTO);
+            return ResponseEntity.ok().body(agiota);
+        } catch (RegistroJaExistenteException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (SenhaNulaException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
+    @GetMapping
+    public List<Agiota> listarAgiotas() {
+        return fachada.listarAgiotas();
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity<?> buscarCliente(@PathVariable long id) {
+    public ResponseEntity<?> buscarAgiota(@PathVariable long id) throws RegistroNaoEncontradoException {
         try {
-            Cliente cliente = fachada.buscarCliente(id);
-            return ResponseEntity.ok().body(cliente);
+            Agiota agiota = fachada.buscarAgiota(id);
+            return ResponseEntity.ok().body(agiota);
         } catch (RegistroNaoEncontradoException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<?> atualizarCliente(@RequestBody @Valid ClienteDTO clienteDTO, @PathVariable long id) {
+    public ResponseEntity<?> atualizarAgiota(@RequestBody @Valid AgiotaDTO agiotaDTO, @PathVariable long id) throws Exception  {
         try {
-            Cliente cliente = fachada.atualizarCliente(clienteDTO, id);
-            return ResponseEntity.ok().body(cliente);
+            Agiota agiota = fachada.atualizarAgiota(agiotaDTO, id);;
+            return ResponseEntity.ok().body(agiota);
         } catch (RegistroNaoEncontradoException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-
 }
+
