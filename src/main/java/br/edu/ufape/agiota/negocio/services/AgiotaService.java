@@ -1,11 +1,9 @@
 package br.edu.ufape.agiota.negocio.services;
 
 import br.edu.ufape.agiota.dtos.AgiotaDTO;
-import br.edu.ufape.agiota.dtos.ClienteDTO;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
 import br.edu.ufape.agiota.fachada.exceptions.SenhaNulaException;
 import br.edu.ufape.agiota.negocio.basica.Agiota;
-import br.edu.ufape.agiota.negocio.basica.Cliente;
 import br.edu.ufape.agiota.negocio.basica.Endereco;
 import br.edu.ufape.agiota.negocio.repositorios.AgiotaRepository;
 import br.edu.ufape.agiota.negocio.repositorios.EnderecoRepository;
