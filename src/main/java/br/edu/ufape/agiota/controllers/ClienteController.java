@@ -6,6 +6,7 @@ import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
 import br.edu.ufape.agiota.fachada.exceptions.SenhaNulaException;
 import br.edu.ufape.agiota.negocio.basica.Cliente;
 import br.edu.ufape.agiota.negocio.services.ClienteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<?> criarCliente(@RequestBody ClienteDTO clienteDTO) throws RegistroNaoEncontradoException, SenhaNulaException {
+    public ResponseEntity<?> criarCliente(@RequestBody @Valid ClienteDTO clienteDTO) throws RegistroNaoEncontradoException, SenhaNulaException {
         try {
             Cliente cliente = fachada.criarCliente(clienteDTO);
             return ResponseEntity.ok().body(cliente);
@@ -49,7 +50,7 @@ public class ClienteController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<?> atualizarCliente(@RequestBody ClienteDTO clienteDTO, @PathVariable long id) throws Exception {
+    public ResponseEntity<?> atualizarCliente(@RequestBody @Valid ClienteDTO clienteDTO, @PathVariable long id) throws Exception {
         try {
             Cliente cliente = fachada.atualizarCliente(clienteDTO, id);;
             return ResponseEntity.ok().body(cliente);

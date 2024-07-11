@@ -8,28 +8,27 @@ import lombok.Data;
 
 @Data
 public class ClienteDTO {
-    @NotNull
+    @NotBlank
     private String nome;
 
-    @NotNull
+    @NotBlank
     @Email
     private String email;
 
     private String senha;
 
-    @NotNull
+    @NotBlank
     private String telefone;
 
     @NotBlank
     private String cpf;
 
-    @NotNull
+    @NotBlank
     private String profissao;
 
-    @NotNull
+    @NotBlank
     private String localDeTrabalho;
 
-    @NotBlank
     private EnderecoDTO endereco;
 
     public void toCliente(Cliente cliente) {
