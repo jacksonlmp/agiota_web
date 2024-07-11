@@ -31,7 +31,7 @@ public class ClienteController {
     }
 
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public Optional<Cliente> update(@RequestBody Cliente cliente, @PathVariable long id) throws Exception {
+    public Optional<Cliente> atualizarCliente(@RequestBody Cliente cliente, @PathVariable long id) throws Exception {
         return clienteService.update(cliente, id);
     }
 
