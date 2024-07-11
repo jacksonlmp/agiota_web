@@ -1,5 +1,6 @@
 package br.edu.ufape.agiota.negocio.basica;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,8 +16,10 @@ public class Avaliacao {
     private String descricao;
 
     @ManyToOne
+    @JsonIgnore
     private Usuario avaliador;
 
     @ManyToOne
+    @JsonIgnore
     private Usuario avaliado;
 }
