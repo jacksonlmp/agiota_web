@@ -20,7 +20,7 @@ public class ClienteService implements UsuarioServiceInterface {
     }
 
     public Cliente criarCliente(Cliente cliente) throws Exception {
-        if(findByEmail(cliente.getEmail()) == null)
+        if(findByEmail(isNull(cliente.getEmail()))
             return clienteRepository.save(cliente);
         else
             throw new Exception("O email informado já se encontra cadastrado no sistema");
