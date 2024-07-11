@@ -51,7 +51,6 @@ public class ClienteController {
     public ResponseEntity<?> atualizarCliente(@RequestBody @Valid ClienteDTO clienteDTO, @PathVariable long id) {
         try {
             Cliente cliente = fachada.atualizarCliente(clienteDTO, id);
-            ;
             return ResponseEntity.ok().body(cliente);
         } catch (RegistroNaoEncontradoException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
