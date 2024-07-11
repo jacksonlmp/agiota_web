@@ -6,7 +6,7 @@ import br.edu.ufape.agiota.negocio.basica.Usuario;
 import java.util.List;
 
 public interface UsuarioServiceInterface {
-    List<Cliente> usuarios();
+    List<Cliente> listarClientes();
 
     Cliente criarCliente(Cliente cliente) throws Exception;
 }
