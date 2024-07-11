@@ -8,5 +8,5 @@ import java.util.List;
 public interface UsuarioServiceInterface {
     List<Cliente> usuarios();
 
-    Cliente create(Cliente cliente) throws Exception;
+    Cliente criarCliente(Cliente cliente) throws Exception;
 }
