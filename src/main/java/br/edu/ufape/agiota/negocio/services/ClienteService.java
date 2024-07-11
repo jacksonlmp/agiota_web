@@ -19,7 +19,7 @@ public class ClienteService implements UsuarioServiceInterface {
         return clienteRepository.findAll();
     }
 
-    public Cliente create(Cliente cliente) throws Exception {
+    public Cliente criarCliente(Cliente cliente) throws Exception {
         if(findByEmail(cliente.getEmail()) == null)
             return clienteRepository.save(cliente);
         else
