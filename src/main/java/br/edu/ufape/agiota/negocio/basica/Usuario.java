@@ -1,5 +1,6 @@
 package br.edu.ufape.agiota.negocio.basica;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Cascade;
@@ -11,13 +12,15 @@ import lombok.Data;
 @Data
 @Inheritance(strategy = InheritanceType.JOINED)
 @EqualsAndHashCode(of = "id")
-public class Usuario {
+public abstract class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String nome;
     private String email;
+
+    @JsonIgnore
     private String senha;
     private String telefone;
     private String cpf;

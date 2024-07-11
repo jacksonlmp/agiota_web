@@ -1,8 +1,14 @@
 package br.edu.ufape.agiota.controllers;
 
+import br.edu.ufape.agiota.dtos.ClienteDTO;
+import br.edu.ufape.agiota.fachada.Fachada;
+import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
+import br.edu.ufape.agiota.fachada.exceptions.SenhaNulaException;
 import br.edu.ufape.agiota.negocio.basica.Cliente;
 import br.edu.ufape.agiota.negocio.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,31 +19,43 @@ import java.util.Optional;
 public class ClienteController {
 
     @Autowired
-    private ClienteService clienteService;
+    private Fachada fachada;
 
     @GetMapping
     public List<Cliente> listarClientes(){
-        return clienteService.usuarios();
+        return fachada.listarClientes();
     }
 
     @PostMapping
-    public Cliente criarCliente(@RequestBody Cliente cliente) throws Exception {
-        return clienteService.create(cliente);
+    public ResponseEntity<?> criarCliente(@RequestBody ClienteDTO clienteDTO) throws RegistroNaoEncontradoException, SenhaNulaException {
+        try {
+            Cliente cliente = fachada.criarCliente(clienteDTO);
+            return ResponseEntity.ok().body(cliente);
+        } catch (RegistroNaoEncontradoException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (SenhaNulaException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @GetMapping("/{id}")
-    public Cliente buscarCliente(@PathVariable long id) throws Exception {
-        return clienteService.find(id);
+    public ResponseEntity<?> buscarCliente(@PathVariable long id) throws RegistroNaoEncontradoException {
+        try {
+            Cliente cliente = fachada.buscarCliente(id);
+            return ResponseEntity.ok().body(cliente);
+        } catch (RegistroNaoEncontradoException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
-    @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public Optional<Cliente> atualizarCliente(@RequestBody Cliente cliente, @PathVariable long id) throws Exception {
-        return clienteService.update(cliente, id);
-    }
-
-    @DeleteMapping("/{id}")
-    public boolean delete(@PathVariable long id) throws Exception {
-        return clienteService.delete(id);
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<?> atualizarCliente(@RequestBody ClienteDTO clienteDTO, @PathVariable long id) throws Exception {
+        try {
+            Cliente cliente = fachada.atualizarCliente(clienteDTO, id);;
+            return ResponseEntity.ok().body(cliente);
+        } catch (RegistroNaoEncontradoException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
 }

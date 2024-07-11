@@ -1,16 +1,22 @@
 package br.edu.ufape.agiota.negocio.services;
 
+import br.edu.ufape.agiota.dtos.ClienteDTO;
+import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
+import br.edu.ufape.agiota.fachada.exceptions.SenhaNulaException;
 import br.edu.ufape.agiota.negocio.basica.Cliente;
 import br.edu.ufape.agiota.negocio.repositorios.ClienteRepository;
-import br.edu.ufape.agiota.negocio.services.interfaces.UsuarioServiceInterface;
+import br.edu.ufape.agiota.negocio.services.interfaces.ClienteServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+
 @Service
-public class ClienteService implements UsuarioServiceInterface {
+public class ClienteService implements ClienteServiceInterface {
 
     @Autowired
     private ClienteRepository clienteRepository;
@@ -19,57 +25,36 @@ public class ClienteService implements UsuarioServiceInterface {
         return clienteRepository.findAll();
     }
 
-    public Cliente criarCliente(Cliente cliente) throws Exception {
-        if(findByEmail(isNull(cliente.getEmail()))
-            return clienteRepository.save(cliente);
-        else
-            throw new Exception("O email informado já se encontra cadastrado no sistema");
+    public Cliente criarCliente(ClienteDTO clienteDTO) throws RegistroNaoEncontradoException, SenhaNulaException {
+        if ( nonNull(buscarClientePorEmail(clienteDTO.getEmail())) ) {
+            throw new RegistroNaoEncontradoException("O email informado já se encontra cadastrado no sistema");
+        }
+
+        if ( isNull(clienteDTO.getSenha())) {
+            throw new SenhaNulaException("Senha é um campo obrigatório");
+        }
+
+        Cliente cliente = new Cliente();
+
+        clienteDTO.toCliente(cliente);
+
+        return clienteRepository.save(cliente);
     }
 
-    public Cliente buscarCliente(long id) throws Exception {
+    public Cliente buscarCliente(long id) throws RegistroNaoEncontradoException {
         Optional<Cliente> clienteOpt = clienteRepository.findById(id);
 
         if (clienteOpt.isPresent()) return clienteOpt.get();
 
-        throw new Exception("Cliente com o identificador " + id + " não foi encontrado!");
+        throw new RegistroNaoEncontradoException("Cliente com o identificador " + id + " não foi encontrado!");
     }
 
-    public Optional<Cliente> atualizarCliente(Cliente c, long id) throws Exception {
-        return clienteRepository.findById(id)
-                .map(currentCliente -> {
-                    if (c.getNome() != null) {
-                        currentCliente.setNome(c.getNome());
-                    }
-                    if(c.getEmail() != null) {
-                        currentCliente.setEmail(c.getEmail());
-                    }
-                    if(c.getSenha() != null) {
-                        currentCliente.setSenha(c.getSenha());
-                    }
-                    if(c.getTelefone() != null) {
-                        currentCliente.setTelefone(c.getTelefone());
-                    }
-                    if(c.getCpf() != null) {
-                        currentCliente.setCpf(c.getCpf());
-                    }
-                    if(c.getProfissao() != null) {
-                        currentCliente.setProfissao(c.getProfissao());
-                    }
-                    if(c.getLocalDeTrabalho() != null) {
-                        currentCliente.setLocalDeTrabalho(c.getLocalDeTrabalho());
-                    }
+    public Cliente atualizarCliente(ClienteDTO clienteDTO, long id) throws RegistroNaoEncontradoException {
+        Cliente cliente = buscarCliente(id);
 
-                    return currentCliente;
-                })
-                .map(clienteRepository::save);
-    }
+        clienteDTO.toCliente(cliente);
 
-    public boolean delete(long id) throws Exception {
-        find(id);
-
-        clienteRepository.deleteById(id);
-
-        return true;
+        return clienteRepository.save(cliente);
     }
 
     private Cliente buscarClientePorEmail(String email)
