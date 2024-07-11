@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
 import jdk.jfr.Name;
 import lombok.Data;
 
@@ -16,6 +17,7 @@ public class AgiotaDTO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotNull
     private String nome;
     private String email;
     private String senha;
