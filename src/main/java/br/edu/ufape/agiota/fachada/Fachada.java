@@ -3,6 +3,7 @@ package br.edu.ufape.agiota.fachada;
 import br.edu.ufape.agiota.dtos.AgiotaDTO;
 import br.edu.ufape.agiota.dtos.ClienteDTO;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
+import br.edu.ufape.agiota.fachada.exceptions.RegistroJaExistenteException;
 import br.edu.ufape.agiota.fachada.exceptions.SenhaNulaException;
 import br.edu.ufape.agiota.negocio.basica.Agiota;
 import br.edu.ufape.agiota.negocio.basica.Cliente;
@@ -40,7 +41,7 @@ public class Fachada {
     public List<Agiota> listarAgiotas() {
         return agiotaService.listarAgiotas();
     }
-    public Agiota criarAgiota(AgiotaDTO agiotaDTO) throws RegistroNaoEncontradoException, SenhaNulaException {
+    public Agiota criarAgiota(AgiotaDTO agiotaDTO) throws RegistroJaExistenteException, SenhaNulaException {
         return agiotaService.criarAgiota(agiotaDTO);
     }
 

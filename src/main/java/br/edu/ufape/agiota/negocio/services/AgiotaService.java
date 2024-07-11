@@ -2,6 +2,7 @@ package br.edu.ufape.agiota.negocio.services;
 
 import br.edu.ufape.agiota.dtos.AgiotaDTO;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
+import br.edu.ufape.agiota.fachada.exceptions.RegistroJaExistenteException;
 import br.edu.ufape.agiota.fachada.exceptions.SenhaNulaException;
 import br.edu.ufape.agiota.negocio.basica.Agiota;
 import br.edu.ufape.agiota.negocio.basica.Endereco;
@@ -27,7 +28,7 @@ public class AgiotaService implements AgiotaServiceInterface {
 
     public Agiota criarAgiota(AgiotaDTO agiotaDTO) throws RegistroNaoEncontradoException, SenhaNulaException {
         if (nonNull(buscarAgiotaPorEmail(agiotaDTO.getEmail()))) {
-            throw new RegistroNaoEncontradoException("O email informado já se encontra cadastrado no sistema");
+            throw new RegistroJaExistenteException("O email informado já se encontra cadastrado no sistema");
         }
 
         if (isNull(agiotaDTO.getSenha())) {

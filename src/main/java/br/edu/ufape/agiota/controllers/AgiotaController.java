@@ -3,6 +3,7 @@ package br.edu.ufape.agiota.controllers;
 import br.edu.ufape.agiota.dtos.AgiotaDTO;
 import br.edu.ufape.agiota.fachada.Fachada;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
+import br.edu.ufape.agiota.fachada.exceptions.RegistroJaExistenteException;
 import br.edu.ufape.agiota.fachada.exceptions.SenhaNulaException;
 import br.edu.ufape.agiota.negocio.basica.Agiota;
 import jakarta.validation.Valid;
@@ -20,7 +21,7 @@ public class AgiotaController {
     private Fachada fachada;
 
     @PostMapping
-    public ResponseEntity<?> criarAgiota(@RequestBody @Valid AgiotaDTO agiotaDTO) throws RegistroNaoEncontradoException, SenhaNulaException {
+    public ResponseEntity<?> criarAgiota(@RequestBody @Valid AgiotaDTO agiotaDTO) throws RegistroJaExistenteException, SenhaNulaException {
         try {
             Agiota agiota = fachada.criarAgiota(agiotaDTO);
             return ResponseEntity.ok().body(agiota);
