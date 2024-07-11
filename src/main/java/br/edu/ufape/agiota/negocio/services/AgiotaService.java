@@ -26,7 +26,7 @@ public class AgiotaService implements AgiotaServiceInterface {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
-    public Agiota criarAgiota(AgiotaDTO agiotaDTO) throws RegistroNaoEncontradoException, SenhaNulaException {
+    public Agiota criarAgiota(AgiotaDTO agiotaDTO) throws RegistroJaExistenteException, SenhaNulaException {
         if (nonNull(buscarAgiotaPorEmail(agiotaDTO.getEmail()))) {
             throw new RegistroJaExistenteException("O email informado já se encontra cadastrado no sistema");
         }
