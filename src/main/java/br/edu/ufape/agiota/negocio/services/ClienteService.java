@@ -26,7 +26,7 @@ public class ClienteService implements UsuarioServiceInterface {
             throw new Exception("O email informado já se encontra cadastrado no sistema");
     }
 
-    public Cliente find(long id) throws Exception {
+    public Cliente buscarCliente(long id) throws Exception {
         Optional<Cliente> clienteOpt = clienteRepository.findById(id);
 
         if (clienteOpt.isPresent()) return clienteOpt.get();
