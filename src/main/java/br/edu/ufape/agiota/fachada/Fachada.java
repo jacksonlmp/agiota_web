@@ -18,6 +18,9 @@ public class Fachada {
     @Autowired
     private ClienteServiceInterface clienteService;
 
+    @Autowired
+    private AgiotaServiceInterface agiotaService;
+
     public List<Cliente> listarClientes() {
         return clienteService.listarClientes();
     }
@@ -34,9 +37,6 @@ public class Fachada {
         return clienteService.atualizarCliente(clienteDTO, id);
     }
 
-    //Agiota
-    @Autowired
-    private AgiotaServiceInterface agiotaService;
     public List<Agiota> listarAgiotas() {
         return agiotaService.listarAgiotas();
     }
