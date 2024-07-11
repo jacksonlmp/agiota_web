@@ -15,7 +15,7 @@ public class ClienteService implements UsuarioServiceInterface {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    public List<Cliente> usuarios() {
+    public List<Cliente> listarClientes() {
         return clienteRepository.findAll();
     }
 
