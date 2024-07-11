@@ -8,8 +8,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jdk.jfr.Enabled;
 import jdk.jfr.Name;
 import lombok.Data;
 
@@ -19,7 +21,9 @@ public class AgiotaDTO {
     private String nome;
 
     @NotBlank
+    @Email
     private String email;
+
     private String senha;
 
     @NotBlank
@@ -28,16 +32,13 @@ public class AgiotaDTO {
     @NotBlank
     private String cpf;
 
-    @NotBlank
-    private String reputacao;
-
-    @NotBlank
+    @NotNull
     private Double taxaDeJuros;
 
     @NotBlank
     private String metodoCobranca;
 
-    @NotBlank
+    @NotNull
     private PeriodoTaxa periodoTaxa;
 
     @NotNull
