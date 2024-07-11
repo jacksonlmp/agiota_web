@@ -26,7 +26,7 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
-    public Cliente find(@PathVariable long id) throws Exception {
+    public Cliente buscarCliente(@PathVariable long id) throws Exception {
         return clienteService.find(id);
     }
 
