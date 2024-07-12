@@ -3,15 +3,18 @@ package br.edu.ufape.agiota.fachada;
 import br.edu.ufape.agiota.dtos.AvaliacaoDTO;
 import br.edu.ufape.agiota.dtos.ClienteDTO;
 import br.edu.ufape.agiota.dtos.LembreteDTO;
+import br.edu.ufape.agiota.dtos.TransacaoDTO;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
 import br.edu.ufape.agiota.fachada.exceptions.SenhaNulaException;
 import br.edu.ufape.agiota.negocio.basica.Avaliacao;
 import br.edu.ufape.agiota.negocio.basica.Cliente;
 import br.edu.ufape.agiota.negocio.basica.Parcela;
 import br.edu.ufape.agiota.negocio.basica.Lembrete;
+import br.edu.ufape.agiota.negocio.basica.Transacao;
 import br.edu.ufape.agiota.negocio.services.interfaces.AvaliacaoServiceInterface;
 import br.edu.ufape.agiota.negocio.services.interfaces.ClienteServiceInterface;
 import br.edu.ufape.agiota.negocio.services.interfaces.ParcelaServiceInterface;
+import br.edu.ufape.agiota.negocio.services.interfaces.TransacaoServiceInterface;
 import jakarta.validation.Valid;
 import br.edu.ufape.agiota.negocio.services.interfaces.LembreteServiceInterface;
 
@@ -33,6 +36,9 @@ public class Fachada {
     
     @Autowired
     private LembreteServiceInterface lembreteService;
+    
+    @Autowired
+    private TransacaoServiceInterface transacaoService;
 
     public List<Cliente> listarClientes() {
         return clienteService.listarClientes();
@@ -59,7 +65,7 @@ public class Fachada {
     }
 
     public List<Parcela> listarParcelas(){
-        return parcelaService.listarParcelas();
+        return ParcelaServiceInterface.listarParcelas();
     }
 
     public Parcela buscarParcela(long id){
@@ -77,4 +83,21 @@ public class Fachada {
 	public Lembrete criarLembrete(LembreteDTO lembreteDTO) throws RegistroNaoEncontradoException {
 		return lembreteService.criarLembrete(lembreteDTO);
 	}
+	
+    public Transacao criarTransacao(TransacaoDTO transacaoDTO) throws RegistroNaoEncontradoException {
+        return transacaoService.criarTransacao(transacaoDTO);
+    }
+
+    public List<Transacao> listarTransacoes() {
+        return transacaoService.listarTransacao();
+    }
+
+    public Transacao buscarTransacao(long id) throws RegistroNaoEncontradoException {
+        return transacaoService.buscarTransacao(id);
+    }
+
+    public List<Transacao> buscarTransacoesPorParcela(long idParcela) throws RegistroNaoEncontradoException {
+        return transacaoService.buscarTransacoesPorParcela(idParcela);
+    }
+}
 }

@@ -1,9 +1,9 @@
 package br.edu.ufape.agiota.controllers;
 
-import br.edu.ufape.agiota.dtos.LembreteDTO;
+import br.edu.ufape.agiota.dtos.TransacaoDTO;
 import br.edu.ufape.agiota.fachada.Fachada;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
-import br.edu.ufape.agiota.negocio.basica.Lembrete;
+import br.edu.ufape.agiota.negocio.basica.Transacao;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,32 +13,32 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/lembretes")
-public class LembreteController {
+@RequestMapping("/transacao")
+public class TransacaoController {
 
     @Autowired
     private Fachada fachada;
 
     @GetMapping
-    public List<Lembrete> listarLembrete() {
-        return fachada.listarLembrete();
+    public List<Transacao> listarTransacao() {
+        return fachada.listarTransacoes();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> buscarLembrete(@PathVariable long id) {
+    public ResponseEntity<?> buscarTransacao(@PathVariable long id) {
         try {
-            Lembrete lembrete = fachada.buscarLembrete(id);
-            return ResponseEntity.ok().body(lembrete);
+            Transacao Transacao = fachada.buscarTransacao(id);
+            return ResponseEntity.ok().body(buscarTransacao(id));
         } catch (RegistroNaoEncontradoException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
     @PostMapping
-    public ResponseEntity<?> criarLembrete(@RequestBody @Valid LembreteDTO lembreteDTO) {
+    public ResponseEntity<?> criarTransacao(@RequestBody @Valid TransacaoDTO transacaoDTO) {
         try {
-            Lembrete lembrete = fachada.criarLembrete(lembreteDTO);
-            return ResponseEntity.ok().body(lembrete);
+            Transacao transacao = fachada.criarTransacao(transacaoDTO);
+            return ResponseEntity.ok().body(transacao);
         } catch (RegistroNaoEncontradoException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }

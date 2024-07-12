@@ -1,42 +1,42 @@
-package br.edu.ufape.agiota.negocio.basica;
+package br.edu.ufape.agiota.dtos;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
+import br.edu.ufape.agiota.negocio.basica.Parcela;
+
 @Data
-@Entity
-public class Transacao {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private Date data;
+public class TransacaoDTO {
+    @NotNull
+    private long parcelaId;
+
+    @NotNull
     private BigDecimal valor;
+
+    @NotNull
     private String metodoPagamento;
+
+    @NotNull
     private Date dataTransacao;
-    
-    public long getId() {
-        return id;
-    }
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	private Date data;
 
+	private Parcela parcela;
+
+    @NotNull
     public Date getData() {
         return data;
     }
 
+    @NotNull
     public void setData(Date data) {
         this.data = data;
     }
 
+    @NotNull
     public BigDecimal getValor() {
         return valor;
     }
@@ -58,14 +58,14 @@ public class Transacao {
     }
 
     public void setDataTransacao(Date dataTransacao) {
-        this.dataTransacao = dataTransacao;		
-	}
+        this.dataTransacao = dataTransacao;
+    }
 
-    @JoinColumn(name = "parcela_id")
-    private Parcela parcela;
-    
+    public Parcela getParcela() {
+        return getParcela();
+    }
+
     public void setParcela(Parcela parcela) {
         this.parcela = parcela;
     }
-
 }

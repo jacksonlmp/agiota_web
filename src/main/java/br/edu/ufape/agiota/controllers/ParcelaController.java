@@ -25,7 +25,7 @@ public class ParcelaController {
     @GetMapping("/{id}")
     public ResponseEntity<?> buscarParcela(@PathVariable long id) {
         try {
-            Parcela parcela = fachada.buscarParcela(id);
+            Parcela parcela = (Parcela) fachada.buscarTransacoesPorParcela(id);
             return ResponseEntity.ok().body(parcela);
         } catch (RegistroNaoEncontradoException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

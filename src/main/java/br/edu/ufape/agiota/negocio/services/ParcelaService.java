@@ -18,7 +18,6 @@ public class ParcelaService implements ParcelaServiceInterface{
     @Autowired
     private ParcelaRepository parcelaRepository;
 
-    @Override
     public List<Parcela> listarParcelas() {
         return parcelaRepository.findAll();
     }
