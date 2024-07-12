@@ -18,6 +18,7 @@ public abstract class Usuario {
     private long id;
 
     private String nome;
+    private String login;
     private String email;
 
     @JsonIgnore
