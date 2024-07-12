@@ -2,6 +2,7 @@ package br.edu.ufape.agiota.controllers;
 
 import br.edu.ufape.agiota.dtos.ClienteDTO;
 import br.edu.ufape.agiota.fachada.Fachada;
+import br.edu.ufape.agiota.fachada.exceptions.RegistroJaExistenteException;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
 import br.edu.ufape.agiota.fachada.exceptions.SenhaNulaException;
 import br.edu.ufape.agiota.negocio.basica.Cliente;
@@ -30,7 +31,7 @@ public class ClienteController {
         try {
             Cliente cliente = fachada.criarCliente(clienteDTO);
             return ResponseEntity.ok().body(cliente);
-        } catch (RegistroNaoEncontradoException e) {
+        } catch (RegistroJaExistenteException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (SenhaNulaException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

@@ -1,6 +1,8 @@
 package br.edu.ufape.agiota.negocio.basica;
 
+import br.edu.ufape.agiota.fachada.exceptions.OperacaoNaoPermitidaException;
 import br.edu.ufape.agiota.negocio.basica.enums.StatusEmprestimo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -26,8 +28,23 @@ public class Emprestimo {
     private StatusEmprestimo status;
 
     @ManyToOne
+    @JsonIgnore
     private Cliente cliente;
 
     @ManyToOne
+    @JsonIgnore
     private Agiota agiota;
+
+
+    public void checarPossibilidadeDeCancelar()
+    {
+        switch (getStatus()) {
+            case APROVADO -> throw new OperacaoNaoPermitidaException("O emprestimo não pode ser cancelado, pois já foi aprovado");
+            case QUITADO -> throw new OperacaoNaoPermitidaException("O emprestimo não pode ser cancelado, pois já foi quitado");
+            case ATRASADO -> throw new OperacaoNaoPermitidaException("O emprestimo não pode ser cancelado, pois está sendo pago");
+            case REJEITADO -> throw new OperacaoNaoPermitidaException("O emprestimo não pode ser cancelado, pois foi recusado pelo agiota");
+            case CANCELADO -> throw new OperacaoNaoPermitidaException("O emprestimo não pode ser cancelado, pois já foi cancelado");
+            default -> { }
+        }
+    }
 }

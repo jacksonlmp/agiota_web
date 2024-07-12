@@ -1,6 +1,7 @@
 package br.edu.ufape.agiota.negocio.services;
 
 import br.edu.ufape.agiota.dtos.ClienteDTO;
+import br.edu.ufape.agiota.fachada.exceptions.RegistroJaExistenteException;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
 import br.edu.ufape.agiota.fachada.exceptions.SenhaNulaException;
 import br.edu.ufape.agiota.negocio.basica.Cliente;
@@ -30,9 +31,9 @@ public class ClienteService implements ClienteServiceInterface {
         return clienteRepository.findAll();
     }
 
-    public Cliente criarCliente(ClienteDTO clienteDTO) throws RegistroNaoEncontradoException, SenhaNulaException {
+    public Cliente criarCliente(ClienteDTO clienteDTO) throws RegistroJaExistenteException, SenhaNulaException {
         if ( nonNull(buscarClientePorEmail(clienteDTO.getEmail())) ) {
-            throw new RegistroNaoEncontradoException("O email informado já se encontra cadastrado no sistema");
+            throw new RegistroJaExistenteException("O email informado já se encontra cadastrado no sistema");
         }
 
         if ( isNull(clienteDTO.getSenha())) {
