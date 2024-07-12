@@ -23,7 +23,6 @@ public abstract class Usuario implements UserDetails {
     private long id;
 
     private String nome;
-    private String login;
     private String email;
 
     @JsonIgnore
@@ -48,7 +47,7 @@ public abstract class Usuario implements UserDetails {
 
     @Override
     public String getUsername() {
-        return login;
+        return email;
     }
 
     @Override

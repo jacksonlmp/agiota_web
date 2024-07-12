@@ -1,4 +1,4 @@
 package br.edu.ufape.agiota.dtos;
 
-public record DadosAutenticacao(String login, String senha) {
+public record DadosAutenticacao(String email, String senha) {
 }
