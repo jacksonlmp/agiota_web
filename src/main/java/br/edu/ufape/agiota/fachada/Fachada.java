@@ -100,4 +100,3 @@ public class Fachada {
         return transacaoService.buscarTransacoesPorParcela(idParcela);
     }
 }
-}
