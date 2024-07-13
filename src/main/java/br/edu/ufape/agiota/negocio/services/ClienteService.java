@@ -52,9 +52,7 @@ public class ClienteService implements ClienteServiceInterface {
         Endereco novoEndereco = enderecoRepository.save(endereco);
 
         Cliente cliente = new Cliente();
-        clienteDTO.setSenha(passwordEncoder.encode(clienteDTO.getSenha()));
-
-        clienteDTO.toCliente(cliente);
+        clienteDTO.toCliente(cliente, passwordEncoder.encode(clienteDTO.getSenha()));
 
         cliente.setEndereco(novoEndereco);
 
@@ -76,8 +74,7 @@ public class ClienteService implements ClienteServiceInterface {
 
         enderecoRepository.save(cliente.getEndereco());
 
-        clienteDTO.setSenha(passwordEncoder.encode(clienteDTO.getSenha()));
-        clienteDTO.toCliente(cliente);
+        clienteDTO.toCliente(cliente, passwordEncoder.encode(clienteDTO.getSenha()));
 
         return clienteRepository.save(cliente);
     }

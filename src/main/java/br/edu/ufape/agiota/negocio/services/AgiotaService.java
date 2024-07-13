@@ -44,8 +44,7 @@ public class AgiotaService implements AgiotaServiceInterface {
         Endereco novoEndereco = enderecoRepository.save(endereco);
 
         Agiota agiota = new Agiota();
-        agiotaDTO.setSenha(passwordEncoder.encode(agiotaDTO.getSenha()));
-        agiotaDTO.toAgiota(agiota);
+        agiotaDTO.toAgiota(agiota, passwordEncoder.encode(agiotaDTO.getSenha()));
         agiota.setEndereco(novoEndereco);
 
         return agiotaRepository.save(agiota);
@@ -66,8 +65,7 @@ public class AgiotaService implements AgiotaServiceInterface {
         agiotaDTO.getEndereco().toEndereco(agiota.getEndereco());
         enderecoRepository.save(agiota.getEndereco());
 
-        agiotaDTO.setSenha(passwordEncoder.encode(agiotaDTO.getSenha()));
-        agiotaDTO.toAgiota(agiota);
+        agiotaDTO.toAgiota(agiota, passwordEncoder.encode(agiotaDTO.getSenha()));
 
         return agiotaRepository.save(agiota);
     }
