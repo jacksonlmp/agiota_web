@@ -15,7 +15,6 @@ import br.edu.ufape.agiota.negocio.services.interfaces.AvaliacaoServiceInterface
 import br.edu.ufape.agiota.negocio.services.interfaces.ClienteServiceInterface;
 import br.edu.ufape.agiota.negocio.services.interfaces.ParcelaServiceInterface;
 import br.edu.ufape.agiota.negocio.services.interfaces.TransacaoServiceInterface;
-import jakarta.validation.Valid;
 import br.edu.ufape.agiota.negocio.services.interfaces.LembreteServiceInterface;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,19 +70,19 @@ public class Fachada {
     public Parcela buscarParcela(long id){
         return parcelaService.buscarParcela(id);
     }
-    
+
     public List<Lembrete> listarLembrete() {
-        return Lembrete.listarLembrete();
+        return lembreteService.listarLembrete();
     }
 
     public Lembrete buscarLembrete(long id) throws RegistroNaoEncontradoException {
         return lembreteService.buscarLembrete(id);
     }
 
-	public Lembrete criarLembrete(LembreteDTO lembreteDTO) throws RegistroNaoEncontradoException {
-		return lembreteService.criarLembrete(lembreteDTO);
-	}
-	
+    public Lembrete criarLembrete(LembreteDTO lembreteDTO) throws RegistroNaoEncontradoException {
+        return lembreteService.criarLembrete(lembreteDTO);
+    }
+
     public Transacao criarTransacao(TransacaoDTO transacaoDTO) throws RegistroNaoEncontradoException {
         return transacaoService.criarTransacao(transacaoDTO);
     }
