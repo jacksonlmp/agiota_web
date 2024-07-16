@@ -7,11 +7,13 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import br.edu.ufape.agiota.negocio.basica.Parcela;
+import br.edu.ufape.agiota.negocio.basica.Transacao;
 
 @Data
 public class TransacaoDTO {
+
     @NotNull
-    private long parcelaId;
+    private Long parcelaId;
 
     @NotNull
     private BigDecimal valor;
@@ -22,50 +24,18 @@ public class TransacaoDTO {
     @NotNull
     private Date dataTransacao;
 
-	private Date data;
+    private Date data;
 
-	private Parcela parcela;
+    private Parcela parcela;
 
-    @NotNull
-    public Date getData() {
-        return data;
-    }
+    public Transacao criarTransacao(Parcela parcela) {
+        Transacao transacao = new Transacao();
+        transacao.setData(new Date());
+        transacao.setValor(this.valor);
+        transacao.setMetodoPagamento(this.metodoPagamento);
+        transacao.setDataTransacao(this.dataTransacao);
+        transacao.setParcela(parcela);
 
-    @NotNull
-    public void setData(Date data) {
-        this.data = data;
-    }
-
-    @NotNull
-    public BigDecimal getValor() {
-        return valor;
-    }
-
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
-    }
-
-    public String getMetodoPagamento() {
-        return metodoPagamento;
-    }
-
-    public void setMetodoPagamento(String metodoPagamento) {
-        this.metodoPagamento = metodoPagamento;
-    }
-
-    public Date getDataTransacao() {
-        return dataTransacao;
-    }
-
-    public void setDataTransacao(Date dataTransacao) {
-        this.dataTransacao = dataTransacao;
-    }
-
-    public Parcela getParcela() {
-        return getParcela();
-    }
-
-    public void setParcela(Parcela parcela) {
-        this.parcela = parcela;
+        return transacao;
     }
 }

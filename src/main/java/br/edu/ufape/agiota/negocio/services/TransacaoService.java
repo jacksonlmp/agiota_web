@@ -7,10 +7,10 @@ import br.edu.ufape.agiota.negocio.basica.Parcela;
 import br.edu.ufape.agiota.negocio.repositorios.TransacaoRepository;
 import br.edu.ufape.agiota.negocio.repositorios.ParcelaRepository;
 import br.edu.ufape.agiota.negocio.services.interfaces.TransacaoServiceInterface;
+import br.edu.ufape.agiota.fachada.exceptions.RegistroJaExistenteException; // Importar a exceção de registro já existente
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +29,16 @@ public class TransacaoService implements TransacaoServiceInterface {
     }
 
     @Override
+    public List<Transacao> listarTransacoesPorEmprestimo(long idEmprestimo) {
+        List<Parcela> parcelas = parcelaRepository.findByEmprestimoId(idEmprestimo);
+        List<Transacao> transacoes = transacaoRepository.findByParcelaIn(parcelas);
+        if (transacoes.isEmpty()) {
+            throw new RegistroNaoEncontradoException("Não foram encontradas transações para o empréstimo com identificador " + idEmprestimo);
+        } 
+        return transacoes;
+    }
+
+    @Override
     public Transacao buscarTransacao(long id) {
         Optional<Transacao> transacaoOpt = transacaoRepository.findById(id);
         if (transacaoOpt.isPresent()) return transacaoOpt.get();
@@ -36,20 +46,12 @@ public class TransacaoService implements TransacaoServiceInterface {
     }
 
     @Override
-    public Transacao criarTransacao(TransacaoDTO transacaoDTO) throws RegistroNaoEncontradoException {
+    public Transacao criarTransacao(TransacaoDTO transacaoDTO) throws RegistroJaExistenteException {
         Optional<Parcela> parcelaOpt = parcelaRepository.findById(transacaoDTO.getParcelaId());
         if (!parcelaOpt.isPresent()) {
             throw new RegistroNaoEncontradoException("Parcela com o identificador " + transacaoDTO.getParcelaId() + " não foi encontrada!");
         }
-        Parcela parcela = parcelaOpt.get();
-
-        Transacao transacao = new Transacao();
-        transacao.setData(new Date());
-        transacao.setValor(transacaoDTO.getValor());
-        transacao.setMetodoPagamento(transacaoDTO.getMetodoPagamento());
-        transacao.setDataTransacao(transacaoDTO.getDataTransacao());
-        transacao.setParcela(parcela);
-
+        Transacao transacao = transacaoDTO.criarTransacao(parcelaOpt.get());
         return transacaoRepository.save(transacao);
     }
 
