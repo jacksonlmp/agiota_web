@@ -1,5 +1,6 @@
 package br.edu.ufape.agiota.dtos;
 
+import br.edu.ufape.agiota.negocio.basica.Lembrete;
 import lombok.Data;
 
 import java.util.Date;
@@ -20,5 +21,12 @@ public class LembreteDTO {
 
     public long getParcelaId() {
         return parcelaId;
+    }
+
+    public Lembrete toEntity() {
+        Lembrete lembrete = new Lembrete();
+        lembrete.setData(this.data);
+        lembrete.setTexto(this.texto);
+        return lembrete;
     }
 }
