@@ -24,7 +24,7 @@ public class TransacaoService implements TransacaoServiceInterface {
     private ParcelaRepository parcelaRepository;
 
     @Override
-    public List<Transacao> listarTransacao() {
+    public List<Transacao> listarTransacoes() {
         return transacaoRepository.findAll();
     }
 

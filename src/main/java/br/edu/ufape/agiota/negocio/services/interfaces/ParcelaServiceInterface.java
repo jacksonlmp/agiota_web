@@ -6,9 +6,9 @@ import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
 import br.edu.ufape.agiota.negocio.basica.Parcela;
 
 public interface ParcelaServiceInterface {
-    List<Parcela> Parcela = null;
+    List<Parcela> Parcelas = null;
 	static List<Parcela> listarParcelas() {
-		return Parcela;
+		return Parcelas;
 	}
     Parcela buscarParcela(long id) throws RegistroNaoEncontradoException;
 }

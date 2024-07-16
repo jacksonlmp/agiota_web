@@ -10,6 +10,6 @@ public interface TransacaoServiceInterface {
     Transacao criarTransacao(TransacaoDTO transacaoDTO) throws RegistroNaoEncontradoException;
     List<Transacao> buscarTransacoesPorParcela(long idParcela) throws RegistroNaoEncontradoException;
     Transacao buscarTransacao(long idTransacao) throws RegistroNaoEncontradoException;
-    List<Transacao> listarTransacao();
+    List<Transacao> listarTransacoes();
     List<Transacao> listarTransacoesPorEmprestimo(long idEmprestimo);
 }

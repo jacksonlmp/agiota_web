@@ -23,7 +23,7 @@ public class LembreteService implements LembreteServiceInterface {
     private ParcelaRepository parcelaRepository;
 
     @Override
-    public List<Lembrete> listarLembrete() {
+    public List<Lembrete> listarLembretes() {
         return lembreteRepository.findAll();
     }
 

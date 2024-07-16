@@ -7,11 +7,12 @@ import br.edu.ufape.agiota.negocio.basica.Lembrete;
 import java.util.List;
 
 public interface LembreteServiceInterface {
-    List<Lembrete> listarLembrete();
+    List<Lembrete> listarLembretes();
 
     Lembrete criarLembrete(LembreteDTO lembreteDTO) throws RegistroNaoEncontradoException;
 
     Lembrete buscarLembrete(long id) throws RegistroNaoEncontradoException;
 
     Lembrete atualizarLembrete(LembreteDTO lembreteDTO, long id) throws RegistroNaoEncontradoException;
+
 }
