@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -61,6 +62,7 @@ public class Transacao {
         this.dataTransacao = dataTransacao;		
 	}
 
+    @OneToOne
     @JoinColumn(name = "parcela_id")
     private Parcela parcela;
     
