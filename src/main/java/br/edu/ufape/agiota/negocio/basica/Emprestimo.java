@@ -47,4 +47,23 @@ public class Emprestimo {
             default -> { }
         }
     }
+
+    public void checarAprocacao()
+    {
+        if (getStatus() != StatusEmprestimo.AGUARDANDO_APROVACAO) {
+            throw new OperacaoNaoPermitidaException("O emprestimo só pode ser aprovado enquanto estiver aguardando aprovação!");
+        }
+    }
+
+    public void checarRejeicao()
+    {
+        switch (getStatus()) {
+            case APROVADO -> throw new OperacaoNaoPermitidaException("O emprestimo não pode ser rejeitado, pois já foi aprovado");
+            case QUITADO -> throw new OperacaoNaoPermitidaException("O emprestimo não pode ser rejeitado, pois já foi quitado");
+            case ATRASADO -> throw new OperacaoNaoPermitidaException("O emprestimo não pode ser rejeitado, pois está sendo pago");
+            case REJEITADO -> throw new OperacaoNaoPermitidaException("O emprestimo já foi rejeitado");
+            case CANCELADO -> throw new OperacaoNaoPermitidaException("O emprestimo não pode ser rejeitado, pois já foi cancelado");
+            default -> { }
+        }
+    }
 }

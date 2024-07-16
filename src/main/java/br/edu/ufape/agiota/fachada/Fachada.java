@@ -1,9 +1,6 @@
 package br.edu.ufape.agiota.fachada;
 
-import br.edu.ufape.agiota.dtos.AgiotaDTO;
-import br.edu.ufape.agiota.dtos.AvaliacaoDTO;
-import br.edu.ufape.agiota.dtos.ClienteDTO;
-import br.edu.ufape.agiota.dtos.EmprestimoClienteDTO;
+import br.edu.ufape.agiota.dtos.*;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroJaExistenteException;
 import br.edu.ufape.agiota.fachada.exceptions.SenhaNulaException;
@@ -88,5 +85,23 @@ public class Fachada {
 
     public Emprestimo buscarEmprestimo(long idEmprestimo) {
         return emprestimoService.buscarEmprestimo(idEmprestimo);
+    }
+
+    public List<Emprestimo> listarEmprestimosAgiota(long agiotaId) {
+        return emprestimoService.listarEmprestimosAgiota(agiotaId);
+    }
+
+    public Emprestimo buscarEmprestimoAgiota(long idEmprestimo, long agiotaId) {
+        return emprestimoService.buscarEmprestimoAgiota(idEmprestimo, agiotaId);
+    }
+
+    public Emprestimo aprovarSolicitacao(long agiotaId, long emprestimoId, AprovarEmprestimoDTO aprovarEmprestimoDTO)
+    {
+        return emprestimoService.aprovarSolicitacao(agiotaId, emprestimoId, aprovarEmprestimoDTO);
+    }
+
+    public Emprestimo rejeitarSolicitacao(long agiotaId, long emprestimoId)
+    {
+        return emprestimoService.rejeitarSolicitacao(agiotaId, emprestimoId);
     }
 }
