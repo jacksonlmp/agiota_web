@@ -119,6 +119,7 @@ public class Fachada {
         return agiotaService.atualizarAgiota(agiotaDTO, id);
     }
 
+    
 	public ParcelaServiceInterface getParcelasService() {
 		return parcelasService;
 	}

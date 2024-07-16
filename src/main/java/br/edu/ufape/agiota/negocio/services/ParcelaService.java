@@ -18,8 +18,8 @@ public class ParcelaService implements ParcelaServiceInterface{
     @Autowired
     private ParcelaRepository parcelaRepository;
 
-    public List<Parcela> listarParcelas() {
-        return parcelaRepository.findAll();
+    public List<Parcela> listarParcelasPorEmprestimo(long idEmprestimo) {
+        return parcelaRepository.findByEmprestimoId(idEmprestimo);
     }
 
     @Override
