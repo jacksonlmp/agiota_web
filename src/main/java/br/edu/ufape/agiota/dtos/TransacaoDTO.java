@@ -38,4 +38,37 @@ public class TransacaoDTO {
 
         return transacao;
     }
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
+    }
+
+    public String getMetodoPagamento() {
+        return metodoPagamento;
+    }
+
+    public void setMetodoPagamento(String metodoPagamento) {
+        this.metodoPagamento = metodoPagamento;
+    }
+
+    public Date getDataTransacao() {
+        return dataTransacao;
+    }
+
+    public void setDataTransacao(Date dataTransacao) {
+        this.dataTransacao = dataTransacao;		
+	}
+
 }

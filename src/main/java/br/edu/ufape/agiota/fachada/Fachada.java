@@ -118,7 +118,6 @@ public class Fachada {
     public Agiota atualizarAgiota(AgiotaDTO agiotaDTO, long id) throws RegistroNaoEncontradoException {
         return agiotaService.atualizarAgiota(agiotaDTO, id);
     }
-
     
 	public ParcelaServiceInterface getParcelasService() {
 		return parcelasService;
