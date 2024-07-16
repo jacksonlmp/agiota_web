@@ -79,8 +79,8 @@ public class Fachada {
         return lembreteService.buscarLembrete(id);
     }
 
-    public List<Lembrete> listarLembretes() {
-        return lembreteService.listarLembretes();
+    public List<Lembrete> listarLembretesPorUsuarioId(long usuarioId) {
+        return lembreteService.listarLembretesPorUsuarioId(usuarioId);
     }
 
     public Lembrete criarLembrete(LembreteDTO lembreteDTO) throws RegistroNaoEncontradoException {

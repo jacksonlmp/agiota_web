@@ -23,8 +23,8 @@ public class LembreteService implements LembreteServiceInterface {
     private ParcelaRepository parcelaRepository;
 
     @Override
-    public List<Lembrete> listarLembretes() {
-        return lembreteRepository.findAll();
+    public List<Lembrete> listarLembretesPorUsuarioId(long usuarioId) {
+        return lembreteRepository.findByUsuarioId(usuarioId);
     }
 
     @Override
@@ -45,28 +45,6 @@ public class LembreteService implements LembreteServiceInterface {
         Lembrete lembrete = lembreteDTO.toEntity();
         Optional<Parcela> parcelaOpt = parcelaRepository.findById(lembreteDTO.getParcelaId());
 
-        if (!parcelaOpt.isPresent()) {
-            throw new RegistroNaoEncontradoException("Parcela com o identificador " + lembreteDTO.getParcelaId() + " não foi encontrada!");
-        }
-
-        lembrete.setParcela(parcelaOpt.get());
-        return lembreteRepository.save(lembrete);
-    }
-
-    @Override
-    public Lembrete atualizarLembrete(LembreteDTO lembreteDTO, long id) throws RegistroNaoEncontradoException {
-        Optional<Lembrete> lembreteOpt = lembreteRepository.findById(id);
-
-        if (!lembreteOpt.isPresent()) {
-            throw new RegistroNaoEncontradoException("Lembrete com o identificador " + id + " não foi encontrado!");
-        }
-
-        Lembrete lembrete = lembreteOpt.get();
-        lembrete.setData(lembreteDTO.getData());
-        lembrete.setTexto(lembreteDTO.getTexto());
-        lembrete.setUsuarioId(lembreteDTO.getUsuarioId());
-
-        Optional<Parcela> parcelaOpt = parcelaRepository.findById(lembreteDTO.getParcelaId());
         if (!parcelaOpt.isPresent()) {
             throw new RegistroNaoEncontradoException("Parcela com o identificador " + lembreteDTO.getParcelaId() + " não foi encontrada!");
         }

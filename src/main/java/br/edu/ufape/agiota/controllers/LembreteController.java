@@ -20,8 +20,13 @@ public class LembreteController {
     private Fachada fachada;
 
     @GetMapping
-    public List<Lembrete> listarLembrete() {
-        return fachada.listarLembretes();
+    public ResponseEntity<?> listarLembretesPorUsuarioId(@RequestParam long usuarioId) {
+        try {
+            List<Lembrete> lembretes = fachada.listarLembretesPorUsuarioId(usuarioId);
+            return ResponseEntity.ok().body(lembretes);
+        } catch (RegistroNaoEncontradoException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
     @GetMapping("/{id}")
