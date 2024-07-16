@@ -21,7 +21,7 @@ public class LembreteController {
 
     @GetMapping
     public List<Lembrete> listarLembrete() {
-        return fachada.listarLembrete();
+        return fachada.listarLembretes();
     }
 
     @GetMapping("/{id}")
