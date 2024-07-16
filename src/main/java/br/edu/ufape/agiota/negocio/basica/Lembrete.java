@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Entity
@@ -18,9 +17,4 @@ public class Lembrete {
     
     @ManyToOne
     private Parcela parcela;
-
-	public static List<Lembrete> listarLembrete() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
