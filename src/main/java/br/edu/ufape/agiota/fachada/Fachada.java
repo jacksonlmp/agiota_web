@@ -68,12 +68,14 @@ public class Fachada {
     public List<Avaliacao> buscarAvaliacoesDoUsuario(long idUsuario) {
         return avaliacaoService.buscarAvaliacoesDoUsuario(idUsuario);
     }
-    
-    public List<Parcela> listarParcelas() {
-        return ParcelaServiceInterface.listarParcelas();
+
+    public List<Parcela> listarParcelasPorEmprestimo(long emprestimoId) {
+        return parcelasService.listarParcelasPorEmprestimo(emprestimoId);
     }
 
-
+    public Parcela buscarParcela(long id) throws RegistroNaoEncontradoException {
+        return parcelasService.buscarParcela(id);
+    }
 
     public Lembrete buscarLembrete(long id) throws RegistroNaoEncontradoException {
         return lembreteService.buscarLembrete(id);
@@ -118,12 +120,12 @@ public class Fachada {
     public Agiota atualizarAgiota(AgiotaDTO agiotaDTO, long id) throws RegistroNaoEncontradoException {
         return agiotaService.atualizarAgiota(agiotaDTO, id);
     }
-    
-	public ParcelaServiceInterface getParcelasService() {
-		return parcelasService;
-	}
 
-	public void setParcelasService(ParcelaServiceInterface parcelasService) {
-		this.parcelasService = parcelasService;
-	}
+    public ParcelaServiceInterface getParcelasService() {
+        return parcelasService;
+    }
+
+    public void setParcelasService(ParcelaServiceInterface parcelasService) {
+        this.parcelasService = parcelasService;
+    }
 }

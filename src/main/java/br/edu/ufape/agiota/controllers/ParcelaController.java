@@ -1,4 +1,5 @@
 package br.edu.ufape.agiota.controllers;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,19 +18,18 @@ public class ParcelaController {
     @Autowired
     private Fachada fachada;
 
-    @GetMapping
-    public List<Parcela> listarParcelas() {
-        return fachada.listarParcelas();
+    @GetMapping("/emprestimo/{emprestimoId}")
+    public List<Parcela> listarParcelasPorEmprestimo(@PathVariable long emprestimoId) {
+        return fachada.listarParcelasPorEmprestimo(emprestimoId);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> buscarParcela(@PathVariable long id) {
         try {
-            Parcela parcela = (Parcela) fachada.buscarTransacoesPorParcela(id);
+            Parcela parcela = fachada.buscarParcela(id);
             return ResponseEntity.ok().body(parcela);
         } catch (RegistroNaoEncontradoException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-    
 }

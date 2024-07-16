@@ -12,14 +12,14 @@ import br.edu.ufape.agiota.negocio.repositorios.ParcelaRepository;
 import br.edu.ufape.agiota.negocio.services.interfaces.ParcelaServiceInterface;
 
 @Service
-public class ParcelaService implements ParcelaServiceInterface{
-
+public class ParcelaService implements ParcelaServiceInterface {
 
     @Autowired
     private ParcelaRepository parcelaRepository;
 
-    public List<Parcela> listarParcelasPorEmprestimo(long idEmprestimo) {
-        return parcelaRepository.findByEmprestimoId(idEmprestimo);
+    @Override
+    public List<Parcela> listarParcelasPorEmprestimo(long emprestimoId) {
+        return parcelaRepository.findByEmprestimoId(emprestimoId);
     }
 
     @Override
@@ -30,6 +30,10 @@ public class ParcelaService implements ParcelaServiceInterface{
 
         throw new RegistroNaoEncontradoException("Parcela com o identificador " + id + " não foi encontrada!");
     }
-    
-    
+
+	@Override
+	public List<Parcela> listarParcelas() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
