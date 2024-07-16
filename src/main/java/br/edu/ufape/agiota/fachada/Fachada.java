@@ -1,22 +1,25 @@
 package br.edu.ufape.agiota.fachada;
 
+import br.edu.ufape.agiota.dtos.AgiotaDTO;
 import br.edu.ufape.agiota.dtos.AvaliacaoDTO;
 import br.edu.ufape.agiota.dtos.ClienteDTO;
 import br.edu.ufape.agiota.dtos.LembreteDTO;
 import br.edu.ufape.agiota.dtos.TransacaoDTO;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
+import br.edu.ufape.agiota.fachada.exceptions.RegistroJaExistenteException;
 import br.edu.ufape.agiota.fachada.exceptions.SenhaNulaException;
+import br.edu.ufape.agiota.negocio.basica.Agiota;
 import br.edu.ufape.agiota.negocio.basica.Avaliacao;
 import br.edu.ufape.agiota.negocio.basica.Cliente;
-import br.edu.ufape.agiota.negocio.basica.Parcela;
 import br.edu.ufape.agiota.negocio.basica.Lembrete;
+import br.edu.ufape.agiota.negocio.basica.Parcela;
 import br.edu.ufape.agiota.negocio.basica.Transacao;
+import br.edu.ufape.agiota.negocio.services.interfaces.AgiotaServiceInterface;
 import br.edu.ufape.agiota.negocio.services.interfaces.AvaliacaoServiceInterface;
 import br.edu.ufape.agiota.negocio.services.interfaces.ClienteServiceInterface;
+import br.edu.ufape.agiota.negocio.services.interfaces.LembreteServiceInterface;
 import br.edu.ufape.agiota.negocio.services.interfaces.ParcelaServiceInterface;
 import br.edu.ufape.agiota.negocio.services.interfaces.TransacaoServiceInterface;
-import br.edu.ufape.agiota.negocio.services.interfaces.LembreteServiceInterface;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,14 +31,17 @@ public class Fachada {
     private ClienteServiceInterface clienteService;
 
     @Autowired
+    private AgiotaServiceInterface agiotaService;
+
+    @Autowired
     private AvaliacaoServiceInterface avaliacaoService;
 
     @Autowired
-    private ParcelaServiceInterface parcelaService;
-    
+    private ParcelaServiceInterface parcelasService;
+
     @Autowired
     private LembreteServiceInterface lembreteService;
-    
+
     @Autowired
     private TransacaoServiceInterface transacaoService;
 
@@ -47,7 +53,7 @@ public class Fachada {
         return clienteService.buscarCliente(id);
     }
 
-    public Cliente criarCliente(ClienteDTO clienteDTO) throws RegistroNaoEncontradoException, SenhaNulaException {
+    public Cliente criarCliente(ClienteDTO clienteDTO) throws RegistroJaExistenteException, SenhaNulaException {
         return clienteService.criarCliente(clienteDTO);
     }
 
@@ -62,21 +68,19 @@ public class Fachada {
     public List<Avaliacao> buscarAvaliacoesDoUsuario(long idUsuario) {
         return avaliacaoService.buscarAvaliacoesDoUsuario(idUsuario);
     }
-
-    public List<Parcela> listarParcelas(){
+    
+    public List<Parcela> listarParcelas() {
         return ParcelaServiceInterface.listarParcelas();
     }
 
-    public Parcela buscarParcela(long id){
-        return parcelaService.buscarParcela(id);
-    }
 
-    public List<Lembrete> listarLembrete() {
-        return lembreteService.listarLembrete();
-    }
 
     public Lembrete buscarLembrete(long id) throws RegistroNaoEncontradoException {
         return lembreteService.buscarLembrete(id);
+    }
+
+    public List<Lembrete> listarLembretes() {
+        return lembreteService.listarLembretes();
     }
 
     public Lembrete criarLembrete(LembreteDTO lembreteDTO) throws RegistroNaoEncontradoException {
@@ -88,7 +92,7 @@ public class Fachada {
     }
 
     public List<Transacao> listarTransacoes() {
-        return transacaoService.listarTransacao();
+        return transacaoService.listarTransacoes();
     }
 
     public Transacao buscarTransacao(long id) throws RegistroNaoEncontradoException {
@@ -98,4 +102,28 @@ public class Fachada {
     public List<Transacao> buscarTransacoesPorParcela(long idParcela) throws RegistroNaoEncontradoException {
         return transacaoService.buscarTransacoesPorParcela(idParcela);
     }
+
+    public List<Agiota> listarAgiotas() {
+        return agiotaService.listarAgiotas();
+    }
+
+    public Agiota criarAgiota(AgiotaDTO agiotaDTO) throws RegistroJaExistenteException, SenhaNulaException {
+        return agiotaService.criarAgiota(agiotaDTO);
+    }
+
+    public Agiota buscarAgiota(long id) throws RegistroNaoEncontradoException {
+        return agiotaService.buscarAgiota(id);
+    }
+
+    public Agiota atualizarAgiota(AgiotaDTO agiotaDTO, long id) throws RegistroNaoEncontradoException {
+        return agiotaService.atualizarAgiota(agiotaDTO, id);
+    }
+
+	public ParcelaServiceInterface getParcelasService() {
+		return parcelasService;
+	}
+
+	public void setParcelasService(ParcelaServiceInterface parcelasService) {
+		this.parcelasService = parcelasService;
+	}
 }
