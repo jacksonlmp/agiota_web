@@ -5,6 +5,7 @@ import br.edu.ufape.agiota.dtos.AvaliacaoDTO;
 import br.edu.ufape.agiota.dtos.ClienteDTO;
 import br.edu.ufape.agiota.dtos.LembreteDTO;
 import br.edu.ufape.agiota.dtos.TransacaoDTO;
+import br.edu.ufape.agiota.dtos.EmprestimoClienteDTO;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroJaExistenteException;
 import br.edu.ufape.agiota.fachada.exceptions.SenhaNulaException;
@@ -16,10 +17,12 @@ import br.edu.ufape.agiota.negocio.basica.Parcela;
 import br.edu.ufape.agiota.negocio.basica.Transacao;
 import br.edu.ufape.agiota.negocio.services.interfaces.AgiotaServiceInterface;
 import br.edu.ufape.agiota.negocio.services.interfaces.AvaliacaoServiceInterface;
+import br.edu.ufape.agiota.negocio.basica.Emprestimo;
 import br.edu.ufape.agiota.negocio.services.interfaces.ClienteServiceInterface;
 import br.edu.ufape.agiota.negocio.services.interfaces.LembreteServiceInterface;
 import br.edu.ufape.agiota.negocio.services.interfaces.ParcelaServiceInterface;
 import br.edu.ufape.agiota.negocio.services.interfaces.TransacaoServiceInterface;
+import br.edu.ufape.agiota.negocio.services.interfaces.EmprestimoServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +47,7 @@ public class Fachada {
 
     @Autowired
     private TransacaoServiceInterface transacaoService;
+    private EmprestimoServiceInterface emprestimoService;
 
     public List<Cliente> listarClientes() {
         return clienteService.listarClientes();
@@ -127,5 +131,22 @@ public class Fachada {
 
     public void setParcelasService(ParcelaServiceInterface parcelasService) {
         this.parcelasService = parcelasService;
+    }
+
+    public List<Emprestimo> listarEmprestimosCliente(long clienteId) {
+        return emprestimoService.listarEmprestimosCliente(clienteId);
+    }
+
+    public Emprestimo criarSolicitacaoEmprestimo(EmprestimoClienteDTO emprestimoClienteDTO)
+    {
+        return emprestimoService.criarSolicitacaoEmprestimo(emprestimoClienteDTO);
+    }
+
+    public boolean cancelarSolicitacaoEmprestimo(long idEmprestimo) {
+        return emprestimoService.cancelarSolicitacaoEmprestimo(idEmprestimo);
+    }
+
+    public Emprestimo buscarEmprestimo(long idEmprestimo) {
+        return emprestimoService.buscarEmprestimo(idEmprestimo);
     }
 }
