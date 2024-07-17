@@ -108,45 +108,4 @@ public class Fachada {
     public List<Transacao> buscarTransacoesPorParcela(long idParcela) throws RegistroNaoEncontradoException {
         return transacaoService.buscarTransacoesPorParcela(idParcela);
     }
-
-    public List<Agiota> listarAgiotas() {
-        return agiotaService.listarAgiotas();
-    }
-
-    public Agiota criarAgiota(AgiotaDTO agiotaDTO) throws RegistroJaExistenteException, SenhaNulaException {
-        return agiotaService.criarAgiota(agiotaDTO);
-    }
-
-    public Agiota buscarAgiota(long id) throws RegistroNaoEncontradoException {
-        return agiotaService.buscarAgiota(id);
-    }
-
-    public Agiota atualizarAgiota(AgiotaDTO agiotaDTO, long id) throws RegistroNaoEncontradoException {
-        return agiotaService.atualizarAgiota(agiotaDTO, id);
-    }
-
-    public ParcelaServiceInterface getParcelasService() {
-        return parcelasService;
-    }
-
-    public void setParcelasService(ParcelaServiceInterface parcelasService) {
-        this.parcelasService = parcelasService;
-    }
-
-    public List<Emprestimo> listarEmprestimosCliente(long clienteId) {
-        return emprestimoService.listarEmprestimosCliente(clienteId);
-    }
-
-    public Emprestimo criarSolicitacaoEmprestimo(EmprestimoClienteDTO emprestimoClienteDTO)
-    {
-        return emprestimoService.criarSolicitacaoEmprestimo(emprestimoClienteDTO);
-    }
-
-    public boolean cancelarSolicitacaoEmprestimo(long idEmprestimo) {
-        return emprestimoService.cancelarSolicitacaoEmprestimo(idEmprestimo);
-    }
-
-    public Emprestimo buscarEmprestimo(long idEmprestimo) {
-        return emprestimoService.buscarEmprestimo(idEmprestimo);
-    }
 }
