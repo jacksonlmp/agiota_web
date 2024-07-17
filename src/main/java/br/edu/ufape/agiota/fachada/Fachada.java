@@ -134,13 +134,13 @@ public class Fachada {
     public Transacao buscarTransacao(long id) throws RegistroNaoEncontradoException {
         return transacaoService.buscarTransacao(id);
     }
-    
-    public List<Transacao> listarTransacoes() {
-        return transacaoService.listarTransacoes();
-    }
 
     public Transacao criarTransacao(TransacaoDTO transacaoDTO) throws RegistroNaoEncontradoException {
         return transacaoService.criarTransacao(transacaoDTO);
+    }
+
+    public List<Transacao> listarTransacoesPorEmprestimo(long emprestimoId) throws RegistroNaoEncontradoException {
+        return transacaoService.listarTransacoesPorEmprestimo(emprestimoId);
     }
     
 }

@@ -19,9 +19,14 @@ public class TransacaoController {
     @Autowired
     private Fachada fachada;
 
-    @GetMapping
-    public List<Transacao> listarTransacao() {
-        return fachada.listarTransacoes();
+    @GetMapping("/emprestimo/{emprestimoId}")
+    public ResponseEntity<?> listarTransacoesPorEmprestimo(@PathVariable long emprestimoId) {
+        try {
+            List<Transacao> transacoes = fachada.listarTransacoesPorEmprestimo(emprestimoId);
+            return ResponseEntity.ok().body(transacoes);
+        } catch (RegistroNaoEncontradoException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
     @GetMapping("/{id}")

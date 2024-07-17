@@ -24,11 +24,6 @@ public class TransacaoService implements TransacaoServiceInterface {
     private ParcelaRepository parcelaRepository;
 
     @Override
-    public List<Transacao> listarTransacoes() {
-        return transacaoRepository.findAll();
-    }
-
-    @Override
     public List<Transacao> listarTransacoesPorEmprestimo(long idEmprestimo) {
         List<Parcela> parcelas = parcelaRepository.findByEmprestimoId(idEmprestimo);
         List<Transacao> transacoes = transacaoRepository.findByParcelaIn(parcelas);
