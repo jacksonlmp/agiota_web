@@ -3,26 +3,26 @@ package br.edu.ufape.agiota.fachada;
 import br.edu.ufape.agiota.dtos.AgiotaDTO;
 import br.edu.ufape.agiota.dtos.AvaliacaoDTO;
 import br.edu.ufape.agiota.dtos.ClienteDTO;
+import br.edu.ufape.agiota.dtos.EmprestimoClienteDTO;
 import br.edu.ufape.agiota.dtos.LembreteDTO;
 import br.edu.ufape.agiota.dtos.TransacaoDTO;
-import br.edu.ufape.agiota.dtos.EmprestimoClienteDTO;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroJaExistenteException;
 import br.edu.ufape.agiota.fachada.exceptions.SenhaNulaException;
 import br.edu.ufape.agiota.negocio.basica.Agiota;
 import br.edu.ufape.agiota.negocio.basica.Avaliacao;
 import br.edu.ufape.agiota.negocio.basica.Cliente;
+import br.edu.ufape.agiota.negocio.basica.Emprestimo;
 import br.edu.ufape.agiota.negocio.basica.Lembrete;
 import br.edu.ufape.agiota.negocio.basica.Parcela;
 import br.edu.ufape.agiota.negocio.basica.Transacao;
 import br.edu.ufape.agiota.negocio.services.interfaces.AgiotaServiceInterface;
 import br.edu.ufape.agiota.negocio.services.interfaces.AvaliacaoServiceInterface;
-import br.edu.ufape.agiota.negocio.basica.Emprestimo;
 import br.edu.ufape.agiota.negocio.services.interfaces.ClienteServiceInterface;
+import br.edu.ufape.agiota.negocio.services.interfaces.EmprestimoServiceInterface;
 import br.edu.ufape.agiota.negocio.services.interfaces.LembreteServiceInterface;
 import br.edu.ufape.agiota.negocio.services.interfaces.ParcelaServiceInterface;
 import br.edu.ufape.agiota.negocio.services.interfaces.TransacaoServiceInterface;
-import br.edu.ufape.agiota.negocio.services.interfaces.EmprestimoServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,14 +40,16 @@ public class Fachada {
     private AvaliacaoServiceInterface avaliacaoService;
 
     @Autowired
-    private ParcelaServiceInterface parcelasService;
+    private EmprestimoServiceInterface emprestimoService;
 
     @Autowired
     private LembreteServiceInterface lembreteService;
+    
+    @Autowired
+    private ParcelaServiceInterface parcelasService;
 
     @Autowired
     private TransacaoServiceInterface transacaoService;
-    private EmprestimoServiceInterface emprestimoService;
 
     public List<Cliente> listarClientes() {
         return clienteService.listarClientes();
@@ -65,6 +67,21 @@ public class Fachada {
         return clienteService.atualizarCliente(clienteDTO, id);
     }
 
+    public List<Agiota> listarAgiotas() {
+        return agiotaService.listarAgiotas();
+    }
+    public Agiota criarAgiota(AgiotaDTO agiotaDTO) throws RegistroJaExistenteException, SenhaNulaException {
+        return agiotaService.criarAgiota(agiotaDTO);
+    }
+
+    public Agiota buscarAgiota(long id) throws RegistroNaoEncontradoException {
+        return agiotaService.buscarAgiota(id);
+    }
+
+    public Agiota atualizarAgiota(AgiotaDTO agiotaDTO, long id) throws RegistroNaoEncontradoException {
+        return agiotaService.atualizarAgiota(agiotaDTO, id);
+    }
+
     public Avaliacao avaliarUsuario(AvaliacaoDTO avaliacaoDTO) {
         return avaliacaoService.avaliarUsuario(avaliacaoDTO);
     }
@@ -73,14 +90,23 @@ public class Fachada {
         return avaliacaoService.buscarAvaliacoesDoUsuario(idUsuario);
     }
 
-    public List<Parcela> listarParcelasPorEmprestimo(long emprestimoId) {
-        return parcelasService.listarParcelasPorEmprestimo(emprestimoId);
+    public List<Emprestimo> listarEmprestimosCliente(long clienteId) {
+        return emprestimoService.listarEmprestimosCliente(clienteId);
     }
 
-    public Parcela buscarParcela(long id) throws RegistroNaoEncontradoException {
-        return parcelasService.buscarParcela(id);
+    public Emprestimo criarSolicitacaoEmprestimo(EmprestimoClienteDTO emprestimoClienteDTO)
+    {
+        return emprestimoService.criarSolicitacaoEmprestimo(emprestimoClienteDTO);
     }
 
+    public boolean cancelarSolicitacaoEmprestimo(long idEmprestimo) {
+        return emprestimoService.cancelarSolicitacaoEmprestimo(idEmprestimo);
+    }
+
+    public Emprestimo buscarEmprestimo(long idEmprestimo) {
+        return emprestimoService.buscarEmprestimo(idEmprestimo);
+    }
+    
     public Lembrete buscarLembrete(long id) throws RegistroNaoEncontradoException {
         return lembreteService.buscarLembrete(id);
     }
@@ -89,23 +115,32 @@ public class Fachada {
         return lembreteService.listarLembretesPorUsuarioId(usuarioId);
     }
 
-    public Lembrete criarLembrete(LembreteDTO lembreteDTO) throws RegistroNaoEncontradoException {
+    public Lembrete criarLembrete(LembreteDTO lembreteDTO) throws RegistroJaExistenteException {
         return lembreteService.criarLembrete(lembreteDTO);
+    }
+    
+    public Parcela buscarParcela(long id) throws RegistroNaoEncontradoException {
+        return parcelasService.buscarParcela(id);
+    }
+    
+    public List<Parcela> listarParcelasPorEmprestimo(long emprestimoId) {
+        return parcelasService.listarParcelasPorEmprestimo(emprestimoId);
+    }
+    
+    public List<Transacao> buscarTransacoesPorParcela(long idParcela) throws RegistroNaoEncontradoException {
+        return transacaoService.buscarTransacoesPorParcela(idParcela);
+    }
+    
+    public Transacao buscarTransacao(long id) throws RegistroNaoEncontradoException {
+        return transacaoService.buscarTransacao(id);
+    }
+    
+    public List<Transacao> listarTransacoes() {
+        return transacaoService.listarTransacoes();
     }
 
     public Transacao criarTransacao(TransacaoDTO transacaoDTO) throws RegistroNaoEncontradoException {
         return transacaoService.criarTransacao(transacaoDTO);
     }
-
-    public List<Transacao> listarTransacoes() {
-        return transacaoService.listarTransacoes();
-    }
-
-    public Transacao buscarTransacao(long id) throws RegistroNaoEncontradoException {
-        return transacaoService.buscarTransacao(id);
-    }
-
-    public List<Transacao> buscarTransacoesPorParcela(long idParcela) throws RegistroNaoEncontradoException {
-        return transacaoService.buscarTransacoesPorParcela(idParcela);
-    }
+    
 }
