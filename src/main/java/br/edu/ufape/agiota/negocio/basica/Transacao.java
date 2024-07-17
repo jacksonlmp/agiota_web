@@ -4,8 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -21,8 +19,5 @@ public class Transacao {
     private BigDecimal valor;
     private String metodoPagamento;
     private Date dataTransacao;
-    
-    @OneToOne
-    
-    private Parcela parcela;
+
 }
