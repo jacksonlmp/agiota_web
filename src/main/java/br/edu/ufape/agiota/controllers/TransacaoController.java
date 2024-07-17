@@ -33,6 +33,16 @@ public class TransacaoController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+    
+    @GetMapping("/parcela/{parcelaId}")
+    public ResponseEntity<?> buscarTransacoesPorParcela(@PathVariable long parcelaId) {
+        try {
+            List<Transacao> transacoes = fachada.buscarTransacoesPorParcela(parcelaId);
+            return ResponseEntity.ok().body(transacoes);
+        } catch (RegistroNaoEncontradoException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 
     @PostMapping
     public ResponseEntity<?> criarTransacao(@RequestBody @Valid TransacaoDTO transacaoDTO) {
