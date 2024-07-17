@@ -2,6 +2,7 @@ package br.edu.ufape.agiota.controllers;
 
 import br.edu.ufape.agiota.dtos.TransacaoDTO;
 import br.edu.ufape.agiota.fachada.Fachada;
+import br.edu.ufape.agiota.fachada.exceptions.RegistroJaExistenteException;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
 import br.edu.ufape.agiota.negocio.basica.Transacao;
 import jakarta.validation.Valid;
@@ -54,7 +55,7 @@ public class TransacaoController {
         try {
             Transacao transacao = fachada.criarTransacao(transacaoDTO);
             return ResponseEntity.ok().body(transacao);
-        } catch (RegistroNaoEncontradoException e) {
+        } catch (RegistroJaExistenteException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
