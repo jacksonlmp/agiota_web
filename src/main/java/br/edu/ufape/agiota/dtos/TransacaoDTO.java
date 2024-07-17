@@ -23,9 +23,8 @@ public class TransacaoDTO {
 
     @NotNull
     private Date dataTransacao;
-
+    
     private Date data;
-
     private Parcela parcela;
 
     public Transacao criarTransacao(Parcela parcela) {
