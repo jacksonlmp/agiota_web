@@ -13,7 +13,6 @@ public class Lembrete {
     private long id;
     private Date data;
     private String texto;
-    private long usuarioId;
     
     @ManyToOne
     private Parcela parcela;
