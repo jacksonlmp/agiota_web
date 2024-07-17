@@ -23,6 +23,6 @@ public class Transacao {
     private Date dataTransacao;
     
     @OneToOne
-    @JoinColumn(name = "parcela_id")
+    
     private Parcela parcela;
 }
