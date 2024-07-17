@@ -30,10 +30,4 @@ public class ParcelaService implements ParcelaServiceInterface {
 
         throw new RegistroNaoEncontradoException("Parcela com o identificador " + id + " não foi encontrada!");
     }
-
-	@Override
-	public List<Parcela> listarParcelas() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
