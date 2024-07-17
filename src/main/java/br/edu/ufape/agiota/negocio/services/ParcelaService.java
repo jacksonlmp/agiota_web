@@ -25,9 +25,7 @@ public class ParcelaService implements ParcelaServiceInterface {
     @Override
     public Parcela buscarParcela(long id) {
         Optional<Parcela> parceOpt = parcelaRepository.findById(id);
-
         if (parceOpt.isPresent()) return parceOpt.get();
-
         throw new RegistroNaoEncontradoException("Parcela com o identificador " + id + " não foi encontrada!");
     }
 }
