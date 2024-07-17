@@ -1,6 +1,7 @@
 package br.edu.ufape.agiota.negocio.services;
 
 import br.edu.ufape.agiota.dtos.LembreteDTO;
+import br.edu.ufape.agiota.fachada.exceptions.RegistroJaExistenteException;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
 import br.edu.ufape.agiota.negocio.basica.Lembrete;
 import br.edu.ufape.agiota.negocio.basica.Parcela;
@@ -37,9 +38,9 @@ public class LembreteService implements LembreteServiceInterface {
     }
 
     @Override
-    public Lembrete criarLembrete(LembreteDTO lembreteDTO) throws RegistroNaoEncontradoException {
+    public Lembrete criarLembrete(LembreteDTO lembreteDTO) throws RegistroJaExistenteException {
         if (lembreteDTO == null) {
-            throw new IllegalArgumentException("Lembrete não pode ser vazio");
+            throw new IllegalArgumentException("Lembrete já existe");
         }
 
         Lembrete lembrete = lembreteDTO.toEntity();

@@ -16,7 +16,7 @@ public class LembreteDTO {
         Lembrete lembrete = new Lembrete();
         lembrete.setData(this.data);
         lembrete.setTexto(this.texto);
-        lembrete.setUsuarioId(this.usuarioId); // Configurando usuarioId na entidade
+        lembrete.setUsuarioId(this.usuarioId);
         return lembrete;
     }
 }

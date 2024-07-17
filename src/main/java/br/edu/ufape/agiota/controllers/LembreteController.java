@@ -2,6 +2,7 @@ package br.edu.ufape.agiota.controllers;
 
 import br.edu.ufape.agiota.dtos.LembreteDTO;
 import br.edu.ufape.agiota.fachada.Fachada;
+import br.edu.ufape.agiota.fachada.exceptions.RegistroJaExistenteException;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
 import br.edu.ufape.agiota.negocio.basica.Lembrete;
 import jakarta.validation.Valid;
@@ -44,7 +45,7 @@ public class LembreteController {
         try {
             Lembrete lembrete = fachada.criarLembrete(lembreteDTO);
             return ResponseEntity.ok().body(lembrete);
-        } catch (RegistroNaoEncontradoException e) {
+        } catch (RegistroJaExistenteException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
