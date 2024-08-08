@@ -1,6 +1,7 @@
 package br.edu.ufape.agiota.infra.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -25,17 +26,17 @@ public class SecurityConfigurations {
     @Autowired
     private SecurityFilter securityFilter;
 
-    //@Value("${app.url.front}")
-    //private String origemFront;
+    @Value("${app.url.front}")
+    private String origemFront;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(req -> {
-                    req.requestMatchers(HttpMethod.POST, "/login", "/clientes", "/agiotas").permitAll();
-                    req.anyRequest().authenticated();
-                })
+//                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .authorizeHttpRequests(req -> {
+//                    req.requestMatchers(HttpMethod.POST, "/login", "/clientes", "/agiotas").permitAll();
+//                    req.anyRequest().authenticated();
+//                })
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
@@ -54,9 +55,13 @@ public class SecurityConfigurations {
     public CorsFilter corsFilter() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         final CorsConfiguration config = new CorsConfiguration();
-        //config.addAllowedOrigin(origemFront);
+        config.addAllowedOrigin(origemFront);
         config.addAllowedHeader("*");
         config.addAllowedMethod("POST");
+        config.addAllowedMethod("GET");
+        config.addAllowedMethod("PUT");
+        config.addAllowedMethod("DELETE");
+        config.addAllowedMethod("OPTIONS");
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
