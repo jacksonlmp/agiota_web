@@ -1,5 +1,6 @@
 package br.edu.ufape.agiota.negocio.services;
 
+import br.edu.ufape.agiota.dtos.AprovarEmprestimoDTO;
 import br.edu.ufape.agiota.dtos.EmprestimoClienteDTO;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
 import br.edu.ufape.agiota.negocio.basica.Agiota;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import static java.util.Objects.isNull;
 
 @Service
 public class EmprestimoService implements EmprestimoServiceInterface {
@@ -65,6 +68,48 @@ public class EmprestimoService implements EmprestimoServiceInterface {
         }
 
         return emprestimoOpt.get();
+    }
+
+    @Override
+    public List<Emprestimo> listarEmprestimosAgiota(long agiotaId) {
+        return emprestimoRepository.findAllByAgiotaId(agiotaId);
+    }
+
+    @Override
+    public Emprestimo buscarEmprestimoAgiota(long agiotaId, long emprestimoId) {
+        Emprestimo emprestimo = emprestimoRepository.findByIdAndAgiotaId(emprestimoId, agiotaId);
+
+        if (isNull(emprestimo)) {
+            throw new RegistroNaoEncontradoException("Emprestimo não encontrado");
+        }
+
+        return emprestimo;
+    }
+
+    @Override
+    public Emprestimo aprovarSolicitacao(long agiotaId, long emprestimoId, AprovarEmprestimoDTO aprovarEmprestimoDTO)  {
+
+        Agiota agiota = agiotaService.buscarAgiota(agiotaId);
+        Emprestimo emprestimo = buscarEmprestimo(emprestimoId);
+
+        emprestimo.checarAprocacao();
+
+        aprovarEmprestimoDTO.toAprovarEmprestimo(emprestimo, agiota.getTaxaDeJuros());
+
+        return emprestimoRepository.save(emprestimo);
+    }
+
+    @Override
+    public Emprestimo rejeitarSolicitacao(long agiotaId, long emprestimoId)
+    {
+        agiotaService.buscarAgiota(agiotaId);
+        Emprestimo emprestimo = buscarEmprestimo(emprestimoId);
+
+        emprestimo.checarRejeicao();
+
+        emprestimo.setStatus(StatusEmprestimo.REJEITADO);
+
+        return emprestimoRepository.save(emprestimo);
     }
 
 }

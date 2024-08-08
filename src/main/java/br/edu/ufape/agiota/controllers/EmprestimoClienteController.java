@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/emprestimos")
-public class EmprestimoController {
+@RequestMapping("/cliente/emprestimos")
+public class EmprestimoClienteController {
 
     @Autowired
     private Fachada fachada;
