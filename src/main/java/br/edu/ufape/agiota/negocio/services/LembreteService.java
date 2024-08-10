@@ -40,7 +40,7 @@ public class LembreteService implements LembreteServiceInterface {
 
     @Override
     public Lembrete criarLembrete(LembreteDTO lembreteDTO) throws RegistroJaExistenteException {
-        Lembrete lembrete = lembreteDTO.toEntity();
+        Lembrete lembrete = lembreteDTO.toLembrete();
         Optional<Parcela> parcelaOpt = parcelaRepository.findById(lembreteDTO.getParcelaId());
 
         if (!parcelaOpt.isPresent()) {
