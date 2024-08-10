@@ -32,22 +32,20 @@ public class LembreteService implements LembreteServiceInterface {
     public Lembrete buscarLembrete(long id) {
         Optional<Lembrete> lembreteOpt = lembreteRepository.findById(id);
 
-        if (lembreteOpt.isPresent()) return lembreteOpt.get();
+        if (lembreteOpt.isPresent())
+            return lembreteOpt.get();
 
         throw new RegistroNaoEncontradoException("Lembrete com o identificador " + id + " não foi encontrado!");
     }
 
     @Override
     public Lembrete criarLembrete(LembreteDTO lembreteDTO) throws RegistroJaExistenteException {
-        if (lembreteDTO == null) {
-            throw new IllegalArgumentException("Lembrete já existe");
-        }
-
         Lembrete lembrete = lembreteDTO.toEntity();
         Optional<Parcela> parcelaOpt = parcelaRepository.findById(lembreteDTO.getParcelaId());
 
         if (!parcelaOpt.isPresent()) {
-            throw new RegistroNaoEncontradoException("Parcela com o identificador " + lembreteDTO.getParcelaId() + " não foi encontrada!");
+            throw new RegistroNaoEncontradoException(
+                    "Parcela com o identificador " + lembreteDTO.getParcelaId() + " não foi encontrada!");
         }
 
         lembrete.setParcela(parcelaOpt.get());
