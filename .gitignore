@@ -33,3 +33,6 @@ build/
 .vscode/
 
 application.properties
+
+### Front End ###
+/agiota_front_end/node_modules
