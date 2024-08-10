@@ -7,7 +7,7 @@ import br.edu.ufape.agiota.negocio.basica.Parcela;
 import br.edu.ufape.agiota.negocio.repositorios.TransacaoRepository;
 import br.edu.ufape.agiota.negocio.repositorios.ParcelaRepository;
 import br.edu.ufape.agiota.negocio.services.interfaces.TransacaoServiceInterface;
-import br.edu.ufape.agiota.fachada.exceptions.RegistroJaExistenteException; // Importar a exceção de registro já existente
+import br.edu.ufape.agiota.fachada.exceptions.RegistroJaExistenteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
