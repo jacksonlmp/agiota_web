@@ -1,5 +1,10 @@
 package br.edu.ufape.agiota.negocio.services.interfaces;
 
-public class ParcelaServiceInterface {
-    
+import br.edu.ufape.agiota.negocio.basica.Parcela;
+import java.util.List;
+
+public interface ParcelaServiceInterface {
+    List<Parcela> listarParcelasPorEmprestimo(long emprestimoId);
+    Parcela buscarParcela(long id);
+    Parcela buscarParcela(long id, long emprestimoId);
 }
