@@ -26,9 +26,9 @@ public class AprovarEmprestimoDTO {
     @Positive
     private double periodoParcelas;
 
-    public void toAprovarEmprestimo(Emprestimo emprestimo, double taxaDeJuros) {
+    public void aprovar(Emprestimo emprestimo, double taxaDeJuros) {
         emprestimo.setDataEmprestimo(getDataEmprestimo());
-        emprestimo.setDataDeVencimento(getDataDeVencimento()    );
+        emprestimo.setDataDeVencimento(getDataDeVencimento());
         emprestimo.setQuantidadeParcelas(getQuantidadeParcelas());
         emprestimo.setPeriodoParcelas(getPeriodoParcelas());
 

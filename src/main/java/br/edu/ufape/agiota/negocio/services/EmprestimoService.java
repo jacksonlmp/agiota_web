@@ -80,7 +80,7 @@ public class EmprestimoService implements EmprestimoServiceInterface {
         Emprestimo emprestimo = emprestimoRepository.findByIdAndAgiotaId(emprestimoId, agiotaId);
 
         if (isNull(emprestimo)) {
-            throw new RegistroNaoEncontradoException("Emprestimo não encontrado");
+            throw new RegistroNaoEncontradoException("Empréstimo não encontrado");
         }
 
         return emprestimo;
@@ -94,7 +94,7 @@ public class EmprestimoService implements EmprestimoServiceInterface {
 
         emprestimo.checarAprocacao();
 
-        aprovarEmprestimoDTO.toAprovarEmprestimo(emprestimo, agiota.getTaxaDeJuros());
+        aprovarEmprestimoDTO.aprovar(emprestimo, agiota.getTaxaDeJuros());
 
         return emprestimoRepository.save(emprestimo);
     }
