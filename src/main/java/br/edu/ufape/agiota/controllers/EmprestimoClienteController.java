@@ -13,43 +13,43 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cliente/emprestimos")
+@RequestMapping("/cliente/{id}")
 public class EmprestimoClienteController {
 
     @Autowired
     private Fachada fachada;
 
-    @GetMapping
-    public ResponseEntity<?> listarEmprestimosCliente(@RequestParam("clienteId") long clienteId) {
+    @GetMapping("/emprestimos")
+    public ResponseEntity<?> listarEmprestimosCliente(@PathVariable("id") long clienteId) {
         List<Emprestimo> result = fachada.listarEmprestimosCliente(clienteId);
         return ResponseEntity.ok().body(result);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> buscarEmprestimo(@PathVariable long id) {
+    @GetMapping("/emprestimos/{emprestimoId}")
+    public ResponseEntity<?> buscarEmprestimo(@PathVariable("id") long clienteId, @PathVariable long emprestimoId) {
         try {
-            Emprestimo emprestimo = fachada.buscarEmprestimo(id);
+            Emprestimo emprestimo = fachada.buscarEmprestimo(clienteId, emprestimoId);
             return ResponseEntity.ok().body(emprestimo);
         } catch (RegistroNaoEncontradoException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
-    @PostMapping
-    public ResponseEntity<?> criarSolicitacaoEmprestimo(@RequestBody @Valid EmprestimoClienteDTO emprestimoClienteDTO) {
+    @PostMapping("/emprestimos")
+    public ResponseEntity<?> criarSolicitacaoEmprestimo(@RequestBody @Valid EmprestimoClienteDTO emprestimoClienteDTO, @PathVariable("id") long clienteId) {
         try {
-            Emprestimo emprestimo = fachada.criarSolicitacaoEmprestimo(emprestimoClienteDTO);
+            Emprestimo emprestimo = fachada.criarSolicitacaoEmprestimo(emprestimoClienteDTO, clienteId);
             return ResponseEntity.ok().body(emprestimo);
         } catch (RegistroNaoEncontradoException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<?> cancelarSolicitacaoEmprestimo(@PathVariable long id)
+    @PatchMapping("/emprestimos/{emprestimoId}")
+    public ResponseEntity<?> cancelarSolicitacaoEmprestimo(@PathVariable long emprestimoId, @PathVariable("id") long clienteId)
     {
         try {
-            return ResponseEntity.ok().body(fachada.cancelarSolicitacaoEmprestimo(id));
+            return ResponseEntity.ok().body(fachada.cancelarSolicitacaoEmprestimo(emprestimoId, clienteId));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }

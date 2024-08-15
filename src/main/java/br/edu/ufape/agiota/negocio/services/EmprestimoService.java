@@ -35,8 +35,8 @@ public class EmprestimoService implements EmprestimoServiceInterface {
     }
 
     @Override
-    public Emprestimo criarSolicitacaoEmprestimo(EmprestimoClienteDTO emprestimoClienteDTO) {
-        Cliente cliente = clienteService.buscarCliente(emprestimoClienteDTO.getClienteId());
+    public Emprestimo criarSolicitacaoEmprestimo(EmprestimoClienteDTO emprestimoClienteDTO, long clienteId) {
+        Cliente cliente = clienteService.buscarCliente(clienteId);
         Agiota agiota = agiotaService.buscarAgiota(emprestimoClienteDTO.getAgiotaId());
 
         Emprestimo emprestimo = new Emprestimo();
@@ -47,8 +47,8 @@ public class EmprestimoService implements EmprestimoServiceInterface {
     }
 
     @Override
-    public boolean cancelarSolicitacaoEmprestimo(long idEmprestimo) {
-        Emprestimo emprestimo = buscarEmprestimo(idEmprestimo);
+    public boolean cancelarSolicitacaoEmprestimo(long idEmprestimo, long clienteId) {
+        Emprestimo emprestimo = buscarEmprestimoCliente(clienteId, idEmprestimo);
 
         emprestimo.checarPossibilidadeDeCancelar();
 
@@ -59,7 +59,6 @@ public class EmprestimoService implements EmprestimoServiceInterface {
         return true;
     }
 
-    @Override
     public Emprestimo buscarEmprestimo(long id) {
         Optional<Emprestimo> emprestimoOpt = emprestimoRepository.findById(id);
 
@@ -78,6 +77,17 @@ public class EmprestimoService implements EmprestimoServiceInterface {
     @Override
     public Emprestimo buscarEmprestimoAgiota(long agiotaId, long emprestimoId) {
         Emprestimo emprestimo = emprestimoRepository.findByIdAndAgiotaId(emprestimoId, agiotaId);
+
+        if (isNull(emprestimo)) {
+            throw new RegistroNaoEncontradoException("Empréstimo não encontrado");
+        }
+
+        return emprestimo;
+    }
+
+    @Override
+    public Emprestimo buscarEmprestimoCliente(long clienteId, long emprestimoId) {
+        Emprestimo emprestimo = emprestimoRepository.findByIdAndClienteId(emprestimoId, clienteId);
 
         if (isNull(emprestimo)) {
             throw new RegistroNaoEncontradoException("Empréstimo não encontrado");
