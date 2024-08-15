@@ -74,17 +74,17 @@ public class Fachada {
         return emprestimoService.listarEmprestimosCliente(clienteId);
     }
 
-    public Emprestimo criarSolicitacaoEmprestimo(EmprestimoClienteDTO emprestimoClienteDTO)
+    public Emprestimo criarSolicitacaoEmprestimo(EmprestimoClienteDTO emprestimoClienteDTO, long clienteId)
     {
-        return emprestimoService.criarSolicitacaoEmprestimo(emprestimoClienteDTO);
+        return emprestimoService.criarSolicitacaoEmprestimo(emprestimoClienteDTO, clienteId);
     }
 
-    public boolean cancelarSolicitacaoEmprestimo(long idEmprestimo) {
-        return emprestimoService.cancelarSolicitacaoEmprestimo(idEmprestimo);
+    public boolean cancelarSolicitacaoEmprestimo(long idEmprestimo, long clienteId) {
+        return emprestimoService.cancelarSolicitacaoEmprestimo(idEmprestimo, clienteId);
     }
 
-    public Emprestimo buscarEmprestimo(long idEmprestimo) {
-        return emprestimoService.buscarEmprestimo(idEmprestimo);
+    public Emprestimo buscarEmprestimo(long clienteId, long idEmprestimo) {
+        return emprestimoService.buscarEmprestimoCliente(clienteId, idEmprestimo);
     }
 
     public List<Emprestimo> listarEmprestimosAgiota(long agiotaId) {

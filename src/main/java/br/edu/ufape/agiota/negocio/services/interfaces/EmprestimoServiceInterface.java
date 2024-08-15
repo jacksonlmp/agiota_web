@@ -9,11 +9,11 @@ import java.util.List;
 public interface EmprestimoServiceInterface {
     List<Emprestimo> listarEmprestimosCliente(long clienteId);
 
-    Emprestimo criarSolicitacaoEmprestimo(EmprestimoClienteDTO emprestimoClienteDTO);
+    Emprestimo criarSolicitacaoEmprestimo(EmprestimoClienteDTO emprestimoClienteDTO, long clienteId);
 
-    boolean cancelarSolicitacaoEmprestimo(long idEmprestimo);
+    boolean cancelarSolicitacaoEmprestimo(long idEmprestimo, long clienteId);
 
-    Emprestimo buscarEmprestimo(long id);
+    Emprestimo buscarEmprestimoCliente(long clienteId, long idEmprestimo);
 
     List<Emprestimo> listarEmprestimosAgiota(long agiotaId);
 
