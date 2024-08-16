@@ -14,16 +14,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/lembretes")
-public class LembreteController {
+@RequestMapping("/agiota/{agiotaId}")
+public class AgiotaLembreteController {
 
     @Autowired
     private Fachada fachada;
 
-    @GetMapping
-    public ResponseEntity<?> listarLembretesPorUsuarioId(@RequestParam long usuarioId) {
+    @GetMapping("/lembretes")
+    public ResponseEntity<?> listarLembretesPorUsuarioId(@PathVariable long agiotaId) {
         try {
-            List<Lembrete> lembretes = fachada.listarLembretesPorUsuarioId(usuarioId);
+            System.out.println("-=-=-=-=-=-=-=-=-\n");
+            System.out.println(agiotaId);
+            List<Lembrete> lembretes = fachada.listarLembretesPorUsuarioId(agiotaId);
             return ResponseEntity.ok().body(lembretes);
         } catch (RegistroNaoEncontradoException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

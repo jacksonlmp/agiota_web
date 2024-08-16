@@ -111,8 +111,8 @@ public class Fachada {
         return lembreteService.buscarLembrete(id);
     }
 
-    public List<Lembrete> listarLembretesPorUsuarioId(long usuarioId) {
-        return lembreteService.listarLembretesPorUsuarioId(usuarioId);
+    public List<Lembrete> listarLembretesPorUsuarioId(long agiotaId) {
+        return lembreteService.listarLembretesPorUsuarioId(agiotaId);
     }
 
     public Lembrete criarLembrete(LembreteDTO lembreteDTO) throws RegistroJaExistenteException {
