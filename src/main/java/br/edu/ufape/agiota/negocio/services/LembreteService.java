@@ -24,7 +24,7 @@ public class LembreteService implements LembreteServiceInterface {
     private ParcelaRepository parcelaRepository;
 
     @Override
-    public List<Lembrete> listarLembretesPorUsuarioId(long agiotaId) {
+    public List<Lembrete> listarLembretesPorAgiotaId(long agiotaId) {
         return lembreteRepository.findAllByAgiota(agiotaId);
     }
 

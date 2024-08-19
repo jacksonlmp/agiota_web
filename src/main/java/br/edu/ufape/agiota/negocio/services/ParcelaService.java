@@ -30,17 +30,4 @@ public class ParcelaService implements ParcelaServiceInterface {
         }
         throw new RegistroNaoEncontradoException("Parcela com o identificador " + id + " não foi encontrada!");
     }
-
-    @Override
-    public Parcela buscarParcela(long id, long emprestimoId) {
-        Optional<Parcela> parcelaOpt = parcelaRepository.findById(id)
-            .filter(parcela -> parcela.getEmprestimo().getId() == emprestimoId);
-
-        if (parcelaOpt.isPresent()) {
-            return parcelaOpt.get();
-        }
-
-        throw new RegistroNaoEncontradoException("Parcela com o identificador " + id + 
-                                                 " não foi encontrada no empréstimo " + emprestimoId + "!");
-    }
 }

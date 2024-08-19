@@ -8,7 +8,7 @@ import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
 import br.edu.ufape.agiota.negocio.basica.Lembrete;
 
 public interface LembreteServiceInterface {
-    List<Lembrete> listarLembretesPorUsuarioId(long agiotaId);
+    List<Lembrete> listarLembretesPorAgiotaId(long agiotaId);
 
     Lembrete buscarLembrete(long id) throws RegistroNaoEncontradoException;
 

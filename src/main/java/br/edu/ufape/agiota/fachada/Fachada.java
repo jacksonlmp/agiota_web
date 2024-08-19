@@ -111,8 +111,8 @@ public class Fachada {
         return lembreteService.buscarLembrete(id);
     }
 
-    public List<Lembrete> listarLembretesPorUsuarioId(long agiotaId) {
-        return lembreteService.listarLembretesPorUsuarioId(agiotaId);
+    public List<Lembrete> listarLembretesPorAgiotaId(long agiotaId) {
+        return lembreteService.listarLembretesPorAgiotaId(agiotaId);
     }
 
     public Lembrete criarLembrete(LembreteDTO lembreteDTO) throws RegistroJaExistenteException {
@@ -135,7 +135,7 @@ public class Fachada {
         return transacaoService.buscarTransacao(id);
     }
 
-    public Transacao criarTransacao(TransacaoDTO transacaoDTO) throws RegistroJaExistenteException {
+    public Transacao criarTransacao(TransacaoDTO transacaoDTO) throws RegistroNaoEncontradoException {
         return transacaoService.criarTransacao(transacaoDTO);
     }
 

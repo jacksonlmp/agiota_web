@@ -41,12 +41,17 @@ public class TransacaoService implements TransacaoServiceInterface {
     }
 
     @Override
-    public Transacao criarTransacao(TransacaoDTO transacaoDTO) throws RegistroJaExistenteException {
+    public Transacao criarTransacao(TransacaoDTO transacaoDTO) throws RegistroNaoEncontradoException {
         Optional<Parcela> parcelaOpt = parcelaRepository.findById(transacaoDTO.getParcelaId());
-        if (!parcelaOpt.isPresent()) {
+
+        if (parcelaOpt.isEmpty()) {
             throw new RegistroNaoEncontradoException("Parcela com o identificador " + transacaoDTO.getParcelaId() + " não foi encontrada!");
         }
-        Transacao transacao = transacaoDTO.criarTransacao(parcelaOpt.get());
+
+        Transacao transacao = new Transacao();
+
+        transacaoDTO.criarTransacao(transacao, parcelaOpt.get());
+
         return transacaoRepository.save(transacao);
     }
 

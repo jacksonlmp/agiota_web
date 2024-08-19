@@ -56,7 +56,7 @@ public class TransacaoController {
             Transacao transacao = fachada.criarTransacao(transacaoDTO);
             return ResponseEntity.ok().body(transacao);
         } catch (RegistroJaExistenteException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 }

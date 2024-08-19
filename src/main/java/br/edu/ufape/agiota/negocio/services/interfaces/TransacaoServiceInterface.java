@@ -15,5 +15,5 @@ public interface TransacaoServiceInterface {
 
     Transacao criarTransacao(TransacaoDTO transacaoDTO) throws RegistroJaExistenteException, RegistroNaoEncontradoException;
 
-    List<Transacao> buscarTransacoesPorParcela(long idParcela) throws RegistroNaoEncontradoException;
+    List<Transacao> buscarTransacoesPorParcela(long idParcela);
 }

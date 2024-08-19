@@ -27,14 +27,11 @@ public class TransacaoDTO {
     private Date data;
     private Parcela parcela;
 
-    public Transacao criarTransacao(Parcela parcela) {
-        Transacao transacao = new Transacao();
+    public void criarTransacao(Transacao transacao, Parcela parcela) {
         transacao.setData(new Date());
-        transacao.setValor(this.valor);
-        transacao.setMetodoPagamento(this.metodoPagamento);
-        transacao.setDataTransacao(this.dataTransacao);
+        transacao.setValor(getValor());
+        transacao.setMetodoPagamento(getMetodoPagamento());
+        transacao.setDataTransacao(getDataTransacao());
         transacao.setParcela(parcela);
-
-        return transacao;
     }
 }

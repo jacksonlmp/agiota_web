@@ -23,9 +23,7 @@ public class AgiotaLembreteController {
     @GetMapping("/lembretes")
     public ResponseEntity<?> listarLembretesPorUsuarioId(@PathVariable long agiotaId) {
         try {
-            System.out.println("-=-=-=-=-=-=-=-=-\n");
-            System.out.println(agiotaId);
-            List<Lembrete> lembretes = fachada.listarLembretesPorUsuarioId(agiotaId);
+            List<Lembrete> lembretes = fachada.listarLembretesPorAgiotaId(agiotaId);
             return ResponseEntity.ok().body(lembretes);
         } catch (RegistroNaoEncontradoException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

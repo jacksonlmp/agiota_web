@@ -1,11 +1,6 @@
 package br.edu.ufape.agiota.negocio.basica;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -22,7 +17,6 @@ public class Transacao {
     private String metodoPagamento;
     private Date dataTransacao;
     
-    @OneToOne
-    
+    @ManyToOne
     private Parcela parcela;
 }
