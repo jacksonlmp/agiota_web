@@ -41,7 +41,7 @@ public class TransacaoService implements TransacaoServiceInterface {
     }
 
     @Override
-    public Transacao criarTransacao(TransacaoDTO transacaoDTO) throws RegistroNaoEncontradoException {
+    public Transacao criarTransacao(TransacaoDTO transacaoDTO) {
         Optional<Parcela> parcelaOpt = parcelaRepository.findById(transacaoDTO.getParcelaId());
 
         if (parcelaOpt.isEmpty()) {

@@ -135,7 +135,7 @@ public class Fachada {
         return transacaoService.buscarTransacao(id);
     }
 
-    public Transacao criarTransacao(TransacaoDTO transacaoDTO) throws RegistroNaoEncontradoException {
+    public Transacao criarTransacao(TransacaoDTO transacaoDTO) {
         return transacaoService.criarTransacao(transacaoDTO);
     }
 

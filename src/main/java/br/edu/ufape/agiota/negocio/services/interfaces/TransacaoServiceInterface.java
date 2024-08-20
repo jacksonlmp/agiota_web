@@ -13,7 +13,7 @@ public interface TransacaoServiceInterface {
 
     Transacao buscarTransacao(long id) throws RegistroNaoEncontradoException;
 
-    Transacao criarTransacao(TransacaoDTO transacaoDTO) throws RegistroJaExistenteException, RegistroNaoEncontradoException;
+    Transacao criarTransacao(TransacaoDTO transacaoDTO) throws RegistroJaExistenteException;
 
     List<Transacao> buscarTransacoesPorParcela(long idParcela);
 }

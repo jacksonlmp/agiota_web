@@ -21,7 +21,7 @@ public class AgiotaLembreteController {
     private Fachada fachada;
 
     @GetMapping("/lembretes")
-    public ResponseEntity<?> listarLembretesPorUsuarioId(@PathVariable long agiotaId) {
+    public ResponseEntity<?> listarLembretesPorAgiotaId(@PathVariable long agiotaId) {
         try {
             List<Lembrete> lembretes = fachada.listarLembretesPorAgiotaId(agiotaId);
             return ResponseEntity.ok().body(lembretes);
