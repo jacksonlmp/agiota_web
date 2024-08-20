@@ -1,5 +1,6 @@
 package br.edu.ufape.agiota.fachada;
 
+import br.edu.ufape.agiota.dtos.*;
 import br.edu.ufape.agiota.dtos.AgiotaDTO;
 import br.edu.ufape.agiota.dtos.AvaliacaoDTO;
 import br.edu.ufape.agiota.dtos.ClienteDTO;
@@ -44,7 +45,7 @@ public class Fachada {
 
     @Autowired
     private LembreteServiceInterface lembreteService;
-    
+
     @Autowired
     private ParcelaServiceInterface parcelasService;
 
@@ -94,19 +95,37 @@ public class Fachada {
         return emprestimoService.listarEmprestimosCliente(clienteId);
     }
 
-    public Emprestimo criarSolicitacaoEmprestimo(EmprestimoClienteDTO emprestimoClienteDTO)
+    public Emprestimo criarSolicitacaoEmprestimo(EmprestimoClienteDTO emprestimoClienteDTO, long clienteId)
     {
-        return emprestimoService.criarSolicitacaoEmprestimo(emprestimoClienteDTO);
+        return emprestimoService.criarSolicitacaoEmprestimo(emprestimoClienteDTO, clienteId);
     }
 
-    public boolean cancelarSolicitacaoEmprestimo(long idEmprestimo) {
-        return emprestimoService.cancelarSolicitacaoEmprestimo(idEmprestimo);
+    public boolean cancelarSolicitacaoEmprestimo(long idEmprestimo, long clienteId) {
+        return emprestimoService.cancelarSolicitacaoEmprestimo(idEmprestimo, clienteId);
     }
 
-    public Emprestimo buscarEmprestimo(long idEmprestimo) {
-        return emprestimoService.buscarEmprestimo(idEmprestimo);
+    public Emprestimo buscarEmprestimo(long clienteId, long idEmprestimo) {
+        return emprestimoService.buscarEmprestimoCliente(clienteId, idEmprestimo);
     }
-    
+
+    public List<Emprestimo> listarEmprestimosAgiota(long agiotaId) {
+        return emprestimoService.listarEmprestimosAgiota(agiotaId);
+    }
+
+    public Emprestimo buscarEmprestimoAgiota(long idEmprestimo, long agiotaId) {
+        return emprestimoService.buscarEmprestimoAgiota(idEmprestimo, agiotaId);
+    }
+
+    public Emprestimo aprovarSolicitacao(long agiotaId, long emprestimoId, AprovarEmprestimoDTO aprovarEmprestimoDTO)
+    {
+        return emprestimoService.aprovarSolicitacao(agiotaId, emprestimoId, aprovarEmprestimoDTO);
+    }
+
+    public Emprestimo rejeitarSolicitacao(long agiotaId, long emprestimoId)
+    {
+        return emprestimoService.rejeitarSolicitacao(agiotaId, emprestimoId);
+    }
+
     public Lembrete buscarLembrete(long id) throws RegistroNaoEncontradoException {
         return lembreteService.buscarLembrete(id);
     }
@@ -118,19 +137,19 @@ public class Fachada {
     public Lembrete criarLembrete(LembreteDTO lembreteDTO) throws RegistroJaExistenteException {
         return lembreteService.criarLembrete(lembreteDTO);
     }
-    
+
     public Parcela buscarParcela(long id) throws RegistroNaoEncontradoException {
         return parcelasService.buscarParcela(id);
     }
-    
+
     public List<Parcela> listarParcelasPorEmprestimo(long emprestimoId) {
         return parcelasService.listarParcelasPorEmprestimo(emprestimoId);
     }
-    
+
     public List<Transacao> buscarTransacoesPorParcela(long idParcela) throws RegistroNaoEncontradoException {
         return transacaoService.buscarTransacoesPorParcela(idParcela);
     }
-    
+
     public Transacao buscarTransacao(long id) throws RegistroNaoEncontradoException {
         return transacaoService.buscarTransacao(id);
     }
@@ -142,5 +161,5 @@ public class Fachada {
     public List<Transacao> listarTransacoesPorEmprestimo(long emprestimoId) throws RegistroNaoEncontradoException {
         return transacaoService.listarTransacoesPorEmprestimo(emprestimoId);
     }
-    
+
 }

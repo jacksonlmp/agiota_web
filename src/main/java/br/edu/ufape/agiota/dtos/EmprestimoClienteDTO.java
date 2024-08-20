@@ -21,10 +21,6 @@ public class EmprestimoClienteDTO {
 
     @NotNull
     @Positive
-    private long clienteId;
-
-    @NotNull
-    @Positive
     private long agiotaId;
 
     public void toSolicitarEmprestimo(Emprestimo emprestimo, Cliente cliente, Agiota agiota) {

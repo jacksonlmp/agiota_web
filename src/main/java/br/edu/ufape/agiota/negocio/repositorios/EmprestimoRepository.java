@@ -7,4 +7,11 @@ import java.util.List;
 
 public interface EmprestimoRepository extends JpaRepository<Emprestimo, Long> {
     List<Emprestimo> findAllByClienteId(Long clienteId);
+
+    List<Emprestimo> findAllByAgiotaId(Long agiotaId);
+
+    Emprestimo findByIdAndAgiotaId(Long id, Long agiotaId);
+
+    Emprestimo findByIdAndClienteId(Long id, Long clienteId);
+
 }
