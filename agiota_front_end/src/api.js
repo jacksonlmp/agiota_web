@@ -9,13 +9,13 @@ export const registerUser = async (user) => {
         body: JSON.stringify(user)
     });
     if (!response.ok) {
-        throw new Error('Erro ao registrar o usuário');
+        throw new Error('Erro ao registrar o usuário1');
     }
     return await response.json();
 };
 
-export const loginUser = async (username, password) => {
-    const response = await fetch(`${API_URL}?username=${username}&password=${password}`);
+export const loginUser = async (email, senha) => {
+    const response = await fetch(`${API_URL}?email=${email}&senha=${senha}`);
     const users = await response.json();
     if (users.length > 0) {
         return users[0]; // Retorna o usuário correspondente

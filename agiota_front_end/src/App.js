@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import Header from "./components/Header";
-import Login from "./components/login";
-import Register from "./components/cadastro";
+import Header from './components/Header';
+import Login from './components/login';
+import Cadastro from './components/cadastro'; 
 import { loginUser, registerUser } from './api';
 
 function App() {
@@ -10,9 +10,10 @@ function App() {
     const [isRegistering, setIsRegistering] = useState(false);
     const navigate = useNavigate();
 
-    const handleLogin = async (username, password) => {
+    
+    const handleLogin = async (email, senha) => {
         try {
-            const user = await loginUser(username, password);
+            const user = await loginUser(email, senha); 
             if (user) {
                 setIsAuthenticated(true);
                 navigate('/');
@@ -27,6 +28,7 @@ function App() {
             await registerUser(newUser);
             alert('Cadastro realizado com sucesso!');
             setIsRegistering(false);
+            navigate('/login');
         } catch (error) {
             alert('Erro ao registrar o usuário.');
         }
@@ -37,9 +39,9 @@ function App() {
             {isAuthenticated && <Header />}
             <div className="container">
                 {isAuthenticated ? (
-                    <Outlet />
+                    <Outlet /> 
                 ) : isRegistering ? (
-                    <Register onRegister={handleRegister} goToLogin={() => setIsRegistering(false)} />
+                    <Cadastro onRegister={handleRegister} goToLogin={() => setIsRegistering(false)} />
                 ) : (
                     <Login onLogin={handleLogin} goToRegister={() => setIsRegistering(true)} />
                 )}

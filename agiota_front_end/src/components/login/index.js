@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
+import { loginUser } from './api';
 
-const Login = ({ onLogin, goToRegister }) => {
+const Login = ({ onLoginSuccess, goToRegister }) => {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const [error, setError] = useState(null);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        onLogin(email, senha);
+        try {
+            const data = await loginUser(email, senha);
+            localStorage.setItem('token', data.token);
+            onLoginSuccess();
+        } catch (error) {
+            setError(error.message);
+        }
     };
 
     return (
@@ -16,6 +24,7 @@ const Login = ({ onLogin, goToRegister }) => {
                     Login
                 </h1>
                 <form onSubmit={handleSubmit}>
+                    {error && <p className="text-red-500 text-center mb-4">{error}</p>}
                     <div className="mb-4">
                         <label className="block text-[#ffffff] text-sm font-medium mb-2" htmlFor="email">
                             E-mail
