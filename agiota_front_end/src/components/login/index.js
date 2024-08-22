@@ -1,20 +1,25 @@
 import React, { useState } from 'react';
-import { loginUser } from './api';
+import { loginUser } from '../../api';
 
-const Login = ({ onLoginSuccess, goToRegister }) => {
+const Login = ({ onLogin, goToRegister }) => {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
-    const [error, setError] = useState(null);
 
-    const handleSubmit = async (e) => {
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value);
+    };
+
+    const handleSenhaChange = (e) => {
+        setSenha(e.target.value);
+    };
+
+    const handleSubmit = (e) => {
         e.preventDefault();
-        try {
-            const data = await loginUser(email, senha);
-            localStorage.setItem('token', data.token);
-            onLoginSuccess();
-        } catch (error) {
-            setError(error.message);
-        }
+        const credentials = {
+            email,
+            senha
+        };
+        onLogin(credentials);
     };
 
     return (
@@ -24,52 +29,48 @@ const Login = ({ onLoginSuccess, goToRegister }) => {
                     Login
                 </h1>
                 <form onSubmit={handleSubmit}>
-                    {error && <p className="text-red-500 text-center mb-4">{error}</p>}
                     <div className="mb-4">
                         <label className="block text-[#ffffff] text-sm font-medium mb-2" htmlFor="email">
                             E-mail
                         </label>
-                        <input 
+                        <input
                             id="email"
+                            name="email"
                             type="email"
                             value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={handleEmailChange}
                             className="shadow-sm appearance-none border border-[#ffffff] rounded-md w-full py-3 px-4 text-[#ffffff] bg-[#003b5c] leading-tight focus:outline-none focus:ring-1 focus:ring-[#ffffff] focus:border-[#ffffff]"
                             placeholder="Digite seu e-mail"
                         />
                     </div>
-                    <div className="mb-6">
+                    <div className="mb-4">
                         <label className="block text-[#ffffff] text-sm font-medium mb-2" htmlFor="senha">
                             Senha
                         </label>
-                        <input 
+                        <input
                             id="senha"
+                            name="senha"
                             type="password"
                             value={senha}
-                            onChange={(e) => setSenha(e.target.value)}
+                            onChange={handleSenhaChange}
                             className="shadow-sm appearance-none border border-[#ffffff] rounded-md w-full py-3 px-4 text-[#ffffff] bg-[#003b5c] mb-3 leading-tight focus:outline-none focus:ring-1 focus:ring-[#ffffff] focus:border-[#ffffff]"
                             placeholder="Digite sua senha"
                         />
                     </div>
-                    <div className="flex justify-center mb-6">
-                        <button 
-                            type="submit" 
+                    <div className="flex justify-between mb-6">
+                        <button
+                            type="submit"
                             className="bg-[#ffffff] hover:bg-[#e0e0e0] text-[#003b5c] font-semibold py-3 px-6 rounded-lg focus:outline-none focus:ring-4 focus:ring-[#ffffff]"
                         >
                             Entrar
                         </button>
-                    </div>
-                    <div className="text-center">
-                        <p className="text-[#ffffff]">
-                            Não tem uma conta?{' '}
-                            <button 
-                                type="button" 
-                                onClick={goToRegister}
-                                className="text-[#ffffff] hover:text-[#e0e0e0] underline"
-                            >
-                                Cadastre-se
-                            </button>
-                        </p>
+                        <button
+                            type="button"
+                            onClick={goToRegister}
+                            className="bg-[#ffffff] hover:bg-[#e0e0e0] text-[#003b5c] font-semibold py-3 px-6 rounded-lg focus:outline-none focus:ring-4 focus:ring-[#ffffff]"
+                        >
+                            Registrar
+                        </button>
                     </div>
                 </form>
             </div>
