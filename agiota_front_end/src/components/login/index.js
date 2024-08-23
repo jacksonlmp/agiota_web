@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { loginUser } from '../../api';
+import { onLogin } from '../../api/login';
+
 
 const Login = ({ onLogin, goToRegister }) => {
     const [email, setEmail] = useState('');
@@ -13,13 +14,13 @@ const Login = ({ onLogin, goToRegister }) => {
         setSenha(e.target.value);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const credentials = {
-            email,
-            senha
-        };
-        onLogin(credentials);
+        try {
+            await onLogin(email, senha);
+        } catch (error) {
+            alert('Login falhou. E-mail ou senha incorretos..');
+        }
     };
 
     return (
@@ -57,19 +58,22 @@ const Login = ({ onLogin, goToRegister }) => {
                             placeholder="Digite sua senha"
                         />
                     </div>
-                    <div className="flex justify-between mb-6">
+                    <div className="flex justify-center mb-6">
                         <button
-                            type="submit"
+                            type="button"
+                            onClick={handleSubmit}
                             className="bg-[#ffffff] hover:bg-[#e0e0e0] text-[#003b5c] font-semibold py-3 px-6 rounded-lg focus:outline-none focus:ring-4 focus:ring-[#ffffff]"
                         >
                             Entrar
                         </button>
+                    </div>
+                    <div className="text-center">
                         <button
-                            type="button"
-                            onClick={goToRegister}
-                            className="bg-[#ffffff] hover:bg-[#e0e0e0] text-[#003b5c] font-semibold py-3 px-6 rounded-lg focus:outline-none focus:ring-4 focus:ring-[#ffffff]"
+                        type="button"
+                        onClick={goToRegister}
+                        className="text-[#ffffff] hover:text-[#e0e0e0] font-semibold underline"
                         >
-                            Registrar
+                            Não tem uma conta? Cadastre-se
                         </button>
                     </div>
                 </form>

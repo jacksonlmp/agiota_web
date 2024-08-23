@@ -3,42 +3,49 @@ import { Link, Outlet, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import Login from './components/login';
 import Register from './components/cadastro';
-import { loginUser, registerUser } from './api';
+import { onCreateAgiota } from './api/agiotas';
+import { onCreateCliente } from './api/clientes';
+import { onLogin } from './api/login';
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isRegistering, setIsRegistering] = useState(false);
+    const [userType, setUserType] = useState('cliente'); // 'cliente' ou 'agiota'
     const navigate = useNavigate();
 
-    const handleLogin = async (username, password) => {
+    const handleLogin = async (email, senha) => {
         try {
-            const user = await loginUser(username, password);
-            if (user) {
-                setIsAuthenticated(true);
-                navigate('/');
-            }
+            await onLogin(email, senha);
+            setIsAuthenticated(true);
+            navigate('/');
         } catch (error) {
-            alert('Login falhou. Verifique suas credenciais.');
+            alert('E-mail ou senha incorretos.');
         }
     };
 
     const handleRegister = async (newUser) => {
         try {
-            await registerUser(newUser);
+            if (userType === 'cliente') {
+                await onCreateCliente(newUser);
+            } else if (userType === 'agiota') {
+                await onCreateAgiota(newUser);
+            }
             alert('Cadastro realizado com sucesso!');
             setIsRegistering(false);
             navigate('/login');
         } catch (error) {
             alert('Erro ao registrar o usuário.');
-
         }
+    };
+
+    const handleUserTypeChange = (type) => {
+        setUserType(type);
     };
 
     return (
         <>
             {isAuthenticated && <Header />}
             <nav>
-                {/* <Link to="/">Home</Link> |  */}
                 <Link to="/login">Login</Link> | 
                 <Link to="/cadastro">Cadastro</Link>
             </nav>
@@ -46,7 +53,12 @@ function App() {
                 {isAuthenticated ? (
                     <Outlet />
                 ) : isRegistering ? (
-                    <Register onRegister={handleRegister} goToLogin={() => setIsRegistering(false)} />
+                    <Register 
+                        onRegister={handleRegister} 
+                        goToLogin={() => setIsRegistering(false)} 
+                        userType={userType}
+                        onUserTypeChange={handleUserTypeChange}
+                    />
                 ) : (
                     <Login onLogin={handleLogin} goToRegister={() => setIsRegistering(true)} />
                 )}
