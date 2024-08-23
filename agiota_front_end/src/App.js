@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import Login from './components/login';
-import Register from './components/cadastro';
+import Cadastro from './components/cadastro/cadastroForm';
 import { onCreateAgiota } from './api/agiotas';
 import { onCreateCliente } from './api/clientes';
 import { onLogin } from './api/login';
@@ -23,8 +23,13 @@ function App() {
         }
     };
 
-    const handleRegister = async (newUser) => {
+    const handleRegister = async (userData, enderecoData, roleData) => {
         try {
+            const newUser = {
+                ...userData,
+                endereco: enderecoData,
+                ...(userType === 'cliente' ? { ...roleData, role: 'cliente' } : { ...roleData, role: 'agiota' })
+            };
             if (userType === 'cliente') {
                 await onCreateCliente(newUser);
             } else if (userType === 'agiota') {
@@ -43,17 +48,13 @@ function App() {
     };
 
     return (
-        <>
+        <div className="flex flex-col min-h-screen">
             {isAuthenticated && <Header />}
-            <nav>
-                <Link to="/login">Login</Link> | 
-                <Link to="/cadastro">Cadastro</Link>
-            </nav>
-            <div className="container">
+            <main className="flex-1 bg-gray-100 p-4">
                 {isAuthenticated ? (
                     <Outlet />
                 ) : isRegistering ? (
-                    <Register 
+                    <Cadastro 
                         onRegister={handleRegister} 
                         goToLogin={() => setIsRegistering(false)} 
                         userType={userType}
@@ -62,8 +63,8 @@ function App() {
                 ) : (
                     <Login onLogin={handleLogin} goToRegister={() => setIsRegistering(true)} />
                 )}
-            </div>
-        </>
+            </main>
+        </div>
     );
 }
 
