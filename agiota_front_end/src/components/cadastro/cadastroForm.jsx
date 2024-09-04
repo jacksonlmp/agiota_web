@@ -79,20 +79,13 @@ const Cadastro = () => {
     };
 
     const handleSubmit = async () => {
-        const newUser = {
-            ...userData,
-            endereco: enderecoData,
-            ...roleData,
-            role,
-        };
-
-        console.log('Dados para submissão:', newUser);
-
+        console.log('Dados do roleData:', roleData);
+    
         try {
             if (role === 'cliente') {
-                await onCreateCliente(newUser);
+                await onCreateCliente(userData, enderecoData, roleData);
             } else if (role === 'agiota') {
-                await onCreateAgiota(newUser);
+                await onCreateAgiota(userData, enderecoData, roleData); 
             }
             alert('Cadastro realizado com sucesso!');
         } catch (error) {

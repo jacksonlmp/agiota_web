@@ -7,11 +7,7 @@ export const onCreateAgiota = async (userData, enderecoData, roleData) => {
         const user = {
             ...userData,
             endereco: enderecoData,
-            role: {
-                taxaDeJuros: roleData.taxaDeJuros,
-                metodoCobranca: roleData.metodoCobranca,
-                periodoTaxa: roleData.periodoTaxa
-            }
+            ...roleData,
         };
 
         const response = await axios.post(API_URL, user, {
@@ -19,7 +15,7 @@ export const onCreateAgiota = async (userData, enderecoData, roleData) => {
                 'Content-Type': 'application/json'
             }
         });
-
+        
         return response.data;
     } catch (error) {
         console.error('Erro ao criar agiota:', error.response ? error.response.data : error.message);
