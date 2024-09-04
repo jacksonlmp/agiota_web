@@ -1,10 +1,43 @@
 import React, { useState } from 'react';
 import { FiUser, FiMail, FiLock, FiEye, FiEyeOff, FiPhone } from 'react-icons/fi';
 
+const formatCPF = (cpf) => {
+    cpf = cpf.replace(/\D/g, ''); 
+
+    if (cpf.length > 11) {
+        cpf = cpf.slice(0, 11);
+    }
+
+    if (cpf.length > 9) {
+        cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, "$1.$2.$3-$4");
+    } else if (cpf.length > 6) {
+        cpf = cpf.replace(/(\d{3})(\d{3})(\d{1,3})/, "$1.$2.$3");
+    } else if (cpf.length > 3) {
+        cpf = cpf.replace(/(\d{3})(\d{1,3})/, "$1.$2");
+    }
+
+    return cpf;
+};
+
 const UsuarioForm = ({ userData, handleUserDataChange, handleNext }) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
     const togglePasswordVisibility = () => setIsPasswordVisible(!isPasswordVisible);
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+
+        if (name === "cpf") {
+            handleUserDataChange({
+                target: {
+                    name,
+                    value: formatCPF(value),
+                },
+            });
+        } else {
+            handleUserDataChange(e);
+        }
+    };
 
     return (
         <div className="bg-[#141414] rounded-2xl shadow-lg p-8 w-full max-w-md">
@@ -18,7 +51,7 @@ const UsuarioForm = ({ userData, handleUserDataChange, handleNext }) => {
                     type="text"
                     name="nome"
                     value={userData.nome}
-                    onChange={handleUserDataChange}
+                    onChange={handleInputChange}
                 />
             </div>
             <div className="mb-4">
@@ -28,7 +61,7 @@ const UsuarioForm = ({ userData, handleUserDataChange, handleNext }) => {
                     type="email"
                     name="email"
                     value={userData.email}
-                    onChange={handleUserDataChange}
+                    onChange={handleInputChange}
                 />
             </div>
             <div className="mb-4">
@@ -38,7 +71,7 @@ const UsuarioForm = ({ userData, handleUserDataChange, handleNext }) => {
                     type="password"
                     name="senha"
                     value={userData.senha}
-                    onChange={handleUserDataChange}
+                    onChange={handleInputChange}
                     isPasswordVisible={isPasswordVisible}
                     togglePasswordVisibility={togglePasswordVisibility}
                 />
@@ -50,7 +83,7 @@ const UsuarioForm = ({ userData, handleUserDataChange, handleNext }) => {
                     type="tel"
                     name="telefone"
                     value={userData.telefone}
-                    onChange={handleUserDataChange}
+                    onChange={handleInputChange}
                 />
             </div>
             <div className="mb-4">
@@ -60,7 +93,8 @@ const UsuarioForm = ({ userData, handleUserDataChange, handleNext }) => {
                     type="text"
                     name="cpf"
                     value={userData.cpf}
-                    onChange={handleUserDataChange}
+                    onChange={handleInputChange}
+                    maxLength={14}
                 />
             </div>
             <div className="flex justify-center mb-6">
