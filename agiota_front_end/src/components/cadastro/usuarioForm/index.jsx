@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FiUser, FiMail, FiLock, FiEye, FiEyeOff, FiPhone } from 'react-icons/fi';
 
 const formatCPF = (cpf) => {
-    cpf = cpf.replace(/\D/g, ''); 
+    cpf = cpf.replace(/\D/g, '');
 
     if (cpf.length > 11) {
         cpf = cpf.slice(0, 11);
@@ -21,6 +21,7 @@ const formatCPF = (cpf) => {
 
 const UsuarioForm = ({ userData, handleUserDataChange, handleNext }) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const [isPasswordTouched, setIsPasswordTouched] = useState(false);
 
     const togglePasswordVisibility = () => setIsPasswordVisible(!isPasswordVisible);
 
@@ -34,10 +35,18 @@ const UsuarioForm = ({ userData, handleUserDataChange, handleNext }) => {
                     value: formatCPF(value),
                 },
             });
+        } else if (name === "senha") {
+            if (!isPasswordTouched) {
+                setIsPasswordTouched(true);
+            }
+            handleUserDataChange(e);
         } else {
             handleUserDataChange(e);
         }
     };
+
+    const isPasswordValid = userData.senha.length >= 6 || !isPasswordTouched;
+    const isFormValid = userData.nome && userData.email && isPasswordValid && userData.telefone && userData.cpf;
 
     return (
         <div className="bg-[#141414] rounded-2xl shadow-lg p-8 w-full max-w-md">
@@ -75,6 +84,11 @@ const UsuarioForm = ({ userData, handleUserDataChange, handleNext }) => {
                     isPasswordVisible={isPasswordVisible}
                     togglePasswordVisibility={togglePasswordVisibility}
                 />
+                {!isPasswordValid && (
+                    <p className="text-red-500 text-sm mt-2">
+                        A senha deve ter no mínimo 6 caracteres.
+                    </p>
+                )}
             </div>
             <div className="mb-4">
                 <Input
@@ -101,7 +115,8 @@ const UsuarioForm = ({ userData, handleUserDataChange, handleNext }) => {
                 <button
                     type="button"
                     onClick={handleNext}
-                    className="bg-gradient-to-r from-blue-400 to-green-500 hover:from-blue-500 hover:to-green-600 text-white font-semibold py-3 px-6 rounded-lg focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 w-full"
+                    className={`bg-gradient-to-r from-blue-400 to-green-500 hover:from-blue-500 hover:to-green-600 text-white font-semibold py-3 px-6 rounded-lg focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 w-full ${!isFormValid ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    disabled={!isFormValid}
                 >
                     Próximo
                 </button>
