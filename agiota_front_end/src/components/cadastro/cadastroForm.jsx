@@ -6,7 +6,7 @@ import RoleSelection from './roleForm/selecaoRole';
 import { onCreateCliente } from '../../api/clientes';
 import { onCreateAgiota } from '../../api/agiotas';
 
-const Cadastro = () => {
+const Cadastro = ({ goToLogin }) => {
     const [step, setStep] = useState(1);
     const [role, setRole] = useState(null);
     const [userData, setUserData] = useState({
@@ -82,12 +82,14 @@ const Cadastro = () => {
         console.log('Dados do roleData:', roleData);
     
         try {
+            const requestData = {...userData, ...roleData, endereco: enderecoData};
             if (role === 'cliente') {
-                await onCreateCliente(userData, enderecoData, roleData);
+                await onCreateCliente(requestData);
             } else if (role === 'agiota') {
-                await onCreateAgiota(userData, enderecoData, roleData); 
+                await onCreateAgiota(requestData);
             }
             alert('Cadastro realizado com sucesso!');
+            goToLogin();
         } catch (error) {
             console.error('Erro ao criar usuário:', error);
             alert('Erro ao realizar o cadastro.');

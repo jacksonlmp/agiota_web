@@ -2,15 +2,9 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:8080/agiotas';
 
-export const onCreateAgiota = async (userData, enderecoData, roleData) => {
+export const onCreateAgiota = async (requestData) => {
     try {
-        const user = {
-            ...userData,
-            endereco: enderecoData,
-            ...roleData,
-        };
-
-        const response = await axios.post(API_URL, user, {
+        const response = await axios.post(API_URL, requestData, {
             headers: {
                 'Content-Type': 'application/json'
             }

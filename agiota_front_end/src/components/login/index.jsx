@@ -27,7 +27,7 @@ const Login = ({ onLogin, goToRegister }) => {
         <div className="flex items-center justify-center min-h-screen bg-[#0f0f0f]">
             <div className="bg-[#141414] rounded-2xl shadow-lg p-8 w-full max-w-md">
                 <h2 className="text-center text-2xl font-semibold text-white mb-6">
-                    Login
+                    A.G.I.O.T.A
                 </h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">

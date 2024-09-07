@@ -2,9 +2,9 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:8080/clientes';
 
-export const onCreateCliente = async (userData) => {
+export const onCreateCliente = async (requestData) => {
     try {
-        const response = await axios.post(API_URL, userData, {
+        const response = await axios.post(API_URL, requestData, {
             headers: {
                 'Content-Type': 'application/json'
             }

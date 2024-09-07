@@ -10,7 +10,7 @@ import { onLogin } from './api/login';
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isRegistering, setIsRegistering] = useState(false);
-    const [userType, setUserType] = useState('cliente'); // 'cliente' ou 'agiota'
+    const [userType, setUserType] = useState('cliente');
     const navigate = useNavigate();
 
     const handleLogin = async (email, senha) => {
@@ -23,43 +23,14 @@ function App() {
         }
     };
 
-    const handleRegister = async (userData, enderecoData, roleData) => {
-        try {
-            const newUser = {
-                ...userData,
-                endereco: enderecoData,
-                ...(userType === 'cliente' ? { ...roleData, role: 'cliente' } : { ...roleData, role: 'agiota' })
-            };
-            if (userType === 'cliente') {
-                await onCreateCliente(newUser);
-            } else if (userType === 'agiota') {
-                await onCreateAgiota(newUser);
-            }
-            alert('Cadastro realizado com sucesso!');
-            setIsRegistering(false);
-            navigate('/login');
-        } catch (error) {
-            alert('Erro ao registrar o usuário.');
-        }
-    };
-
-    const handleUserTypeChange = (type) => {
-        setUserType(type);
-    };
-
     return (
-        <div className="flex flex-col min-h-screen">
+        <div>
             {isAuthenticated && <Header />}
-            <main className="flex-1 bg-gray-100 p-4">
+            <main>
                 {isAuthenticated ? (
                     <Outlet />
                 ) : isRegistering ? (
-                    <Cadastro 
-                        onRegister={handleRegister} 
-                        goToLogin={() => setIsRegistering(false)} 
-                        userType={userType}
-                        onUserTypeChange={handleUserTypeChange}
-                    />
+                    <Cadastro goToLogin={() => setIsRegistering(false)}  />
                 ) : (
                     <Login onLogin={handleLogin} goToRegister={() => setIsRegistering(true)} />
                 )}
