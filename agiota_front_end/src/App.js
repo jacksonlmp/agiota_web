@@ -3,12 +3,12 @@ import { Link, Outlet, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import Login from './components/login';
 import Cadastro from './components/cadastro/cadastroForm';
-import { onCreateAgiota } from './api/agiotas';
-import { onCreateCliente } from './api/clientes';
 import { onLogin } from './api/login';
 
 function App() {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(
+        () => localStorage.getItem('isAuthenticated') === 'true'
+    );
     const [isRegistering, setIsRegistering] = useState(false);
     const [userType, setUserType] = useState('cliente');
     const navigate = useNavigate();
@@ -17,6 +17,7 @@ function App() {
         try {
             await onLogin(email, senha);
             setIsAuthenticated(true);
+            localStorage.setItem('isAuthenticated', 'true');
             navigate('/');
         } catch (error) {
             alert('E-mail ou senha incorretos.');
