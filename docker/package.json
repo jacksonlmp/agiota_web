@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "cryptr": "^6.3.0",
+    "jwt-decode": "^4.0.0"
+  }
+}
