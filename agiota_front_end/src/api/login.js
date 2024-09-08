@@ -9,9 +9,8 @@ export const onLogin = async (email, senha) => {
             senha: senha
         });
 
-        const user = response.data;
-        if (user) {
-            return user;
+        if (response.data) {
+            return response;
         } else {
             throw new Error('E-mail ou senha incorretos.');
         }

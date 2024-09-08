@@ -2,6 +2,7 @@ package br.edu.ufape.agiota.controllers;
 
 import br.edu.ufape.agiota.dtos.DadosAutenticacao;
 import br.edu.ufape.agiota.dtos.DadosTokenJWT;
+import br.edu.ufape.agiota.dtos.UsuarioAutenticadoDTO;
 import br.edu.ufape.agiota.negocio.basica.Usuario;
 import br.edu.ufape.agiota.negocio.services.TokenService;
 import jakarta.validation.Valid;
@@ -30,6 +31,18 @@ public class AutenticacaoController {
         var authentication = manager.authenticate(authenticationToken);
         var tokenJWT = tokenService.gerarToken((Usuario) authentication.getPrincipal());
 
-        return ResponseEntity.ok(new DadosTokenJWT(tokenJWT));
+        var usuario = authentication.getPrincipal();
+        var tipo = usuario.getClass().toString();
+        tipo = tipo.substring(tipo.lastIndexOf(".") + 1);
+
+        UsuarioAutenticadoDTO usuarioAutenticadoDTO = new UsuarioAutenticadoDTO(
+                ((Usuario) usuario).getId(),
+                tipo,
+                ((Usuario) usuario).getNome(),
+                ((Usuario) usuario).getEmail()
+        );
+
+
+        return ResponseEntity.ok(new DadosTokenJWT(tokenJWT, usuarioAutenticadoDTO));
     }
 }
