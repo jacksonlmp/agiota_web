@@ -1,0 +1,8 @@
+./start-docker-composse
+
+Ou copiar e colar, de uma vez, os comandos que estiverem lá dentro.
+
+
+Caso aconteça erro com o mariadb, e exiba apenas "sleeping" em vez de conectar, execute estes comandos:
+docker-compose down -v
+docker-compose up --build
