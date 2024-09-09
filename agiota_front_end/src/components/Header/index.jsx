@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import { FiUser, FiDollarSign } from 'react-icons/fi';
-import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
-    const navigate = useNavigate();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const user = JSON.parse(localStorage.getItem('@Auth:user'));
 
     const handleLogout = () => {
         localStorage.removeItem('isAuthenticated');
@@ -45,11 +44,11 @@ const Header = () => {
                     <div
                         id="dropdownInformation"
                         className={`${isDropdownOpen ? 'block' : 'hidden'} absolute right-0 mt-2 z-50 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600`}
-                        style={{top: '100%'}} // Garante que o dropdown apareça abaixo do botão
+                        style={{top: '100%'}}
                     >
                         <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
                             <div>Bonnie Green</div>
-                            <div className="font-medium truncate">name@flowbite.com</div>
+                            <div className="font-medium truncate">{ user?.email }</div>
                         </div>
                         <ul className="py-2 text-sm text-gray-700 dark:text-gray-200"
                             aria-labelledby="dropdownInformationButton">

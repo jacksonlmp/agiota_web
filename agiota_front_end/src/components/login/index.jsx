@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import { FiMail, FiLock } from 'react-icons/fi';
-import { onLogin, goToRegister } from '../../api/login';
+import {AuthContext} from "../../context/auth";
 
-const Login = ({ onLogin, goToRegister }) => {
+const Login = ({ goToRegister }) => {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const { handleLogin } = useContext(AuthContext)
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -17,7 +18,7 @@ const Login = ({ onLogin, goToRegister }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await onLogin(email, senha);
+            await handleLogin({email, senha});
         } catch (error) {
             alert('Login falhou. E-mail ou senha incorretos.');
         }
