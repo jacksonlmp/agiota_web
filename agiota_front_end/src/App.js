@@ -4,11 +4,15 @@ import Header from './components/Header';
 import Login from './components/login';
 import Cadastro from './components/cadastro/cadastroForm';
 import {AuthContext, AuthProvider} from "./context/auth";
+import kc from "./keycloack/kc";
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(
-        () => localStorage.getItem('isAuthenticated') === 'true'
+        () => kc.authenticated
     );
+
+    console.log(kc.authenticated)
+
     const [isRegistering, setIsRegistering] = useState(false);
 
     return (
