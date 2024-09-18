@@ -1,0 +1,26 @@
+{
+  "name": "next_aula1",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "cryptr": "^6.3.0",
+    "daisyui": "^4.12.10",
+    "date-fns": "^3.6.0",
+    "jwt-decode": "^4.0.0",
+    "next": "14.2.5",
+    "next-auth": "^4.24.7",
+    "react": "^18",
+    "react-datepicker": "^7.3.0",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1"
+  }
+}
