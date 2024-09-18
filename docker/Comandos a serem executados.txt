@@ -1,4 +1,4 @@
-./start-docker-composse
+./start-docker-compose
 
 Ou copiar e colar, de uma vez, os comandos que estiverem lá dentro.
 
