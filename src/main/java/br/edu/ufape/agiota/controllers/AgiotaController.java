@@ -7,6 +7,7 @@ import br.edu.ufape.agiota.fachada.exceptions.RegistroJaExistenteException;
 import br.edu.ufape.agiota.fachada.exceptions.SenhaNulaException;
 import br.edu.ufape.agiota.negocio.basica.Agiota;
 import br.edu.ufape.agiota.negocio.basica.Usuario;
+import br.edu.ufape.agiota.negocio.services.ApplicationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,9 @@ import static java.util.Objects.nonNull;
 public class AgiotaController {
     @Autowired
     private Fachada fachada;
+
+    @Autowired
+    private ApplicationService applicationService;
 
     @PostMapping
     public ResponseEntity<?> criarAgiota(@RequestBody @Valid AgiotaDTO agiotaDTO) throws RegistroJaExistenteException, SenhaNulaException {
@@ -60,10 +64,10 @@ public class AgiotaController {
         }
     }
 
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<?> atualizarAgiota(@RequestBody @Valid AgiotaDTO agiotaDTO, @PathVariable long id) throws Exception  {
+    @PutMapping(value = "/")
+    public ResponseEntity<?> atualizarAgiota(@RequestBody @Valid AgiotaDTO agiotaDTO) throws Exception  {
         try {
-            Agiota agiota = fachada.atualizarAgiota(agiotaDTO, id);;
+            Agiota agiota = fachada.atualizarAgiota(agiotaDTO, applicationService.getAgiotaLogado().getId());;
             return ResponseEntity.ok().body(agiota);
         } catch (RegistroNaoEncontradoException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

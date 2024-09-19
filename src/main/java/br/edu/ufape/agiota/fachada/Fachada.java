@@ -10,13 +10,7 @@ import br.edu.ufape.agiota.dtos.TransacaoDTO;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroJaExistenteException;
 import br.edu.ufape.agiota.fachada.exceptions.SenhaNulaException;
-import br.edu.ufape.agiota.negocio.basica.Agiota;
-import br.edu.ufape.agiota.negocio.basica.Avaliacao;
-import br.edu.ufape.agiota.negocio.basica.Cliente;
-import br.edu.ufape.agiota.negocio.basica.Emprestimo;
-import br.edu.ufape.agiota.negocio.basica.Lembrete;
-import br.edu.ufape.agiota.negocio.basica.Parcela;
-import br.edu.ufape.agiota.negocio.basica.Transacao;
+import br.edu.ufape.agiota.negocio.basica.*;
 import br.edu.ufape.agiota.negocio.services.interfaces.AgiotaServiceInterface;
 import br.edu.ufape.agiota.negocio.services.interfaces.AvaliacaoServiceInterface;
 import br.edu.ufape.agiota.negocio.services.interfaces.ClienteServiceInterface;
@@ -83,8 +77,8 @@ public class Fachada {
         return agiotaService.atualizarAgiota(agiotaDTO, id);
     }
 
-    public Avaliacao avaliarUsuario(AvaliacaoDTO avaliacaoDTO) {
-        return avaliacaoService.avaliarUsuario(avaliacaoDTO);
+    public Avaliacao avaliarUsuario(AvaliacaoDTO avaliacaoDTO, Usuario avaliador) {
+        return avaliacaoService.avaliarUsuario(avaliacaoDTO, avaliador);
     }
 
     public List<Avaliacao> buscarAvaliacoesDoUsuario(long idUsuario) {
