@@ -3,26 +3,44 @@ package br.edu.ufape.agiota.controllers;
 import br.edu.ufape.agiota.dtos.EmprestimoClienteDTO;
 import br.edu.ufape.agiota.fachada.Fachada;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
+import br.edu.ufape.agiota.negocio.basica.Cliente;
 import br.edu.ufape.agiota.negocio.basica.Emprestimo;
+import br.edu.ufape.agiota.negocio.services.ApplicationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
-@RequestMapping("/cliente/{id}")
+@RequestMapping("/cliente")
 public class EmprestimoClienteController {
 
     @Autowired
     private Fachada fachada;
 
+    @Autowired
+    private ApplicationService applicationService;
+
     @GetMapping("/emprestimos")
-    public ResponseEntity<?> listarEmprestimosCliente(@PathVariable("id") long clienteId) {
-        List<Emprestimo> result = fachada.listarEmprestimosCliente(clienteId);
+    public ResponseEntity<?> listarEmprestimosCliente() {
+        List<Emprestimo> result = fachada.listarEmprestimosCliente(applicationService.getCliente().getId());
+
         return ResponseEntity.ok().body(result);
+    }
+
+    @GetMapping("/emprestimos/teste")
+    public ResponseEntity<?> teste() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Cliente cliente = (Cliente) authentication.getPrincipal();
+
+        return ResponseEntity.ok().body(cliente.getClass());
     }
 
     @GetMapping("/emprestimos/{emprestimoId}")
