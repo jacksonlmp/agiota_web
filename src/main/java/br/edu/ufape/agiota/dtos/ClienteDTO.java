@@ -32,10 +32,10 @@ public class ClienteDTO {
     @NotNull
     private EnderecoDTO endereco;
 
-    public void toCliente(Cliente cliente, String senhaEncriptada) {
+    public void toCliente(Cliente cliente) {
         cliente.setNome(getNome());
         cliente.setEmail(getEmail());
-        cliente.setSenha(senhaEncriptada);
+        cliente.setSenha(cliente.getSenha());
         cliente.setTelefone(getTelefone());
         cliente.setCpf(getCpf());
         cliente.setProfissao(getProfissao());

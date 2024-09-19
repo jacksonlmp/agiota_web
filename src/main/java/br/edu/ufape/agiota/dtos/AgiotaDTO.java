@@ -36,10 +36,9 @@ public class AgiotaDTO {
     @NotNull
     private EnderecoDTO endereco;
 
-    public void toAgiota(Agiota agiota, String senhEncriptada) {
+    public void toAgiota(Agiota agiota) {
         agiota.setNome(getNome());
         agiota.setEmail(getEmail());
-        agiota.setSenha(senhEncriptada);
         agiota.setTelefone(getTelefone());
         agiota.setCpf(getCpf());
         agiota.setTaxaDeJuros(getTaxaDeJuros());

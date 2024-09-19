@@ -10,7 +10,6 @@ import br.edu.ufape.agiota.negocio.repositorios.ClienteRepository;
 import br.edu.ufape.agiota.negocio.repositorios.EnderecoRepository;
 import br.edu.ufape.agiota.negocio.services.interfaces.ClienteServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,20 +27,16 @@ public class ClienteService implements ClienteServiceInterface {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-
     public List<Cliente> listarClientes() {
         return clienteRepository.findAll();
     }
 
     public Cliente criarCliente(ClienteDTO clienteDTO) throws RegistroJaExistenteException, SenhaNulaException {
-        if ( nonNull(buscarClientePorEmail(clienteDTO.getEmail())) ) {
+        if (nonNull(buscarClientePorEmail(clienteDTO.getEmail()))) {
             throw new RegistroJaExistenteException("O email informado já se encontra cadastrado no sistema");
         }
 
-        if ( isNull(clienteDTO.getSenha())) {
+        if (isNull(clienteDTO.getSenha())) {
             throw new SenhaNulaException("Senha é um campo obrigatório");
         }
 
@@ -52,7 +47,7 @@ public class ClienteService implements ClienteServiceInterface {
         Endereco novoEndereco = enderecoRepository.save(endereco);
 
         Cliente cliente = new Cliente();
-        clienteDTO.toCliente(cliente, passwordEncoder.encode(clienteDTO.getSenha()));
+        clienteDTO.toCliente(cliente);
 
         cliente.setEndereco(novoEndereco);
 
@@ -74,13 +69,12 @@ public class ClienteService implements ClienteServiceInterface {
 
         enderecoRepository.save(cliente.getEndereco());
 
-        clienteDTO.toCliente(cliente, passwordEncoder.encode(clienteDTO.getSenha()));
+        clienteDTO.toCliente(cliente);
 
         return clienteRepository.save(cliente);
     }
 
-    private Cliente buscarClientePorEmail(String email)
-    {
+    private Cliente buscarClientePorEmail(String email) {
         return clienteRepository.findByEmail(email);
     }
 }

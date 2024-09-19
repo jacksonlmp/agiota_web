@@ -10,7 +10,6 @@ import br.edu.ufape.agiota.negocio.repositorios.AgiotaRepository;
 import br.edu.ufape.agiota.negocio.repositorios.EnderecoRepository;
 import br.edu.ufape.agiota.negocio.services.interfaces.AgiotaServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,9 +26,6 @@ public class AgiotaService implements AgiotaServiceInterface {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     public Agiota criarAgiota(AgiotaDTO agiotaDTO) throws RegistroJaExistenteException, SenhaNulaException {
         if (nonNull(buscarAgiotaPorEmail(agiotaDTO.getEmail()))) {
             throw new RegistroJaExistenteException("O email informado já se encontra cadastrado no sistema");
@@ -44,7 +40,7 @@ public class AgiotaService implements AgiotaServiceInterface {
         Endereco novoEndereco = enderecoRepository.save(endereco);
 
         Agiota agiota = new Agiota();
-        agiotaDTO.toAgiota(agiota, passwordEncoder.encode(agiotaDTO.getSenha()));
+        agiotaDTO.toAgiota(agiota);
         agiota.setEndereco(novoEndereco);
 
         return agiotaRepository.save(agiota);
@@ -65,7 +61,7 @@ public class AgiotaService implements AgiotaServiceInterface {
         agiotaDTO.getEndereco().toEndereco(agiota.getEndereco());
         enderecoRepository.save(agiota.getEndereco());
 
-        agiotaDTO.toAgiota(agiota, passwordEncoder.encode(agiotaDTO.getSenha()));
+        agiotaDTO.toAgiota(agiota);
 
         return agiotaRepository.save(agiota);
     }
