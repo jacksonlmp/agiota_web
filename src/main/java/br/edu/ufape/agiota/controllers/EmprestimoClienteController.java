@@ -29,7 +29,7 @@ public class EmprestimoClienteController {
 
     @GetMapping("/emprestimos")
     public ResponseEntity<?> listarEmprestimosCliente() {
-        List<Emprestimo> result = fachada.listarEmprestimosCliente(applicationService.getCliente().getId());
+        List<Emprestimo> result = fachada.listarEmprestimosCliente(applicationService.getClienteLogado().getId());
 
         return ResponseEntity.ok().body(result);
     }
