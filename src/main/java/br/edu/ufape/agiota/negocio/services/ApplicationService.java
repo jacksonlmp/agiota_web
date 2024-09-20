@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class ApplicationService {
 
-    public Object usuario() {
+    public Object getUsuarioLogado() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getPrincipal();
     }
 
     public Object getUsuarioLogado(Class<?> tipo) {
-        Object usuario = usuario();
+        Object usuario = getUsuarioLogado();
 
         if (tipo.isInstance(usuario)) {
             return usuario;
