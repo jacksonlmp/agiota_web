@@ -25,7 +25,7 @@ public class AvaliacaoController {
     @PostMapping("/avaliar")
     public ResponseEntity<?> avaliarUsuario(@RequestBody @Valid AvaliacaoDTO avaliacaoDTO) {
         try {
-            Avaliacao avaliacao = fachada.avaliarUsuario(avaliacaoDTO, (Usuario) applicationService.usuario());
+            Avaliacao avaliacao = fachada.avaliarUsuario(avaliacaoDTO, (Usuario) applicationService.getUsuarioLogado());
             return ResponseEntity.ok().body(avaliacao);
         } catch (RegistroNaoEncontradoException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
