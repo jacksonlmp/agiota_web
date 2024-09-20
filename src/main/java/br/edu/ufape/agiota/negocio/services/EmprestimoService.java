@@ -29,6 +29,9 @@ public class EmprestimoService implements EmprestimoServiceInterface {
     @Autowired
     private ClienteService clienteService;
 
+    @Autowired
+    private ParcelaService parcelaService;
+
     @Override
     public List<Emprestimo> listarEmprestimosCliente(long clienteId) {
         return emprestimoRepository.findAllByClienteId(clienteId);
@@ -106,7 +109,11 @@ public class EmprestimoService implements EmprestimoServiceInterface {
 
         aprovarEmprestimoDTO.aprovar(emprestimo, agiota.getTaxaDeJuros());
 
-        return emprestimoRepository.save(emprestimo);
+        Emprestimo savedEmprestimo = emprestimoRepository.save(emprestimo);
+
+        parcelaService.gerarParcelas(savedEmprestimo);
+
+        return savedEmprestimo;
     }
 
     @Override

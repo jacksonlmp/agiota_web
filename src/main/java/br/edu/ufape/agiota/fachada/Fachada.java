@@ -120,15 +120,15 @@ public class Fachada {
         return emprestimoService.rejeitarSolicitacao(agiotaId, emprestimoId);
     }
 
-    public Lembrete buscarLembrete(long id) throws RegistroNaoEncontradoException {
-        return lembreteService.buscarLembrete(id);
+    public Lembrete buscarLembreteAgiota(long id, long idAgiota) throws RegistroNaoEncontradoException {
+        return lembreteService.buscarLembreteAgiota(id, idAgiota);
     }
 
     public List<Lembrete> listarLembretesPorAgiotaId(long agiotaId) {
         return lembreteService.listarLembretesPorAgiotaId(agiotaId);
     }
 
-    public Lembrete criarLembrete(LembreteDTO lembreteDTO) throws RegistroJaExistenteException {
+    public Lembrete criarLembrete(LembreteDTO lembreteDTO) throws RegistroNaoEncontradoException {
         return lembreteService.criarLembrete(lembreteDTO);
     }
 

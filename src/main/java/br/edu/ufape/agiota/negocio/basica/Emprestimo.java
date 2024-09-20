@@ -18,7 +18,7 @@ public class Emprestimo {
 
     private Date dataEmprestimo;
     private BigDecimal valorEmprestimo;
-    private Date dataDeVencimento;
+    private Date dataDeVencimentoInicial;
     private String garantia;
     private int quantidadeParcelas;
     private double periodoParcelas;

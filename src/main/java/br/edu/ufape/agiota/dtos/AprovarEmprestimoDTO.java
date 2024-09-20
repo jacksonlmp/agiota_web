@@ -16,7 +16,7 @@ public class AprovarEmprestimoDTO {
     private Date dataEmprestimo;
 
     @NotNull
-    private Date dataDeVencimento;
+    private Date dataDeVencimentoInicial;
 
     @Positive
     @Min(1)
@@ -28,7 +28,7 @@ public class AprovarEmprestimoDTO {
 
     public void aprovar(Emprestimo emprestimo, double taxaDeJuros) {
         emprestimo.setDataEmprestimo(getDataEmprestimo());
-        emprestimo.setDataDeVencimento(getDataDeVencimento());
+        emprestimo.setDataDeVencimentoInicial(getDataDeVencimentoInicial());
         emprestimo.setQuantidadeParcelas(getQuantidadeParcelas());
         emprestimo.setPeriodoParcelas(getPeriodoParcelas());
 

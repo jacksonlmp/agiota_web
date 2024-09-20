@@ -55,7 +55,7 @@ public class AgiotaController {
     public ResponseEntity<?> atualizarAgiota(@RequestBody @Valid AgiotaDTO agiotaDTO) {
         try {
             Agiota agiota = fachada.atualizarAgiota(agiotaDTO, applicationService.getAgiotaLogado().getId());
-            ;
+
             return ResponseEntity.ok().body(agiota);
         } catch (RegistroNaoEncontradoException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

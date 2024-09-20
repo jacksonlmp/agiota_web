@@ -29,8 +29,8 @@ public class LembreteService implements LembreteServiceInterface {
     }
 
     @Override
-    public Lembrete buscarLembrete(long id) {
-        Optional<Lembrete> lembreteOpt = lembreteRepository.findById(id);
+    public Lembrete buscarLembreteAgiota(long id, long idAgiota) {
+        Optional<Lembrete> lembreteOpt = lembreteRepository.findByIdAndAgiotaId(id, idAgiota);
 
         if (lembreteOpt.isPresent())
             return lembreteOpt.get();
@@ -39,11 +39,11 @@ public class LembreteService implements LembreteServiceInterface {
     }
 
     @Override
-    public Lembrete criarLembrete(LembreteDTO lembreteDTO) throws RegistroJaExistenteException {
+    public Lembrete criarLembrete(LembreteDTO lembreteDTO) throws RegistroNaoEncontradoException {
         Lembrete lembrete = lembreteDTO.toLembrete();
         Optional<Parcela> parcelaOpt = parcelaRepository.findById(lembreteDTO.getParcelaId());
 
-        if (!parcelaOpt.isPresent()) {
+        if (parcelaOpt.isEmpty()) {
             throw new RegistroNaoEncontradoException(
                     "Parcela com o identificador " + lembreteDTO.getParcelaId() + " não foi encontrada!");
         }
