@@ -32,15 +32,6 @@ const Header = () => {
                         <span>Empréstimos</span>
                     </a>
 
-                    <a
-                        href="/listagem"
-                        className="flex items-center space-x-2 text-white hover:text-blue-400 transition-colors duration-300"
-                        aria-current="page"
-                    >
-                        <CiBoxList  className="text-lg"/>
-                        <span>Listagem</span>
-                    </a>
-
                     <button
                         id="dropdownInformationButton"
                         onClick={toggleDropdown} // Toggle dropdown visibility
