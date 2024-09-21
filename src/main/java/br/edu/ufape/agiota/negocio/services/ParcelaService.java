@@ -1,28 +1,28 @@
 package br.edu.ufape.agiota.negocio.services;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
-import br.edu.ufape.agiota.negocio.basica.Emprestimo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
-
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
+import br.edu.ufape.agiota.infra.GeradorDeDatas;
+import br.edu.ufape.agiota.negocio.basica.Emprestimo;
 import br.edu.ufape.agiota.negocio.basica.Parcela;
 import br.edu.ufape.agiota.negocio.repositorios.ParcelaRepository;
 import br.edu.ufape.agiota.negocio.services.interfaces.ParcelaServiceInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ParcelaService implements ParcelaServiceInterface {
 
     @Autowired
     private ParcelaRepository parcelaRepository;
+
+    @Autowired
+    private GeradorDeDatas geradorDeDatas;
 
     @Override
     public List<Parcela> listarParcelasPorEmprestimo(long emprestimoId) {
@@ -38,33 +38,19 @@ public class ParcelaService implements ParcelaServiceInterface {
         throw new RegistroNaoEncontradoException("Parcela com o identificador " + id + " não foi encontrada!");
     }
 
-
     @Override
     public void gerarParcelas(Emprestimo emprestimo) {
-        BigDecimal valorParcela = emprestimo.getValorEmprestimo().divide(BigDecimal.valueOf(emprestimo.getQuantidadeParcelas()));
         Date vencimento = emprestimo.getDataDeVencimentoInicial();
+        BigDecimal valorParcela = emprestimo.getValorEmprestimo()
+                .divide(BigDecimal.valueOf(emprestimo.getQuantidadeParcelas()), RoundingMode.HALF_UP);
 
-        for (int i = 0; i < emprestimo.getQuantidadeParcelas(); i++) {
-            Parcela parcela = new Parcela();
+        int quantidadeParcelas = emprestimo.getQuantidadeParcelas();
+        int periodoParcelas = emprestimo.getPeriodoParcelas();
 
-            parcela.setDataVencimento(vencimento);
-            parcela.setEmprestimo(emprestimo);
-            parcela.setValor(valorParcela);
-
-            parcelaRepository.save(parcela);
-
-            vencimento = adicionarDias((long) emprestimo.getPeriodoParcelas(), vencimento);
+        for (int i = 0; i < quantidadeParcelas; i++) {
+            parcelaRepository.save(new Parcela(vencimento, valorParcela, emprestimo));
+            vencimento = geradorDeDatas.getDataMaisNDias(vencimento, periodoParcelas);
         }
     }
-
-    public Date adicionarDias(long dias, Date vencimento) {
-        LocalDate localDate = vencimento.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
-        LocalDate novaData = localDate.plusDays(dias);
-
-        return Date.from(novaData.atStartOfDay(ZoneId.systemDefault()).toInstant());
-    }
-
 
 }

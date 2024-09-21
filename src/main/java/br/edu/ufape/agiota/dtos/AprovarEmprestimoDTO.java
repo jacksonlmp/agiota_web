@@ -24,7 +24,7 @@ public class AprovarEmprestimoDTO {
 
     @NotNull
     @Positive
-    private double periodoParcelas;
+    private int periodoParcelas;
 
     public void aprovar(Emprestimo emprestimo, double taxaDeJuros) {
         emprestimo.setDataEmprestimo(getDataEmprestimo());

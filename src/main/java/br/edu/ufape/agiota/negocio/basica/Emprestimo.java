@@ -21,7 +21,7 @@ public class Emprestimo {
     private Date dataDeVencimentoInicial;
     private String garantia;
     private int quantidadeParcelas;
-    private double periodoParcelas;
+    private int periodoParcelas;
     private double taxaJuros;
 
     @Enumerated(EnumType.STRING)
