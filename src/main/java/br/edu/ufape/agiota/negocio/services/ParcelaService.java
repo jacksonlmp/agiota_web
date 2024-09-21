@@ -45,14 +45,19 @@ public class ParcelaService implements ParcelaServiceInterface {
     @Override
     public void gerarParcelas(Emprestimo emprestimo) {
         Date vencimento = emprestimo.getDataDeVencimentoInicial();
-        BigDecimal valorParcela = emprestimo.getValorEmprestimo()
-                .divide(BigDecimal.valueOf(emprestimo.getQuantidadeParcelas()), RoundingMode.HALF_UP);
 
+        BigDecimal valorTotal = emprestimo.getValorEmprestimo();
         int quantidadeParcelas = emprestimo.getQuantidadeParcelas();
+        double taxaJuros = emprestimo.getTaxaJuros();
+        BigDecimal valorParcela = valorTotal.divide(BigDecimal.valueOf(quantidadeParcelas), RoundingMode.HALF_UP);
+
+        BigDecimal taxaJurosBD = BigDecimal.valueOf(taxaJuros).divide(BigDecimal.valueOf(100));
+        BigDecimal valorComJuros = valorParcela.multiply(taxaJurosBD).add(valorParcela);
+
         int periodoParcelas = emprestimo.getPeriodoParcelas();
 
         for (int i = 0; i < quantidadeParcelas; i++) {
-            parcelaRepository.save(new Parcela(vencimento, valorParcela, emprestimo));
+            parcelaRepository.save(new Parcela(vencimento, valorComJuros, emprestimo));
             vencimento = geradorDeDatas.getDataMaisNDias(vencimento, periodoParcelas);
         }
     }

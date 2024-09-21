@@ -1,7 +1,7 @@
 package br.edu.ufape.agiota.negocio.services;
 
-import br.edu.ufape.agiota.dtos.AprovarEmprestimoDTO;
 import br.edu.ufape.agiota.dtos.EmprestimoClienteDTO;
+import br.edu.ufape.agiota.dtos.RejeitarEmprestimoDTO;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
 import br.edu.ufape.agiota.negocio.basica.Agiota;
 import br.edu.ufape.agiota.negocio.basica.Cliente;
@@ -100,14 +100,13 @@ public class EmprestimoService implements EmprestimoServiceInterface {
     }
 
     @Override
-    public Emprestimo aprovarSolicitacao(long agiotaId, long emprestimoId, AprovarEmprestimoDTO aprovarEmprestimoDTO)  {
+    public Emprestimo aprovarSolicitacao(long agiotaId, long emprestimoId)  {
 
         Agiota agiota = agiotaService.buscarAgiota(agiotaId);
         Emprestimo emprestimo = buscarEmprestimo(emprestimoId);
 
         emprestimo.checarAprocacao();
-
-        aprovarEmprestimoDTO.aprovar(emprestimo, agiota.getTaxaDeJuros());
+        emprestimo.setStatus(StatusEmprestimo.APROVADO);
 
         Emprestimo savedEmprestimo = emprestimoRepository.save(emprestimo);
 
@@ -117,14 +116,14 @@ public class EmprestimoService implements EmprestimoServiceInterface {
     }
 
     @Override
-    public Emprestimo rejeitarSolicitacao(long agiotaId, long emprestimoId)
+    public Emprestimo rejeitarSolicitacao(long agiotaId, long emprestimoId, RejeitarEmprestimoDTO rejeitarEmprestimoDTO)
     {
         agiotaService.buscarAgiota(agiotaId);
         Emprestimo emprestimo = buscarEmprestimo(emprestimoId);
 
         emprestimo.checarRejeicao();
 
-        emprestimo.setStatus(StatusEmprestimo.REJEITADO);
+        rejeitarEmprestimoDTO.rejeitar(emprestimo);
 
         return emprestimoRepository.save(emprestimo);
     }
