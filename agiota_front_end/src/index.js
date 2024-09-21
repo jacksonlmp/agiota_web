@@ -6,6 +6,7 @@ import Login from './components/login/FormularioLogin';
 import Cadastro from './components/cadastro/Cadastro';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import EmprestimosCliente from "./pages/EmprestimosCliente";
+import EmprestimosAgiota from "./pages/EmprestimosAgiota";
 import Agiotas from "./pages/Agiotas";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -25,8 +26,12 @@ const router = createBrowserRouter([
                 element: <Cadastro />
             },
             {
-                path: "emprestimos",
+                path: "emprestimos-cliente",
                 element: <EmprestimosCliente />
+            },
+            {
+                path: "emprestimos-agiota",
+                element: <EmprestimosAgiota />
             },
             {
                 path: "agiotas",
