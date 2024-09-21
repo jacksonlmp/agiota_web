@@ -1,17 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './styles/index.css';
 import App from './App';
-import Login from './components/login';
-import Cadastro from './components/cadastro/cadastroForm';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Login from './components/login/FormularioLogin';
+import Cadastro from './components/cadastro/Cadastro';
+import { createBrowserRouter, RouterProvider, ErrorBoundary } from 'react-router-dom';
+import Emprestimos from "./pages/Emprestimos";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const router = createBrowserRouter([
     {
-        path: "/",
+        path: "/app",
         element: <App />,
+        errorElement: <div>Rota inexistente ou com problema!</div>, // Error boundary
         children: [
             {
                 path: "login",
@@ -20,6 +22,10 @@ const router = createBrowserRouter([
             {
                 path: "cadastro",
                 element: <Cadastro />
+            },
+            {
+                path: "emprestimos",
+                element: <Emprestimos />
             }
         ]
     }

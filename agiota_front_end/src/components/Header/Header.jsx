@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { FiUser, FiDollarSign } from 'react-icons/fi';
+import { FiUser, FiDollarSign  } from 'react-icons/fi';
+import { CiBoxList } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
@@ -23,12 +24,21 @@ const Header = () => {
                 </a>
                 <div className="flex space-x-4 md:space-x-8 relative">
                     <a
-                        href="/emprestimos"
+                        href="/Emprestimos"
                         className="flex items-center space-x-2 text-white hover:text-blue-400 transition-colors duration-300"
                         aria-current="page"
                     >
                         <FiDollarSign className="text-lg"/>
                         <span>Empréstimos</span>
+                    </a>
+
+                    <a
+                        href="/listagem"
+                        className="flex items-center space-x-2 text-white hover:text-blue-400 transition-colors duration-300"
+                        aria-current="page"
+                    >
+                        <CiBoxList  className="text-lg"/>
+                        <span>Listagem</span>
                     </a>
 
                     <button
