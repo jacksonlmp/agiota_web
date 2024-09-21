@@ -6,6 +6,7 @@ import br.edu.ufape.agiota.fachada.exceptions.RegistroJaExistenteException;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
 import br.edu.ufape.agiota.fachada.exceptions.SenhaNulaException;
 import br.edu.ufape.agiota.negocio.basica.Cliente;
+import br.edu.ufape.agiota.negocio.services.ApplicationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,9 @@ public class ClienteController {
 
     @Autowired
     private Fachada fachada;
+
+    @Autowired
+    private ApplicationService applicationService;
 
     @GetMapping
     public List<Cliente> listarClientes() {
@@ -48,10 +52,10 @@ public class ClienteController {
         }
     }
 
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<?> atualizarCliente(@RequestBody @Valid ClienteDTO clienteDTO, @PathVariable long id) {
+    @PutMapping(value = "/edit")
+    public ResponseEntity<?> atualizarCliente(@RequestBody @Valid ClienteDTO clienteDTO) {
         try {
-            Cliente cliente = fachada.atualizarCliente(clienteDTO, id);
+            Cliente cliente = fachada.atualizarCliente(clienteDTO, applicationService.getClienteLogado().getId());
             return ResponseEntity.ok().body(cliente);
         } catch (RegistroNaoEncontradoException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

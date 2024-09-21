@@ -1,8 +1,9 @@
 package br.edu.ufape.agiota.negocio.services;
 
-import br.edu.ufape.agiota.dtos.AprovarEmprestimoDTO;
 import br.edu.ufape.agiota.dtos.EmprestimoClienteDTO;
+import br.edu.ufape.agiota.dtos.RejeitarEmprestimoDTO;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
+import br.edu.ufape.agiota.infra.ChecarDataNoPassado;
 import br.edu.ufape.agiota.negocio.basica.Agiota;
 import br.edu.ufape.agiota.negocio.basica.Cliente;
 import br.edu.ufape.agiota.negocio.basica.Emprestimo;
@@ -29,6 +30,12 @@ public class EmprestimoService implements EmprestimoServiceInterface {
     @Autowired
     private ClienteService clienteService;
 
+    @Autowired
+    private ParcelaService parcelaService;
+
+    @Autowired
+    private ChecarDataNoPassado checarDataNoPassado;
+
     @Override
     public List<Emprestimo> listarEmprestimosCliente(long clienteId) {
         return emprestimoRepository.findAllByClienteId(clienteId);
@@ -36,6 +43,9 @@ public class EmprestimoService implements EmprestimoServiceInterface {
 
     @Override
     public Emprestimo criarSolicitacaoEmprestimo(EmprestimoClienteDTO emprestimoClienteDTO, long clienteId) {
+        checarDataNoPassado.handle(emprestimoClienteDTO.getDataDeVencimentoInicial(), "A data de vencimento inicial não pode ser no passado.");
+        checarDataNoPassado.handle(emprestimoClienteDTO.getDataEmprestimo(), "A data do empréstimo não pode ser no passado.");
+
         Cliente cliente = clienteService.buscarCliente(clienteId);
         Agiota agiota = agiotaService.buscarAgiota(emprestimoClienteDTO.getAgiotaId());
 
@@ -97,27 +107,32 @@ public class EmprestimoService implements EmprestimoServiceInterface {
     }
 
     @Override
-    public Emprestimo aprovarSolicitacao(long agiotaId, long emprestimoId, AprovarEmprestimoDTO aprovarEmprestimoDTO)  {
+    public Emprestimo aprovarSolicitacao(long agiotaId, long emprestimoId)  {
 
         Agiota agiota = agiotaService.buscarAgiota(agiotaId);
         Emprestimo emprestimo = buscarEmprestimo(emprestimoId);
 
+        checarDataNoPassado.handle(emprestimo.getDataEmprestimo(), "A data do empréstimo não pode ser no passado.");
+
         emprestimo.checarAprocacao();
+        emprestimo.setStatus(StatusEmprestimo.APROVADO);
 
-        aprovarEmprestimoDTO.aprovar(emprestimo, agiota.getTaxaDeJuros());
+        Emprestimo savedEmprestimo = emprestimoRepository.save(emprestimo);
 
-        return emprestimoRepository.save(emprestimo);
+        parcelaService.gerarParcelas(savedEmprestimo);
+
+        return savedEmprestimo;
     }
 
     @Override
-    public Emprestimo rejeitarSolicitacao(long agiotaId, long emprestimoId)
+    public Emprestimo rejeitarSolicitacao(long agiotaId, long emprestimoId, RejeitarEmprestimoDTO rejeitarEmprestimoDTO)
     {
         agiotaService.buscarAgiota(agiotaId);
         Emprestimo emprestimo = buscarEmprestimo(emprestimoId);
 
         emprestimo.checarRejeicao();
 
-        emprestimo.setStatus(StatusEmprestimo.REJEITADO);
+        rejeitarEmprestimoDTO.rejeitar(emprestimo);
 
         return emprestimoRepository.save(emprestimo);
     }

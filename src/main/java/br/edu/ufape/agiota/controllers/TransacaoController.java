@@ -2,7 +2,6 @@ package br.edu.ufape.agiota.controllers;
 
 import br.edu.ufape.agiota.dtos.TransacaoDTO;
 import br.edu.ufape.agiota.fachada.Fachada;
-import br.edu.ufape.agiota.fachada.exceptions.RegistroJaExistenteException;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
 import br.edu.ufape.agiota.negocio.basica.Transacao;
 import jakarta.validation.Valid;
@@ -20,6 +19,12 @@ public class TransacaoController {
     @Autowired
     private Fachada fachada;
 
+    @PostMapping
+    public ResponseEntity<?> criarTransacao(@RequestBody @Valid TransacaoDTO transacaoDTO) {
+        Transacao transacao = fachada.criarTransacao(transacaoDTO);
+        return ResponseEntity.ok().body(transacao);
+    }
+
     @GetMapping("/emprestimo/{emprestimoId}")
     public ResponseEntity<?> listarTransacoesPorEmprestimo(@PathVariable long emprestimoId) {
         try {
@@ -33,13 +38,13 @@ public class TransacaoController {
     @GetMapping("/{id}")
     public ResponseEntity<?> buscarTransacao(@PathVariable long id) {
         try {
-            Transacao Transacao = fachada.buscarTransacao(id);
-            return ResponseEntity.ok().body(buscarTransacao(id));
+            Transacao transacao = fachada.buscarTransacao(id);
+            return ResponseEntity.ok().body(transacao);
         } catch (RegistroNaoEncontradoException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-    
+
     @GetMapping("/parcela/{parcelaId}")
     public ResponseEntity<?> buscarTransacoesPorParcela(@PathVariable long parcelaId) {
         try {
@@ -50,13 +55,4 @@ public class TransacaoController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<?> criarTransacao(@RequestBody @Valid TransacaoDTO transacaoDTO) {
-        try {
-            Transacao transacao = fachada.criarTransacao(transacaoDTO);
-            return ResponseEntity.ok().body(transacao);
-        } catch (RegistroJaExistenteException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-    }
 }

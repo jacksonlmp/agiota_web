@@ -10,13 +10,7 @@ import br.edu.ufape.agiota.dtos.TransacaoDTO;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroJaExistenteException;
 import br.edu.ufape.agiota.fachada.exceptions.SenhaNulaException;
-import br.edu.ufape.agiota.negocio.basica.Agiota;
-import br.edu.ufape.agiota.negocio.basica.Avaliacao;
-import br.edu.ufape.agiota.negocio.basica.Cliente;
-import br.edu.ufape.agiota.negocio.basica.Emprestimo;
-import br.edu.ufape.agiota.negocio.basica.Lembrete;
-import br.edu.ufape.agiota.negocio.basica.Parcela;
-import br.edu.ufape.agiota.negocio.basica.Transacao;
+import br.edu.ufape.agiota.negocio.basica.*;
 import br.edu.ufape.agiota.negocio.services.interfaces.AgiotaServiceInterface;
 import br.edu.ufape.agiota.negocio.services.interfaces.AvaliacaoServiceInterface;
 import br.edu.ufape.agiota.negocio.services.interfaces.ClienteServiceInterface;
@@ -83,8 +77,8 @@ public class Fachada {
         return agiotaService.atualizarAgiota(agiotaDTO, id);
     }
 
-    public Avaliacao avaliarUsuario(AvaliacaoDTO avaliacaoDTO) {
-        return avaliacaoService.avaliarUsuario(avaliacaoDTO);
+    public Avaliacao avaliarUsuario(AvaliacaoDTO avaliacaoDTO, Usuario avaliador) {
+        return avaliacaoService.avaliarUsuario(avaliacaoDTO, avaliador);
     }
 
     public List<Avaliacao> buscarAvaliacoesDoUsuario(long idUsuario) {
@@ -116,25 +110,25 @@ public class Fachada {
         return emprestimoService.buscarEmprestimoAgiota(idEmprestimo, agiotaId);
     }
 
-    public Emprestimo aprovarSolicitacao(long agiotaId, long emprestimoId, AprovarEmprestimoDTO aprovarEmprestimoDTO)
+    public Emprestimo aprovarSolicitacao(long agiotaId, long emprestimoId)
     {
-        return emprestimoService.aprovarSolicitacao(agiotaId, emprestimoId, aprovarEmprestimoDTO);
+        return emprestimoService.aprovarSolicitacao(agiotaId, emprestimoId);
     }
 
-    public Emprestimo rejeitarSolicitacao(long agiotaId, long emprestimoId)
+    public Emprestimo rejeitarSolicitacao(long agiotaId, long emprestimoId, RejeitarEmprestimoDTO rejeitarEmprestimoDTO)
     {
-        return emprestimoService.rejeitarSolicitacao(agiotaId, emprestimoId);
+        return emprestimoService.rejeitarSolicitacao(agiotaId, emprestimoId, rejeitarEmprestimoDTO);
     }
 
-    public Lembrete buscarLembrete(long id) throws RegistroNaoEncontradoException {
-        return lembreteService.buscarLembrete(id);
+    public Lembrete buscarLembreteAgiota(long id, long idAgiota) throws RegistroNaoEncontradoException {
+        return lembreteService.buscarLembreteAgiota(id, idAgiota);
     }
 
     public List<Lembrete> listarLembretesPorAgiotaId(long agiotaId) {
         return lembreteService.listarLembretesPorAgiotaId(agiotaId);
     }
 
-    public Lembrete criarLembrete(LembreteDTO lembreteDTO) throws RegistroJaExistenteException {
+    public Lembrete criarLembrete(LembreteDTO lembreteDTO) throws RegistroNaoEncontradoException {
         return lembreteService.criarLembrete(lembreteDTO);
     }
 

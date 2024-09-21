@@ -1,13 +1,13 @@
 package br.edu.ufape.agiota.dtos;
 
+import br.edu.ufape.agiota.negocio.basica.Parcela;
+import br.edu.ufape.agiota.negocio.basica.Transacao;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
-
-import br.edu.ufape.agiota.negocio.basica.Parcela;
-import br.edu.ufape.agiota.negocio.basica.Transacao;
 
 @Data
 public class TransacaoDTO {
@@ -16,22 +16,16 @@ public class TransacaoDTO {
     private Long parcelaId;
 
     @NotNull
+    @Positive
     private BigDecimal valor;
 
     @NotNull
     private String metodoPagamento;
 
-    @NotNull
-    private Date dataTransacao;
-    
-    private Date data;
-    private Parcela parcela;
-
     public void criarTransacao(Transacao transacao, Parcela parcela) {
         transacao.setData(new Date());
         transacao.setValor(getValor());
         transacao.setMetodoPagamento(getMetodoPagamento());
-        transacao.setDataTransacao(getDataTransacao());
         transacao.setParcela(parcela);
     }
 }

@@ -10,7 +10,7 @@ import br.edu.ufape.agiota.negocio.basica.Lembrete;
 public interface LembreteServiceInterface {
     List<Lembrete> listarLembretesPorAgiotaId(long agiotaId);
 
-    Lembrete buscarLembrete(long id) throws RegistroNaoEncontradoException;
+    Lembrete buscarLembreteAgiota(long id, long idAgiota) throws RegistroNaoEncontradoException;
 
-    Lembrete criarLembrete(LembreteDTO lembreteDTO) throws RegistroJaExistenteException;
+    Lembrete criarLembrete(LembreteDTO lembreteDTO) throws RegistroNaoEncontradoException;
 }

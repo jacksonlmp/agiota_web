@@ -14,8 +14,18 @@ public class Parcela {
     private long id;
 
     private Date dataVencimento;
-    private BigDecimal valorVencimento;
-    
+    private BigDecimal valor;
+
     @ManyToOne
     private Emprestimo emprestimo;
+
+    public Parcela() {
+
+    }
+    public Parcela(Date dataVencimento, BigDecimal valor, Emprestimo emprestimo) {
+        this.dataVencimento = dataVencimento;
+        this.valor = valor;
+        this.emprestimo = emprestimo;
+    }
+
 }

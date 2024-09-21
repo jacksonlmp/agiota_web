@@ -18,11 +18,12 @@ public class Emprestimo {
 
     private Date dataEmprestimo;
     private BigDecimal valorEmprestimo;
-    private Date dataDeVencimento;
+    private Date dataDeVencimentoInicial;
     private String garantia;
     private int quantidadeParcelas;
-    private double periodoParcelas;
+    private int periodoParcelas;
     private double taxaJuros;
+    private String motivoRecusa;
 
     @Enumerated(EnumType.STRING)
     private StatusEmprestimo status;

@@ -32,11 +32,12 @@ public class SecurityConfigurations {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
-//                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                .authorizeHttpRequests(req -> {
-//                    req.requestMatchers(HttpMethod.POST, "/login", "/clientes", "/agiotas").permitAll();
-//                    req.anyRequest().authenticated();
-//                })
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(req -> {
+                    req.requestMatchers("/public/**").permitAll();
+                    req.requestMatchers(HttpMethod.POST, "/login", "/clientes", "/agiotas").permitAll();
+                    req.anyRequest().authenticated();
+                })
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
