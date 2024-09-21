@@ -4,7 +4,10 @@ import br.edu.ufape.agiota.negocio.basica.Agiota;
 import br.edu.ufape.agiota.negocio.basica.Cliente;
 import br.edu.ufape.agiota.negocio.basica.Emprestimo;
 import br.edu.ufape.agiota.negocio.basica.enums.StatusEmprestimo;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -41,6 +44,10 @@ public class EmprestimoClienteDTO {
     public void toSolicitarEmprestimo(Emprestimo emprestimo, Cliente cliente, Agiota agiota) {
         emprestimo.setValorEmprestimo(getValorEmprestimo());
         emprestimo.setGarantia(getGarantia());
+        emprestimo.setDataEmprestimo(getDataEmprestimo());
+        emprestimo.setDataDeVencimentoInicial(getDataDeVencimentoInicial());
+        emprestimo.setQuantidadeParcelas(getQuantidadeParcelas());
+        emprestimo.setPeriodoParcelas(getPeriodoParcelas());
         emprestimo.setStatus(StatusEmprestimo.AGUARDANDO_APROVACAO);
         emprestimo.setCliente(cliente);
         emprestimo.setAgiota(agiota);

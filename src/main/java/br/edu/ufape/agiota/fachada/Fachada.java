@@ -110,14 +110,14 @@ public class Fachada {
         return emprestimoService.buscarEmprestimoAgiota(idEmprestimo, agiotaId);
     }
 
-    public Emprestimo aprovarSolicitacao(long agiotaId, long emprestimoId, AprovarEmprestimoDTO aprovarEmprestimoDTO)
+    public Emprestimo aprovarSolicitacao(long agiotaId, long emprestimoId)
     {
-        return emprestimoService.aprovarSolicitacao(agiotaId, emprestimoId, aprovarEmprestimoDTO);
+        return emprestimoService.aprovarSolicitacao(agiotaId, emprestimoId);
     }
 
-    public Emprestimo rejeitarSolicitacao(long agiotaId, long emprestimoId)
+    public Emprestimo rejeitarSolicitacao(long agiotaId, long emprestimoId, RejeitarEmprestimoDTO rejeitarEmprestimoDTO)
     {
-        return emprestimoService.rejeitarSolicitacao(agiotaId, emprestimoId);
+        return emprestimoService.rejeitarSolicitacao(agiotaId, emprestimoId, rejeitarEmprestimoDTO);
     }
 
     public Lembrete buscarLembreteAgiota(long id, long idAgiota) throws RegistroNaoEncontradoException {

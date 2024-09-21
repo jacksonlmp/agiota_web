@@ -23,6 +23,7 @@ public class Emprestimo {
     private int quantidadeParcelas;
     private int periodoParcelas;
     private double taxaJuros;
+    private String motivoRecusa;
 
     @Enumerated(EnumType.STRING)
     private StatusEmprestimo status;
