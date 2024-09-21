@@ -24,13 +24,17 @@ public class ParcelaService implements ParcelaServiceInterface {
     @Autowired
     private GeradorDeDatas geradorDeDatas;
 
+    public Parcela salvar(Parcela parcela) {
+        return parcelaRepository.save(parcela);
+    }
+
     @Override
     public List<Parcela> listarParcelasPorEmprestimo(long emprestimoId) {
         return parcelaRepository.findByEmprestimoId(emprestimoId);
     }
 
     @Override
-    public Parcela buscarParcela(long id) {
+    public Parcela buscarParcela(long id) throws RegistroNaoEncontradoException {
         Optional<Parcela> parcelaOpt = parcelaRepository.findById(id);
         if (parcelaOpt.isPresent()) {
             return parcelaOpt.get();
