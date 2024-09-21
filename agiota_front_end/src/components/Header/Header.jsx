@@ -24,7 +24,7 @@ const Header = () => {
                 </a>
                 <div className="flex space-x-4 md:space-x-8 relative">
                     <a
-                        href="/Emprestimos"
+                        href="/app/emprestimos"
                         className="flex items-center space-x-2 text-white hover:text-blue-400 transition-colors duration-300"
                         aria-current="page"
                     >
