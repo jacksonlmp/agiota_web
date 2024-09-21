@@ -5,7 +5,7 @@ import App from './App';
 import Login from './components/login/FormularioLogin';
 import Cadastro from './components/cadastro/Cadastro';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Emprestimos from "./pages/Emprestimos";
+import EmprestimosCliente from "./pages/EmprestimosCliente";
 import Agiotas from "./pages/Agiotas";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -26,7 +26,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "emprestimos",
-                element: <Emprestimos />
+                element: <EmprestimosCliente />
             },
             {
                 path: "agiotas",
