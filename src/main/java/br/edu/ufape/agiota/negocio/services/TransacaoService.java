@@ -1,6 +1,7 @@
 package br.edu.ufape.agiota.negocio.services;
 
 import br.edu.ufape.agiota.dtos.TransacaoDTO;
+import br.edu.ufape.agiota.fachada.exceptions.OperacaoInvalidaException;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
 import br.edu.ufape.agiota.negocio.basica.Parcela;
 import br.edu.ufape.agiota.negocio.basica.Transacao;
@@ -42,6 +43,9 @@ public class TransacaoService implements TransacaoServiceInterface {
     @Override
     public Transacao criarTransacao(TransacaoDTO transacaoDTO) {
         Parcela parcela = parcelaService.buscarParcela(transacaoDTO.getParcelaId());
+
+        if(transacaoDTO.getValor().compareTo(parcela.getValor()) > 0)
+            throw new OperacaoInvalidaException("Valor a ser pago não pode ser maior que valor da parcela");
 
         Transacao transacao = new Transacao();
         transacaoDTO.criarTransacao(transacao, parcela);
