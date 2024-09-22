@@ -14,7 +14,7 @@ import java.util.Map;
 public class TratadorDeExcecoes {
 
     @ExceptionHandler(OperacaoNaoPermitidaException.class)
-    protected ResponseEntity<Object> tratarExcecaoRegistroDuplicado(OperacaoNaoPermitidaException ex) {
+    protected ResponseEntity<Object> tratarExcecaoOperacaoNaoPermitida(OperacaoNaoPermitidaException ex) {
         Map<String, String> resposta = new HashMap<>();
         resposta.put("tipo", "OperacaoNaoPermitida");
         resposta.put("mensagem", ex.getMessage());
