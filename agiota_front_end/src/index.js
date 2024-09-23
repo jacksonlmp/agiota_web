@@ -8,6 +8,7 @@ import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 import ListagemEmprestimosCliente from "./pages/emprestimoCliente/listagemEmprestimosCliente";
 import ListagemEmprestimoAgiota from "./pages/emprestimoAgiota/listagemEmprestimoAgiota";
 import Agiotas from "./pages/agiota/listagemAgiotas";
+import Clientes from "./pages/cliente/listagemClientes";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
             {
                 path: "agiotas",
                 element: <Agiotas />
+            },
+            {
+                path: "clientes",
+                element: <Clientes />
             }
         ]
     }
