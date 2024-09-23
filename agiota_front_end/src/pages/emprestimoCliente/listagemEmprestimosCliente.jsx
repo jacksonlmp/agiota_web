@@ -9,16 +9,21 @@ function ListagemEmprestimosCliente() {
         { field: 'garantia', headerName: 'Garantia', width: 130 },
         { field: 'valorEmprestimo', headerName: 'Valor do Empréstimo', width: 200 },
         { field: 'agiotaId', headerName: 'ID Agiota', width: 80 },
-        { field: 'dataEmprestimo', headerName: 'Data de Empréstimo', width: 160 },
-        { field: 'dataDeVencimentoInicial', headerName: 'Data de Vencimento', width: 160 },
-        { field: 'quantidadeParcelas', headerName: 'Qntd Parcelas', width: 110 },
+        { field: 'dataEmprestimo', headerName: 'Data de Empréstimo', width: 250 },
+        { field: 'dataDeVencimentoInicial', headerName: 'Data de Vencimento', width: 250 },
+        { field: 'quantidadeParcelas', headerName: 'Nº Parcelas', width: 110 },
         { field: 'periodoParcelas', headerName: 'Periodo', width: 80 },
     ];
 
     useEffect(() => {
         const fetchEmprestimos = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/cliente/emprestimos');
+                const user = JSON.parse(localStorage.getItem('@Auth:user'));
+                const response = await axios.get('http://localhost:8080/cliente/emprestimos', {
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`
+                      }
+                });
                 setEmprestimos(response.data);
             } catch (error) {
                 console.error('Erro ao buscar Empréstimos:', error);
