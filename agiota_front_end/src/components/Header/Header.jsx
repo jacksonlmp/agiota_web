@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { FiUser, FiDollarSign  } from 'react-icons/fi';
-import { CiBoxList } from "react-icons/ci";
+import { FiUser, FiDollarSign } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
@@ -8,13 +7,19 @@ const Header = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const handleLogout = () => {
+        localStorage.removeItem('@Auth:user'); 
         localStorage.removeItem('isAuthenticated');
-        window.location.reload();
+        navigate('/app/login');
     };
 
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
+
+    const user = JSON.parse(localStorage.getItem('@Auth:user'));
+
+    const nome = user?.nome || 'Usuário Desconhecido';
+    const email = user?.email || 'email@desconhecido.com';
 
     return (
         <header className="bg-[#141414] text-white shadow-md w-full relative">
@@ -28,41 +33,40 @@ const Header = () => {
                         className="flex items-center space-x-2 text-white hover:text-blue-400 transition-colors duration-300"
                         aria-current="page"
                     >
-                        <FiDollarSign className="text-lg"/>
+                        <FiDollarSign className="text-lg" />
                         <span>Empréstimos</span>
                     </a>
 
                     <button
                         id="dropdownInformationButton"
-                        onClick={toggleDropdown} // Toggle dropdown visibility
+                        onClick={toggleDropdown}
                         className="text-white hover:text-blue-400 font-medium text-sm px-5 py-2.5 text-center inline-flex items-center"
                         type="button"
                     >
-                        <FiUser className="text-lg"/>
+                        <FiUser className="text-lg" />
                         <span className="ml-3">Perfil</span>
                     </button>
-
 
                     <div
                         id="dropdownInformation"
                         className={`${isDropdownOpen ? 'block' : 'hidden'} absolute right-0 mt-2 z-50 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600`}
-                        style={{top: '100%'}} // Garante que o dropdown apareça abaixo do botão
+                        style={{ top: '100%' }}
                     >
                         <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
-                            <div>Bonnie Green</div>
-                            <div className="font-medium truncate">name@flowbite.com</div>
+                            <div>{nome}</div>
+                            <div className="font-medium truncate">{email}</div>
                         </div>
                         <ul className="py-2 text-sm text-gray-700 dark:text-gray-200"
                             aria-labelledby="dropdownInformationButton">
                             <li>
                                 <a href="#"
-                                   className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                     Dashboard
                                 </a>
                             </li>
                             <li>
                                 <a href="#"
-                                   className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                     Notificações
                                 </a>
                             </li>
