@@ -17,9 +17,6 @@ public class AvaliacaoDTO {
     private String descricao;
 
     @NotNull
-    private int idAvaliador;
-
-    @NotNull
     private int idAvaliado;
 
     public void toAvaliacao(Avaliacao avaliacao, Usuario avaliador, Usuario avaliado) {

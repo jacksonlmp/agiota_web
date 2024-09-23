@@ -23,9 +23,8 @@ public class AvaliacaoService implements AvaliacaoServiceInterface {
     @Autowired
     private AvaliacaoRepository avaliacaoRepository;
 
-    public Avaliacao avaliarUsuario(AvaliacaoDTO avaliacaoDTO) throws RegistroNaoEncontradoException {
-        Usuario avaliador = usuarioService.buscarUsuarioPorId(avaliacaoDTO.getIdAvaliador());
-        Usuario avaliado = usuarioService.buscarUsuarioPorId(avaliacaoDTO.getIdAvaliador());
+    public Avaliacao avaliarUsuario(AvaliacaoDTO avaliacaoDTO, Usuario avaliador) throws RegistroNaoEncontradoException {
+        Usuario avaliado = usuarioService.buscarUsuarioPorId(avaliacaoDTO.getIdAvaliado());
 
         Avaliacao avaliacao = new Avaliacao();
         avaliacaoDTO.toAvaliacao(avaliacao, avaliador, avaliado);

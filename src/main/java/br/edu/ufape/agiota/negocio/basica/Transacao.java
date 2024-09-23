@@ -15,8 +15,7 @@ public class Transacao {
     private Date data;
     private BigDecimal valor;
     private String metodoPagamento;
-    private Date dataTransacao;
-    
+
     @ManyToOne
     private Parcela parcela;
 }

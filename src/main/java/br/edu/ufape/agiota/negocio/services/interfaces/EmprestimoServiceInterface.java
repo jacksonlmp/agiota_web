@@ -1,7 +1,7 @@
 package br.edu.ufape.agiota.negocio.services.interfaces;
 
-import br.edu.ufape.agiota.dtos.AprovarEmprestimoDTO;
 import br.edu.ufape.agiota.dtos.EmprestimoClienteDTO;
+import br.edu.ufape.agiota.dtos.RejeitarEmprestimoDTO;
 import br.edu.ufape.agiota.negocio.basica.Emprestimo;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public interface EmprestimoServiceInterface {
 
     Emprestimo buscarEmprestimoAgiota(long id, long agiotaId);
 
-    Emprestimo aprovarSolicitacao(long agiotaId, long emprestimoId, AprovarEmprestimoDTO aprovarEmprestimoDTO);
+    Emprestimo aprovarSolicitacao(long agiotaId, long emprestimoId);
 
-    Emprestimo rejeitarSolicitacao(long agiotaId, long emprestimoId);
+    Emprestimo rejeitarSolicitacao(long agiotaId, long emprestimoId, RejeitarEmprestimoDTO rejeitarEmprestimoDTO);
 }

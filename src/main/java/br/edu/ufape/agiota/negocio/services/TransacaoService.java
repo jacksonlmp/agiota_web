@@ -2,15 +2,14 @@ package br.edu.ufape.agiota.negocio.services;
 
 import br.edu.ufape.agiota.dtos.TransacaoDTO;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
-import br.edu.ufape.agiota.negocio.basica.Transacao;
 import br.edu.ufape.agiota.negocio.basica.Parcela;
+import br.edu.ufape.agiota.negocio.basica.Transacao;
 import br.edu.ufape.agiota.negocio.repositorios.TransacaoRepository;
-import br.edu.ufape.agiota.negocio.repositorios.ParcelaRepository;
 import br.edu.ufape.agiota.negocio.services.interfaces.TransacaoServiceInterface;
-import br.edu.ufape.agiota.fachada.exceptions.RegistroJaExistenteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,15 +20,15 @@ public class TransacaoService implements TransacaoServiceInterface {
     private TransacaoRepository transacaoRepository;
 
     @Autowired
-    private ParcelaRepository parcelaRepository;
+    private ParcelaService parcelaService;
 
     @Override
     public List<Transacao> listarTransacoesPorEmprestimo(long idEmprestimo) {
-        List<Parcela> parcelas = parcelaRepository.findByEmprestimoId(idEmprestimo);
+        List<Parcela> parcelas = parcelaService.listarParcelasPorEmprestimo(idEmprestimo);
         List<Transacao> transacoes = transacaoRepository.findByParcelaIn(parcelas);
         if (transacoes.isEmpty()) {
             throw new RegistroNaoEncontradoException("Não foram encontradas transações para o empréstimo com identificador " + idEmprestimo);
-        } 
+        }
         return transacoes;
     }
 
@@ -42,25 +41,27 @@ public class TransacaoService implements TransacaoServiceInterface {
 
     @Override
     public Transacao criarTransacao(TransacaoDTO transacaoDTO) {
-        Optional<Parcela> parcelaOpt = parcelaRepository.findById(transacaoDTO.getParcelaId());
-
-        if (parcelaOpt.isEmpty()) {
-            throw new RegistroNaoEncontradoException("Parcela com o identificador " + transacaoDTO.getParcelaId() + " não foi encontrada!");
-        }
+        Parcela parcela = parcelaService.buscarParcela(transacaoDTO.getParcelaId());
 
         Transacao transacao = new Transacao();
+        transacaoDTO.criarTransacao(transacao, parcela);
 
-        transacaoDTO.criarTransacao(transacao, parcelaOpt.get());
+        // Verificar se parcela está atrasada
+        abaterValorDaParcela(parcela, transacaoDTO.getValor());
 
         return transacaoRepository.save(transacao);
     }
 
-    @Override
-    public List<Transacao> buscarTransacoesPorParcela(long idParcela) throws RegistroNaoEncontradoException {
-        Optional<Parcela> parcelaOpt = parcelaRepository.findById(idParcela);
-        if (!parcelaOpt.isPresent()) {
-            throw new RegistroNaoEncontradoException("Parcela com o identificador " + idParcela + " não foi encontrada!");
-        }
-        return transacaoRepository.findByParcelaId(idParcela);
+    public void abaterValorDaParcela(Parcela parcela, BigDecimal valor) {
+        BigDecimal dividaAtual = (parcela.getValor()).subtract(valor);
+        parcela.setValor(dividaAtual);
+        parcelaService.salvar(parcela);
     }
+
+    @Override
+    public List<Transacao> buscarTransacoesPorParcela(long idParcela) {
+        Parcela parcela = parcelaService.buscarParcela(idParcela);
+        return transacaoRepository.findByParcelaId(parcela.getId());
+    }
+
 }
