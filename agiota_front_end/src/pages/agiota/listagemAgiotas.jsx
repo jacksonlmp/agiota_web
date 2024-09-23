@@ -18,16 +18,21 @@ function AgiotaList() {
 
   useEffect(() => {
     const fetchAgiotas = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/agiotas');
-        setAgiotas(response.data);
-      } catch (error) {
-        console.error('Erro ao buscar agiotas:', error);
-      }
+        const user = JSON.parse(localStorage.getItem('@Auth:user'));
+          try {
+            const response = await axios.get('http://localhost:8080/agiotas', {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            });
+            setAgiotas(response.data);
+        } catch (error) {
+            console.error('Erro ao buscar agiotas:', error.response ? error.response.data : error.message);
+        }
     };
 
     fetchAgiotas();
-  }, []);
+}, []);
 
   return (
       <div style={{ height: "auto", width: '100%' }}>
