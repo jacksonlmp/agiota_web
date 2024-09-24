@@ -42,7 +42,6 @@ public class ParcelaService implements ParcelaServiceInterface {
         throw new RegistroNaoEncontradoException("Parcela com o identificador " + id + " não foi encontrada!");
     }
 
-    @Override
     public void gerarParcelas(Emprestimo emprestimo) {
         Date vencimento = emprestimo.getDataDeVencimentoInicial();
 
@@ -60,6 +59,11 @@ public class ParcelaService implements ParcelaServiceInterface {
             parcelaRepository.save(new Parcela(vencimento, valorComJuros, emprestimo));
             vencimento = geradorDeDatas.getDataMaisNDias(vencimento, periodoParcelas);
         }
+    }
+
+    public void abaterValorDaParcela(Parcela parcela, BigDecimal valor) {
+        BigDecimal dividaAtual = (parcela.getValor()).subtract(valor);
+        parcela.setValor(dividaAtual);
     }
 
 }
