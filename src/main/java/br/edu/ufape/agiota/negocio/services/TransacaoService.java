@@ -10,7 +10,6 @@ import br.edu.ufape.agiota.negocio.services.interfaces.TransacaoServiceInterface
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,22 +43,17 @@ public class TransacaoService implements TransacaoServiceInterface {
     public Transacao criarTransacao(TransacaoDTO transacaoDTO) {
         Parcela parcela = parcelaService.buscarParcela(transacaoDTO.getParcelaId());
 
-        if(transacaoDTO.getValor().compareTo(parcela.getValor()) > 0)
+        if (transacaoDTO.getValor().compareTo(parcela.getValor()) > 0)
             throw new OperacaoInvalidaException("Valor a ser pago não pode ser maior que valor da parcela");
 
         Transacao transacao = new Transacao();
         transacaoDTO.criarTransacao(transacao, parcela);
 
         // Verificar se parcela está atrasada
-        abaterValorDaParcela(parcela, transacaoDTO.getValor());
+        parcelaService.abaterValorDaParcela(parcela, transacaoDTO.getValor());
+        parcelaService.salvar(parcela);
 
         return transacaoRepository.save(transacao);
-    }
-
-    public void abaterValorDaParcela(Parcela parcela, BigDecimal valor) {
-        BigDecimal dividaAtual = (parcela.getValor()).subtract(valor);
-        parcela.setValor(dividaAtual);
-        parcelaService.salvar(parcela);
     }
 
     @Override
