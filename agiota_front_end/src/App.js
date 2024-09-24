@@ -10,7 +10,6 @@ function App() {
         () => localStorage.getItem('isAuthenticated') === 'true'
     );
     const [isRegistering, setIsRegistering] = useState(false);
-    const [userType, setUserType] = useState('cliente');
     const navigate = useNavigate();
 
     const handleLogin = async (email, senha) => {
@@ -18,6 +17,7 @@ function App() {
             await onLogin(email, senha);
             setIsAuthenticated(true);
             localStorage.setItem('isAuthenticated', 'true');
+            window.location.reload();
             navigate('/');
         } catch (error) {
             alert('E-mail ou senha incorretos.');

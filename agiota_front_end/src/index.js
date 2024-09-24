@@ -5,8 +5,7 @@ import App from './App';
 import Login from './components/login/FormularioLogin';
 import Cadastro from './components/cadastro/Cadastro';
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
-import ListagemEmprestimosCliente from "./pages/emprestimoCliente/listagemEmprestimosCliente";
-import ListagemEmprestimoAgiota from "./pages/emprestimoAgiota/listagemEmprestimoAgiota";
+import ListagemEmprestimos from "./pages/emprestimoCliente/listagemEmprestimos";
 import Agiotas from "./pages/agiota/listagemAgiotas";
 import Clientes from "./pages/cliente/listagemClientes";
 import CadastroCliente from "./pages/cliente/cadastroCliente";
@@ -14,10 +13,6 @@ import CadastroCliente from "./pages/cliente/cadastroCliente";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <Navigate to="/app/login" replace />
-    },
     {
         path: "/app",
         element: <App />,
@@ -32,12 +27,8 @@ const router = createBrowserRouter([
                 element: <Cadastro />
             },
             {
-                path: "emprestimos-cliente",
-                element: <ListagemEmprestimosCliente />
-            },
-            {
-                path: "emprestimos-agiota",
-                element: <ListagemEmprestimoAgiota />
+                path: "/app",
+                element: <ListagemEmprestimos />
             },
             {
                 path: "agiotas",
