@@ -132,8 +132,8 @@ public class Fachada {
         return lembreteService.criarLembrete(lembreteDTO);
     }
 
-    public Parcela buscarParcela(long id) throws RegistroNaoEncontradoException {
-        return parcelasService.buscarParcela(id);
+    public Parcela buscarParcela(long idParcela, long idUsuario) throws RegistroNaoEncontradoException {
+        return parcelasService.buscarParcela(idParcela, idUsuario);
     }
 
     public List<Parcela> listarParcelasPorEmprestimo(long emprestimoId) {

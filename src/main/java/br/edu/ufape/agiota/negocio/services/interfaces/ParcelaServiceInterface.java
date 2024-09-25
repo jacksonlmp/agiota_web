@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface ParcelaServiceInterface {
     List<Parcela> listarParcelasPorEmprestimo(long emprestimoId);
-    Parcela buscarParcela(long id);
+    Parcela buscarParcela(long idParcela, long idUsuario);
     void gerarParcelas(Emprestimo emprestimo);
 }

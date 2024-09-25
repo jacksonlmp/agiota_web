@@ -13,7 +13,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+
+import static java.util.Objects.nonNull;
 
 @Service
 public class ParcelaService implements ParcelaServiceInterface {
@@ -34,12 +35,12 @@ public class ParcelaService implements ParcelaServiceInterface {
     }
 
     @Override
-    public Parcela buscarParcela(long id) throws RegistroNaoEncontradoException {
-        Optional<Parcela> parcelaOpt = parcelaRepository.findById(id);
-        if (parcelaOpt.isPresent()) {
-            return parcelaOpt.get();
+    public Parcela buscarParcela(long idParcela, long idUsuario) throws RegistroNaoEncontradoException {
+        Parcela parcela = parcelaRepository.findByIdAndEmprestimoClienteId(idParcela, idUsuario);
+        if (nonNull(parcela)) {
+            return parcela;
         }
-        throw new RegistroNaoEncontradoException("Parcela com o identificador " + id + " não foi encontrada!");
+        throw new RegistroNaoEncontradoException("Parcela com o identificador " + idParcela + " não foi encontrada!");
     }
 
     public void gerarParcelas(Emprestimo emprestimo) {
