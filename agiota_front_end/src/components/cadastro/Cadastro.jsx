@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import UsuarioForm from './usuarioForm';
-import EnderecoForm from './enderecoForm'; 
-import RoleForm from './roleForm'; 
-import RoleSelection from './roleForm/selecaoRole';
+import UsuarioForm from './FormularioUsuario';
+import EnderecoForm from './FormularioEndereco';
+import RoleForm from './FormularioRole';
+import RoleSelection from '../../pages/RoleSelection';
 import { onCreateCliente } from '../../api/clientes';
 import { onCreateAgiota } from '../../api/agiotas';
 
