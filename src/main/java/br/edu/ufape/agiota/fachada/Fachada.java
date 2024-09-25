@@ -136,8 +136,8 @@ public class Fachada {
         return parcelasService.buscarParcela(idParcela, idUsuario);
     }
 
-    public List<Parcela> listarParcelasPorEmprestimo(long emprestimoId) {
-        return parcelasService.listarParcelasPorEmprestimo(emprestimoId);
+    public List<Parcela> listarParcelasPorEmprestimo(long idEmprestimo, long idUsuario) {
+        return parcelasService.listarParcelasPorEmprestimo(idEmprestimo, idUsuario);
     }
 
     public List<Transacao> buscarTransacoesPorParcela(long idParcela) throws RegistroNaoEncontradoException {

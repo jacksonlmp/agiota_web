@@ -30,8 +30,8 @@ public class ParcelaService implements ParcelaServiceInterface {
     }
 
     @Override
-    public List<Parcela> listarParcelasPorEmprestimo(long emprestimoId) {
-        return parcelaRepository.findByEmprestimoId(emprestimoId);
+    public List<Parcela> listarParcelasPorEmprestimo(long idEmprestimo, long idUsuario) {
+        return parcelaRepository.findByEmprestimoIdAndUsuarioId(idEmprestimo, idUsuario);
     }
 
     @Override

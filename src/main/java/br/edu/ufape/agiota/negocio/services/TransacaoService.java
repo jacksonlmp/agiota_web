@@ -28,7 +28,8 @@ public class TransacaoService implements TransacaoServiceInterface {
 
     @Override
     public List<Transacao> listarTransacoesPorEmprestimo(long idEmprestimo) {
-        List<Parcela> parcelas = parcelaService.listarParcelasPorEmprestimo(idEmprestimo);
+        Usuario usuarioLogado = (Usuario) applicationService.getUsuarioLogado();
+        List<Parcela> parcelas = parcelaService.listarParcelasPorEmprestimo(idEmprestimo, usuarioLogado.getId());
         List<Transacao> transacoes = transacaoRepository.findByParcelaIn(parcelas);
         if (transacoes.isEmpty()) {
             throw new RegistroNaoEncontradoException("Não foram encontradas transações para o empréstimo com identificador " + idEmprestimo);

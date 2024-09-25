@@ -5,7 +5,7 @@ import br.edu.ufape.agiota.negocio.basica.Parcela;
 import java.util.List;
 
 public interface ParcelaServiceInterface {
-    List<Parcela> listarParcelasPorEmprestimo(long emprestimoId);
+    List<Parcela> listarParcelasPorEmprestimo(long idEmprestimo, long idUsuario);
     Parcela buscarParcela(long idParcela, long idUsuario);
     void gerarParcelas(Emprestimo emprestimo);
 }

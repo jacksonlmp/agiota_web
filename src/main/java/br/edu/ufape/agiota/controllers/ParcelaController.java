@@ -27,7 +27,8 @@ public class ParcelaController {
 
     @GetMapping("/emprestimo/{emprestimoId}")
     public List<Parcela> listarParcelasPorEmprestimo(@PathVariable long emprestimoId) {
-        return fachada.listarParcelasPorEmprestimo(emprestimoId);
+        Usuario usuarioLogado = (Usuario) applicationService.getUsuarioLogado();
+        return fachada.listarParcelasPorEmprestimo(emprestimoId, usuarioLogado.getId());
     }
 
     @GetMapping("/{id}")
