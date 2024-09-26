@@ -4,6 +4,8 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useParams, useLocation } from 'react-router-dom';
 import { Button } from '@mui/material';
 import AvaliacaoModal from "./components/avaliacaoModal";
+import RejeitarModal from "../emprestimoCliente/components/rejeitarModal";
+import PagarParcelaModal from "./components/pagarParcelaModal";
 
 const ListagemParcelas = () => {
   const { emprestimoId } = useParams(); 
@@ -17,34 +19,64 @@ const ListagemParcelas = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [idAvaliado, setIdAvaliado] = useState(null);
+  const [isPagamentoModalOpen, setIsPagamentoModalOpen] = useState(false);
+  const [selectedRecord, setSelectedRecord] = useState(null);
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
     { field: 'dataVencimento', headerName: 'Data de Vencimento', width: 240 },
-    { field: 'valor', headerName: 'Valor', width: 130 }
+    { field: 'valor', headerName: 'Valor', width: 130 },
+    {
+      field: 'actions',
+      headerName: 'Ações',
+      width: 250,
+      renderCell: (params) => {
+        return (
+          <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
+            {params.row.valor > 0 && user.usuario.tipo === "Cliente" && (
+              <>
+                <Button
+                    variant="contained"
+                    color="success"
+                    size="small"
+                    onClick={() => {
+                      setSelectedRecord(params.row);
+                      setIsPagamentoModalOpen(true);
+                    }}
+                >
+                  Abater valor
+                </Button>
+              </>
+            )}
+          </div>
+        )
+      }
+    }
   ];
 
-  useEffect(() => {
-    const fetchParcelas = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/parcelas/emprestimo/${emprestimoId}`, {
-          headers: {
-            'Authorization': `Bearer ${user?.token}`
-          }
-        });
-
-        if (response.data.length > 0) {
-          setEmprestimoDetalhes(response.data[0].emprestimo);
+  const fetchParcelas = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/parcelas/emprestimo/${emprestimoId}`, {
+        headers: {
+          'Authorization': `Bearer ${user?.token}`
         }
+      });
 
-        setParcelas(response.data);
-      } catch (error) {
-        console.error('Erro ao buscar parcelas:', error.response ? error.response.data : error.message);
-      } finally {
-        setIsLoading(false);
+      if (response.data.length > 0) {
+        setEmprestimoDetalhes(response.data[0].emprestimo);
       }
-    };
 
+      console.log(typeof response.data[0].valor.className)
+
+      setParcelas(response.data);
+    } catch (error) {
+      console.error('Erro ao buscar parcelas:', error.response ? error.response.data : error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
     if (emprestimoId) {
       fetchParcelas();
     }
@@ -62,6 +94,7 @@ const ListagemParcelas = () => {
     }
     setIsModalOpen(true);
   };
+
 
   return (
     <div style={{ padding: '20px' }}>
@@ -87,13 +120,23 @@ const ListagemParcelas = () => {
         {isLoading ? (
           <p style={{ textAlign: 'center' }}>Carregando parcelas...</p>
         ) : parcelas.length > 0 ? (
-          <DataGrid
-            rows={parcelas}
-            columns={columns}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-            getRowId={(row) => row.id}
-          />
+            <>
+              <DataGrid
+                  rows={parcelas}
+                  columns={columns}
+                  pageSize={5}
+                  rowsPerPageOptions={[5]}
+                  getRowId={(row) => row.id}
+              />
+
+              <PagarParcelaModal
+                  isOpen={isPagamentoModalOpen}
+                  closeModal={() => setIsPagamentoModalOpen(false)}
+                  record={selectedRecord}
+                  user={user}
+                  refreshList={fetchParcelas}
+              />
+            </>
         ) : (
           <p style={{ textAlign: 'center', color: 'red', fontWeight: 'bold' }}>Não há parcelas a serem exibidas.</p>
         )}

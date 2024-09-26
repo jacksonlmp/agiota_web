@@ -16,3 +16,22 @@ export const onCreateCliente = async (requestData) => {
         throw error;
     }
 };
+
+export const pagarParcela = async (requestData, token) => {
+    try {
+        const response = await axios.post(
+            `http://localhost:8080/transacoes`,
+            requestData,
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                }
+            }
+        );
+
+        return response.data;
+    } catch (error) {
+        window.alert('Error: ' + error?.response?.data);
+    }
+}
