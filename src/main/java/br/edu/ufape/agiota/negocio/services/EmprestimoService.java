@@ -112,8 +112,6 @@ public class EmprestimoService implements EmprestimoServiceInterface {
         Agiota agiota = agiotaService.buscarAgiota(agiotaId);
         Emprestimo emprestimo = buscarEmprestimo(emprestimoId);
 
-        checarDataNoPassado.handle(emprestimo.getDataEmprestimo(), "A data do empréstimo não pode ser no passado.");
-
         emprestimo.checarAprocacao();
         emprestimo.setStatus(StatusEmprestimo.APROVADO);
 
