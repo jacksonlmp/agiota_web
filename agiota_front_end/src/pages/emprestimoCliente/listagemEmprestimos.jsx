@@ -66,7 +66,7 @@ function ListagemEmprestimos() {
                                     size="small"
                                     onClick={() => navigate(`/app/listar-parcelas/${params.row.id}`)}
                                 >
-                                    Ver Parcelas
+                                    Detalhes do Empréstimo
                                 </Button>
                             )}    
                 </div>
