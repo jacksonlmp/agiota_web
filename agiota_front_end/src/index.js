@@ -15,6 +15,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const router = createBrowserRouter([
     {
+        path: "/",
+        element: <Navigate to="/app" replace />
+    },
+    {
         path: "/app",
         element: <App />,
         errorElement: <div>Rota inexistente ou com problema!</div>,

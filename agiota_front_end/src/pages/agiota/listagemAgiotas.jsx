@@ -35,13 +35,17 @@ function AgiotaList() {
 }, []);
 
   return (
-      <div style={{ height: "auto", width: '100%' }}>
-        <DataGrid
-            rows={agiotas}
-            columns={columns}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-        />
+      <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}>
+          <div style={{height: 400, width: '80%'}}>
+              <div style={{height: "auto", width: '100%'}}>
+                  <DataGrid
+                      rows={agiotas}
+                      columns={columns}
+                      pageSize={5}
+                      rowsPerPageOptions={[5]}
+                  />
+              </div>
+          </div>
       </div>
   );
 }
