@@ -46,17 +46,13 @@ const ListagemParcelas = () => {
     return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor);
   };
 
-  const formatarData = (data) => {
-    return new Date(data).toLocaleDateString('pt-BR', { year: 'numeric', month: 'long', day: 'numeric' });
-  };
-
   return (
     <div style={{ padding: '20px' }}>
       {emprestimoDetalhes && (
         <div style={{ marginBottom: '20px', padding: '10px', border: '1px solid #ccc', borderRadius: '5px' }}>
           <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Detalhes do Empréstimo</h3>
           <p>ID: {emprestimoDetalhes.id}</p>
-          <p>Data do Empréstimo: {formatarData(emprestimoDetalhes.dataEmprestimo)}</p>
+          <p>Data do Empréstimo: {emprestimoDetalhes.dataEmprestimo}</p>
           <p>Valor do Empréstimo: {formatarValor(emprestimoDetalhes.valorEmprestimo)}</p>
           <p>Garantia: {emprestimoDetalhes.garantia}</p>
           <p>Status: {emprestimoDetalhes.status}</p>
