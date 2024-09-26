@@ -55,6 +55,7 @@ public class ClienteService implements ClienteServiceInterface {
         clienteDTO.toCliente(cliente, passwordEncoder.encode(clienteDTO.getSenha()));
 
         cliente.setEndereco(novoEndereco);
+        cliente.setReputacao(5.0);
 
         return clienteRepository.save(cliente);
     }
