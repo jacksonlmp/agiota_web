@@ -33,7 +33,7 @@ const ListagemParcelas = () => {
       renderCell: (params) => {
         return (
           <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
-            {params.row.valor > 0 && (
+            {params.row.valor > 0 && user.usuario.tipo === "Cliente" && (
               <>
                 <Button
                     variant="contained"
