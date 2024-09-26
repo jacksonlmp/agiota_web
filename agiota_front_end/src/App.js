@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
-import Header from './components/Header';
-import Login from './components/login';
-import Cadastro from './components/cadastro/cadastroForm';
+import Header from './components/Header/Header';
+import Login from './components/login/FormularioLogin';
+import Cadastro from './components/cadastro/Cadastro';
 import { onLogin } from './api/login';
 
 function App() {
@@ -10,7 +10,6 @@ function App() {
         () => localStorage.getItem('isAuthenticated') === 'true'
     );
     const [isRegistering, setIsRegistering] = useState(false);
-    const [userType, setUserType] = useState('cliente');
     const navigate = useNavigate();
 
     const handleLogin = async (email, senha) => {
@@ -18,6 +17,7 @@ function App() {
             await onLogin(email, senha);
             setIsAuthenticated(true);
             localStorage.setItem('isAuthenticated', 'true');
+            window.location.reload();
             navigate('/');
         } catch (error) {
             alert('E-mail ou senha incorretos.');

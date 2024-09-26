@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { FiMail, FiLock } from 'react-icons/fi';
-import { onLogin, goToRegister } from '../../api/login';
+import { useNavigate } from 'react-router-dom';
 
-const Login = ({ onLogin, goToRegister }) => {
+const Login = ({ onLogin }) => {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const navigate = useNavigate();
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -21,6 +22,10 @@ const Login = ({ onLogin, goToRegister }) => {
         } catch (error) {
             alert('Login falhou. E-mail ou senha incorretos.');
         }
+    };
+
+    const goToRegister = () => {
+        navigate('/app/cadastro');
     };
 
     return (
@@ -53,7 +58,6 @@ const Login = ({ onLogin, goToRegister }) => {
                     <div className="flex justify-center mb-6">
                         <button
                             type="submit"
-                            onClick={handleSubmit}
                             className="bg-gradient-to-r from-blue-400 to-green-500 hover:from-blue-500 hover:to-green-600 text-white font-semibold py-3 px-6 rounded-lg focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 w-full"
                         >
                             Entrar

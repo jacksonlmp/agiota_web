@@ -11,6 +11,7 @@ export const onLogin = async (email, senha) => {
 
         const user = response.data;
         if (user) {
+            localStorage.setItem('@Auth:user', JSON.stringify(user));
             return user;
         } else {
             throw new Error('E-mail ou senha incorretos.');

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FiUser, FiMail, FiLock, FiEye, FiEyeOff, FiPhone } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 
 const formatCPF = (cpf) => {
     cpf = cpf.replace(/\D/g, '');
@@ -22,6 +23,7 @@ const formatCPF = (cpf) => {
 const UsuarioForm = ({ userData, handleUserDataChange, handleNext }) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isPasswordTouched, setIsPasswordTouched] = useState(false);
+    const navigate = useNavigate();
 
     const togglePasswordVisibility = () => setIsPasswordVisible(!isPasswordVisible);
 
@@ -47,6 +49,10 @@ const UsuarioForm = ({ userData, handleUserDataChange, handleNext }) => {
 
     const isPasswordValid = userData.senha.length >= 6 || !isPasswordTouched;
     const isFormValid = userData.nome && userData.email && isPasswordValid && userData.telefone && userData.cpf;
+
+    const goToLogin = () => {
+        navigate('/app/login');
+    };
 
     return (
         <div className="bg-[#141414] rounded-2xl shadow-lg p-8 w-full max-w-md">
@@ -122,9 +128,13 @@ const UsuarioForm = ({ userData, handleUserDataChange, handleNext }) => {
                 </button>
             </div>
             <div className="text-center">
-                <a href="/login" className="text-[#b5b5b5] text-sm underline">
+                <button
+                    type="button"
+                    onClick={goToLogin}
+                    className="text-[#b5b5b5] text-sm underline"
+                >
                     Já possuo uma conta
-                </a>
+                </button>
             </div>
         </div>
     );
