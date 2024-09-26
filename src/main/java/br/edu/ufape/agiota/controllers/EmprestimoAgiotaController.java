@@ -1,5 +1,6 @@
 package br.edu.ufape.agiota.controllers;
 
+import br.edu.ufape.agiota.dtos.EmprestimoDTO;
 import br.edu.ufape.agiota.dtos.RejeitarEmprestimoDTO;
 import br.edu.ufape.agiota.fachada.Fachada;
 import br.edu.ufape.agiota.fachada.exceptions.OperacaoNaoPermitidaException;
@@ -26,7 +27,7 @@ public class EmprestimoAgiotaController {
 
     @GetMapping("/emprestimos")
     public ResponseEntity<?> listarEmprestimosAgiota() {
-        List<Emprestimo> result = fachada.listarEmprestimosAgiota(applicationService.getAgiotaLogado().getId());
+        List<EmprestimoDTO> result = fachada.listarEmprestimosAgiota(applicationService.getAgiotaLogado().getId());
         return ResponseEntity.ok().body(result);
     }
 
