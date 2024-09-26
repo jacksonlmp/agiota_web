@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
 import { useParams } from 'react-router-dom';
+import { Button } from '@mui/material';
+import AvaliacaoModal from "./components/avaliacaoModal"; // Importe o modal de avaliação
 
 const ListagemParcelas = () => {
   const { emprestimoId } = useParams(); 
@@ -9,6 +11,7 @@ const ListagemParcelas = () => {
   const [parcelas, setParcelas] = useState([]);
   const [emprestimoDetalhes, setEmprestimoDetalhes] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
@@ -56,6 +59,14 @@ const ListagemParcelas = () => {
           <p>Valor do Empréstimo: {formatarValor(emprestimoDetalhes.valorEmprestimo)}</p>
           <p>Garantia: {emprestimoDetalhes.garantia}</p>
           <p>Status: {emprestimoDetalhes.status}</p>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setIsModalOpen(true)}
+            style={{ marginTop: '10px' }}
+          >
+            Avaliar
+          </Button>
         </div>
       )}
       <div style={{ height: 400, width: '100%' }}>
@@ -73,6 +84,11 @@ const ListagemParcelas = () => {
           <p style={{ textAlign: 'center', color: 'red', fontWeight: 'bold' }}>Não há parcelas a serem exibidas.</p>
         )}
       </div>
+      <AvaliacaoModal
+        isOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
+        idAvaliado={emprestimoId}
+      />
     </div>
   );
 };
