@@ -1,6 +1,7 @@
 package br.edu.ufape.agiota.controllers;
 
 import br.edu.ufape.agiota.dtos.EmprestimoClienteDTO;
+import br.edu.ufape.agiota.dtos.EmprestimoDTO;
 import br.edu.ufape.agiota.fachada.Fachada;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
 import br.edu.ufape.agiota.negocio.basica.Emprestimo;
@@ -26,7 +27,7 @@ public class EmprestimoClienteController {
 
     @GetMapping("/emprestimos")
     public ResponseEntity<?> listarEmprestimosCliente() {
-        List<Emprestimo> result = fachada.listarEmprestimosCliente(applicationService.getClienteLogado().getId());
+        List<EmprestimoDTO> result = fachada.listarEmprestimosCliente(applicationService.getClienteLogado().getId());
 
         return ResponseEntity.ok().body(result);
     }
