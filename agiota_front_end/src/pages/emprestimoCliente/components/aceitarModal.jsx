@@ -1,10 +1,10 @@
 import React from 'react';
-import {aceitarEmprestido} from "../../../api/agiotas";
+import {aceitarEmprestimo} from "../../../api/agiotas";
 
 const AceitarModal = ({ isOpen, closeModal, record, user, refreshList }) => {
 
     const handleConfirm = async () => {
-        const result = await aceitarEmprestido(record.id, user?.token);
+        const result = await aceitarEmprestimo(record.id, user?.token);
         if (result) {
             window.alert("Empréstimo aceito com sucesso!")
         }

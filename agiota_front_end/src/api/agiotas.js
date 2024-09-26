@@ -17,7 +17,7 @@ export const onCreateAgiota = async (requestData) => {
     }
 };
 
-export const aceitarEmprestido = async (emprestimoId, token) => {
+export const aceitarEmprestimo = async (emprestimoId, token) => {
     try {
         const response = await axios.patch(
             `http://localhost:8080/agiota/emprestimos/${emprestimoId}/aprovar`,
@@ -32,11 +32,11 @@ export const aceitarEmprestido = async (emprestimoId, token) => {
 
         return response;
     } catch (error) {
-        window.alert('Erro ao buscar Empréstimos: ' + error?.response?.data);
+        window.alert('Erro ao buscar empréstimos: ' + error?.response?.data);
     }
 }
 
-export const rejeitarEmprestido = async (body, emprestimoId, token) => {
+export const rejeitarEmprestimo = async (body, emprestimoId, token) => {
     try {
         const response = await axios.patch(
             `http://localhost:8080/agiota/emprestimos/${emprestimoId}/rejeitar`,

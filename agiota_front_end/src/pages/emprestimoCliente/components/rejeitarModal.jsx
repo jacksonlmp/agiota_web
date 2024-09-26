@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {aceitarEmprestido, rejeitarEmprestido} from "../../../api/agiotas";
+import {rejeitarEmprestimo} from "../../../api/agiotas";
 
 const RejeitarModal = ({ isOpen, closeModal, record, user, refreshList }) => {
     const [motivo, setMotivo] = useState(null);
@@ -7,7 +7,7 @@ const RejeitarModal = ({ isOpen, closeModal, record, user, refreshList }) => {
     const handle = async (event) => {
         event.preventDefault();
 
-        const result = await rejeitarEmprestido({ motivoRecusa: motivo }, record.id, user?.token);
+        const result = await rejeitarEmprestimo({ motivoRecusa: motivo }, record.id, user?.token);
         if (result) {
             window.alert("Empréstimo rejeitado com sucesso!");
         }
