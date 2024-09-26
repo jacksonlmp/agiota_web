@@ -8,6 +8,7 @@ const ListagemParcelas = () => {
   const user = JSON.parse(localStorage.getItem('@Auth:user'));
   const [parcelas, setParcelas] = useState([]);
   const [emprestimoDetalhes, setEmprestimoDetalhes] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
@@ -31,6 +32,8 @@ const ListagemParcelas = () => {
         setParcelas(response.data);
       } catch (error) {
         console.error('Erro ao buscar parcelas:', error.response ? error.response.data : error.message);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -60,13 +63,19 @@ const ListagemParcelas = () => {
         </div>
       )}
       <div style={{ height: 400, width: '100%' }}>
-        <DataGrid
-          rows={parcelas}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          getRowId={(row) => row.id}
-        />
+        {isLoading ? (
+          <p style={{ textAlign: 'center' }}>Carregando parcelas...</p>
+        ) : parcelas.length > 0 ? (
+          <DataGrid
+            rows={parcelas}
+            columns={columns}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            getRowId={(row) => row.id}
+          />
+        ) : (
+          <p style={{ textAlign: 'center', color: 'red', fontWeight: 'bold' }}>Não há parcelas a serem exibidas.</p>
+        )}
       </div>
     </div>
   );
