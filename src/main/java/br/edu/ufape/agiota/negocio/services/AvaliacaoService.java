@@ -40,7 +40,7 @@ public class AvaliacaoService implements AvaliacaoServiceInterface {
 
     public Integer somarNotasDoAvaliado(long idUsuarioAvaliado) {
         Integer nota = avaliacaoRepository.somarNotasDoAvaliado(idUsuarioAvaliado);
-        return nonNull(nota) ? nota : 0;
+        return nonNull(nota) ? nota : 5;
     }
 
     public int contarQuantidadeDeAvaliacoes(long idUsuarioAvaliado) {
