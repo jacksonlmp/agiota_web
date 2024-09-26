@@ -34,7 +34,7 @@ const Header = () => {
                         aria-current="page"
                     >
                         <FiDollarSign className="text-lg" />
-                        <span>Emprestimos</span>
+                        <span>Empréstimos</span>
                     </a>
                     {user?.usuario?.tipo === "Cliente" && (
                         <>

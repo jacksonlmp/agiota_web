@@ -9,6 +9,7 @@ import ListagemEmprestimos from "./pages/emprestimoCliente/listagemEmprestimos";
 import Agiotas from "./pages/agiota/listagemAgiotas";
 import Clientes from "./pages/cliente/listagemClientes";
 import CadastroCliente from "./pages/cliente/cadastroCliente";
+import ListagemParcelas from "./pages/parcela/listagemParcela"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
             {
                 path: "cadastrar-cliente",
                 element: <CadastroCliente />
+            },
+            {
+                path: "listar-parcelas/:emprestimoId",
+                element: <ListagemParcelas />
             }
         ]
     }

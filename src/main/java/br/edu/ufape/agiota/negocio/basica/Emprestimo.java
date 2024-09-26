@@ -2,6 +2,7 @@ package br.edu.ufape.agiota.negocio.basica;
 
 import br.edu.ufape.agiota.fachada.exceptions.OperacaoNaoPermitidaException;
 import br.edu.ufape.agiota.negocio.basica.enums.StatusEmprestimo;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -16,8 +17,11 @@ public class Emprestimo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private Date dataEmprestimo;
     private BigDecimal valorEmprestimo;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private Date dataDeVencimentoInicial;
     private String garantia;
     private int quantidadeParcelas;
