@@ -16,33 +16,17 @@ function ListagemEmprestimos() {
         { field: 'dataEmprestimo', headerName: 'Data de Empréstimo', width: 250 },
         { field: 'dataDeVencimentoInicial', headerName: 'Data de Vencimento', width: 250 },
         { field: 'quantidadeParcelas', headerName: 'Nº Parcelas', width: 110 },
-        { field: 'periodoParcelas', headerName: 'Periodo', width: 80 },
+        { field: 'periodoParcelas', headerName: 'Período', width: 80 },
     ];
-
-    useEffect(() => {
-        const fetchEmprestimos = async () => {
-            try {
-                const response = await axios.get(`http://localhost:8080/${user.usuario.tipo.toLowerCase()}/emprestimos`, {
-                    headers: {
-                        'Authorization': `Bearer ${user.token}`
-                    }
-                });
-                setEmprestimos(response.data);
-            } catch (error) {
-                console.error('Erro ao buscar Empréstimos:', error);
-            }
-        };
-
-        fetchEmprestimos();
-    }, []);
 
     const handleCreateEmprestimo = () => {
         navigate("/app/solicitar-emprestimo");
     };
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%', padding: '20px' }}>
-            <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-start', marginBottom: '20px' }}>
+        <div className="flex flex-col items-center w-full p-4">
+            <div className="flex justify-between items-center w-full mb-4">
+                <h1 className="text-xl font-bold">Listagem de Empréstimos</h1>
                 <button
                     type="button"
                     className="bg-gradient-to-r from-blue-400 to-green-500 hover:from-blue-500 hover:to-green-600 text-white font-semibold py-3 px-6 rounded-lg focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50"
@@ -51,14 +35,14 @@ function ListagemEmprestimos() {
                     Criar Empréstimo
                 </button>
             </div>
-            <div style={{ height: "400px", width: '100%' }}>
+            <div className="h-[400px] w-full">
                 <DataGrid
                     rows={emprestimos}
                     columns={columns}
                     pageSize={5}
                     rowsPerPageOptions={[5]}
                     autoHeight 
-                    style={{ textAlign: 'center', width: '100%' }}
+                    className="bg-white shadow-md rounded-lg"
                 />
             </div>
         </div>

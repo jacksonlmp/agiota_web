@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FiUser, FiDollarSign } from 'react-icons/fi';
+import { FiUser } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
@@ -17,57 +17,51 @@ const Header = () => {
     };
 
     const user = JSON.parse(localStorage.getItem('@Auth:user'));
-
     const nome = user?.usuario?.nome || 'Usuário Desconhecido';
     const email = user?.usuario?.email || 'email@desconhecido.com';
 
     return (
-        <header className="bg-[#141414] text-white shadow-md w-full relative">
-            <nav className="max-w-screen-xl mx-auto flex items-center justify-between p-4 w-full">
+        <header className="bg-black text-white shadow-lg w-full relative">
+            <nav className="max-w-screen-xl mx-auto flex items-center justify-between p-4">
                 <a href="/app" className="flex items-center space-x-3">
-                    <span className="text-2xl font-bold">A.G.I.O.T.A</span>
+                    <span className="text-2xl font-bold hover:text-gray-400 transition-colors duration-300">A.G.I.O.T.A.</span>
                 </a>
                 <div className="flex space-x-4 md:space-x-8 relative">
                     <a
-                        href="/app"
-                        className="flex items-center space-x-2 text-white hover:text-blue-400 transition-colors duration-300"
-                        aria-current="page"
+                        href="/app/emprestimos"
+                        className="flex items-center space-x-2 text-white hover:text-gray-400 transition-colors duration-300"
                     >
-                        <FiDollarSign className="text-lg" />
                         <span>Emprestimos</span>
                     </a>
                     <a
                         href="/app/agiotas"
-                        className="flex items-center space-x-2 text-white hover:text-blue-400 transition-colors duration-300"
-                        aria-current="page"
+                        className="flex items-center space-x-2 text-white hover:text-gray-400 transition-colors duration-300"
                     >
                         <span>Agiotas</span>
                     </a>
 
                     <button
-                        id="dropdownInformationButton"
                         onClick={toggleDropdown}
-                        className="text-white hover:text-blue-400 font-medium text-sm px-5 py-2.5 text-center inline-flex items-center"
-                        type="button"
+                        className="flex items-center text-white hover:text-gray-400 font-medium text-sm px-5 py-2.5"
                     >
-                        <FiUser className="text-lg"/>
-                        <span className="ml-3">Perfil</span>
+                        <FiUser className="text-lg" />
+                        <span className="ml-2">Perfil</span>
                     </button>
 
                     <div
-                        id="dropdownInformation"
-                        className={`${isDropdownOpen ? 'block' : 'hidden'} absolute right-0 mt-2 z-50 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600`}
-                        style={{top: '100%'}}
+                        className={`${isDropdownOpen ? 'block' : 'hidden'} absolute right-0 mt-2 z-50 bg-gray-800 divide-y divide-gray-600 rounded-lg shadow-md`}
+                        style={{ top: '100%' }}
                     >
-                        <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
-                            <div>{nome}</div>
-                            <div className="font-medium truncate">{email}</div>
+                        <div className="px-4 py-3 text-sm text-gray-300">
+                            <div className="font-bold">{nome}</div>
+                            <div className="truncate">{email}</div>
                         </div>
-                        <ul className="py-2 text-sm text-gray-700 dark:text-gray-200"
-                            aria-labelledby="dropdownInformationButton">
+                        <ul className="py-2 text-sm text-gray-200">
                             <li>
-                                <a href="#"
-                                   className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                <a
+                                    href="#"
+                                    className="block px-4 py-2 hover:bg-gray-700"
+                                >
                                     Lembretes
                                 </a>
                             </li>
@@ -75,7 +69,7 @@ const Header = () => {
                         <div className="py-2">
                             <a
                                 href="#"
-                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                className="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-700"
                                 onClick={handleLogout}
                             >
                                 Sair
