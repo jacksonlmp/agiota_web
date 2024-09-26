@@ -31,7 +31,7 @@ function Home() {
                     title="Ver Agiotas"
                 />
                 <CardItem
-                    to="/app/solicitar-emprestimo"
+                    to="/app/emprestimos"
                     icon={IconDinheiro}
                     title="Solicitar Empréstimo"
                 />

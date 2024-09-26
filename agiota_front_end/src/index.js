@@ -47,10 +47,6 @@ const router = createBrowserRouter([
                 element: <SolicitarEmprestimo />
             },
             {
-                path: "listagem-emprestimo",
-                element: <ListagemEmprestimos />
-            },
-            {
                 path: "agiotas",
                 element: <Agiotas />
             },
