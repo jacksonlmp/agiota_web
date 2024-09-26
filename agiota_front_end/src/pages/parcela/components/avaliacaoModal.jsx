@@ -9,7 +9,7 @@ const AvaliacaoModal = ({ isOpen, closeModal, idAvaliado }) => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/avaliar', {
+      await axios.post('http://localhost:8080/avaliar', {
         nota: parseInt(nota, 10),
         idAvaliado,
         descricao 
@@ -18,7 +18,8 @@ const AvaliacaoModal = ({ isOpen, closeModal, idAvaliado }) => {
           'Authorization': `Bearer ${user?.token}`
         }
       });
-      console.log('Avaliação enviada com sucesso:', response.data);
+
+      window.alert('Avaliação enviada com sucesso!');
       closeModal(); 
     } catch (error) {
       console.error('Erro ao enviar avaliação:', error.response ? error.response.data : error.message);
