@@ -60,15 +60,15 @@ function ListagemEmprestimos() {
                         </>
                     )}
                     {params.row.status === "APROVADO" && (
-                                <Button
-                                    variant="contained"
-                                    color="secondary"
-                                    size="small"
-                                    onClick={() => navigate(`/app/listar-parcelas/${params.row.id}`)}
-                                >
-                                    Ver Parcelas
-                                </Button>
-                            )}    
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            size="small"
+                            onClick={() => navigate(`/app/listar-parcelas/${params.row.id}`)}
+                        >
+                            Ver Parcelas
+                        </Button>
+                    )}
                 </div>
             )
         }
@@ -92,9 +92,24 @@ function ListagemEmprestimos() {
     }, []);
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '20px' }}>
-            <div style={{ width: '80%' }}>
+        <div className="flex flex-col items-start w-full p-4">
+            {/* Adicionada margem acima do cabeçalho e botão */}
+            <div className="flex justify-between items-center w-full mb-4 mt-4">
+                <h1 className="text-xl font-bold">Listagem de Empréstimos</h1>
+                {/* Botão de Solicitar Empréstimo para Cliente */}
+                {user?.usuario?.tipo === "Cliente" && (
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        className="bg-gradient-to-r from-blue-400 to-green-500 hover:from-blue-500 hover:to-green-600 text-white font-semibold py-3 px-6 rounded-lg focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50"
+                        onClick={() => navigate('/app/solicitar-emprestimo')}
+                    >
+                        Solicitar Empréstimo
+                    </Button>
+                )}
+            </div>
 
+            <div className="h-[400px] w-full bg-white shadow-md rounded-lg mb-4">
                 <DataGrid
                     rows={emprestimos}
                     columns={columns}
