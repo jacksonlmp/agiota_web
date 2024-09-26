@@ -65,7 +65,7 @@ const ListagemParcelas = () => {
             onClick={() => setIsModalOpen(true)}
             style={{ marginTop: '10px' }}
           >
-            Avaliar
+            Avaliar Agiota
           </Button>
         </div>
       )}
