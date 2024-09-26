@@ -5,6 +5,7 @@ import br.edu.ufape.agiota.fachada.exceptions.OperacaoInvalidaException;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
 import br.edu.ufape.agiota.negocio.basica.Parcela;
 import br.edu.ufape.agiota.negocio.basica.Transacao;
+import br.edu.ufape.agiota.negocio.basica.Usuario;
 import br.edu.ufape.agiota.negocio.repositorios.TransacaoRepository;
 import br.edu.ufape.agiota.negocio.services.interfaces.TransacaoServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,13 @@ public class TransacaoService implements TransacaoServiceInterface {
     @Autowired
     private ParcelaService parcelaService;
 
+    @Autowired
+    private ApplicationService applicationService;
+
     @Override
     public List<Transacao> listarTransacoesPorEmprestimo(long idEmprestimo) {
-        List<Parcela> parcelas = parcelaService.listarParcelasPorEmprestimo(idEmprestimo);
+        Usuario usuarioLogado = (Usuario) applicationService.getUsuarioLogado();
+        List<Parcela> parcelas = parcelaService.listarParcelasPorEmprestimo(idEmprestimo, usuarioLogado.getId());
         List<Transacao> transacoes = transacaoRepository.findByParcelaIn(parcelas);
         if (transacoes.isEmpty()) {
             throw new RegistroNaoEncontradoException("Não foram encontradas transações para o empréstimo com identificador " + idEmprestimo);
@@ -41,7 +46,8 @@ public class TransacaoService implements TransacaoServiceInterface {
 
     @Override
     public Transacao criarTransacao(TransacaoDTO transacaoDTO) {
-        Parcela parcela = parcelaService.buscarParcela(transacaoDTO.getParcelaId());
+        Usuario usuarioLogado = (Usuario) applicationService.getUsuarioLogado();
+        Parcela parcela = parcelaService.buscarParcela(transacaoDTO.getParcelaId(), usuarioLogado.getId());
 
         if (transacaoDTO.getValor().compareTo(parcela.getValor()) > 0)
             throw new OperacaoInvalidaException("Valor a ser pago não pode ser maior que valor da parcela");
@@ -58,7 +64,8 @@ public class TransacaoService implements TransacaoServiceInterface {
 
     @Override
     public List<Transacao> buscarTransacoesPorParcela(long idParcela) {
-        Parcela parcela = parcelaService.buscarParcela(idParcela);
+        Usuario usuarioLogado = (Usuario) applicationService.getUsuarioLogado();
+        Parcela parcela = parcelaService.buscarParcela(idParcela, usuarioLogado.getId());
         return transacaoRepository.findByParcelaId(parcela.getId());
     }
 
