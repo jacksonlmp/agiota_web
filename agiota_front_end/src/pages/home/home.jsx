@@ -18,7 +18,6 @@ function Home() {
 
     return (
         <div className="flex flex-col items-center justify-start h-screen bg-white p-6">
-            {/* Título posicionado no topo */}
             <h1 className="text-3xl font-bold mb-8 text-gray-800 text-center mt-4">Bem-vindo ao Sistema de Empréstimos</h1>
             <div className="flex gap-6 w-full max-w-4xl mt-4">
                 <CardItem
