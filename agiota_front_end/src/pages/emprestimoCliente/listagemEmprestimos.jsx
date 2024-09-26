@@ -15,7 +15,7 @@ function ListagemEmprestimos() {
     const navigate = useNavigate();
 
     const columns = [
-        { field: 'id', headerName: 'ID', width: 50 },
+        { field: 'id', headerName: 'ID Empréstimo', width: 100 },
         { field: 'garantia', headerName: 'Garantia', width: 130 },
         { field: 'valorEmprestimo', headerName: 'Valor do Empréstimo', width: 200 },
         { field: 'status', headerName: 'Situação do Empréstimo', width: 220 },
@@ -64,9 +64,9 @@ function ListagemEmprestimos() {
                                     variant="contained"
                                     color="secondary"
                                     size="small"
-                                    onClick={() => navigate(`/app/listar-parcelas/${params.row.id}`)}
+                                    onClick={() => navigate(`/app/listar-parcelas/${params.row.id}?agiota_id=${params.row.agiota_id}&cliente_id=${params.row.cliente_id}`)}
                                 >
-                                    Ver Parcelas
+                                    Detalhes do Empréstimo
                                 </Button>
                             )}    
                 </div>

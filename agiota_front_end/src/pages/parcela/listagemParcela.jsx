@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
+import { Button } from '@mui/material';
+import AvaliacaoModal from "./components/avaliacaoModal";
 
 const ListagemParcelas = () => {
   const { emprestimoId } = useParams(); 
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const agiotaId = queryParams.get('agiota_id');
+  const clienteId = queryParams.get('cliente_id');
   const user = JSON.parse(localStorage.getItem('@Auth:user'));
   const [parcelas, setParcelas] = useState([]);
   const [emprestimoDetalhes, setEmprestimoDetalhes] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [idAvaliado, setIdAvaliado] = useState(null);
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
@@ -46,6 +54,15 @@ const ListagemParcelas = () => {
     return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor);
   };
 
+  const handleAvaliar = () => {
+    if (user.usuario.tipo === "Cliente") {
+      setIdAvaliado(agiotaId); 
+    } else if (user.usuario.tipo === "Agiota") {
+      setIdAvaliado(clienteId); 
+    }
+    setIsModalOpen(true);
+  };
+
   return (
     <div style={{ padding: '20px' }}>
       {emprestimoDetalhes && (
@@ -56,6 +73,14 @@ const ListagemParcelas = () => {
           <p>Valor do Empréstimo: {formatarValor(emprestimoDetalhes.valorEmprestimo)}</p>
           <p>Garantia: {emprestimoDetalhes.garantia}</p>
           <p>Status: {emprestimoDetalhes.status}</p>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleAvaliar}
+            style={{ marginTop: '10px' }}
+          >
+            Avaliar {user.usuario.tipo === "Cliente" ? "Agiota" : "Cliente"}
+          </Button>
         </div>
       )}
       <div style={{ height: 400, width: '100%' }}>
@@ -73,6 +98,11 @@ const ListagemParcelas = () => {
           <p style={{ textAlign: 'center', color: 'red', fontWeight: 'bold' }}>Não há parcelas a serem exibidas.</p>
         )}
       </div>
+      <AvaliacaoModal
+        isOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
+        idAvaliado={idAvaliado}
+      />
     </div>
   );
 };

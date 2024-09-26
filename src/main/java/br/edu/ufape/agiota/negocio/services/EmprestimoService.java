@@ -1,6 +1,7 @@
 package br.edu.ufape.agiota.negocio.services;
 
 import br.edu.ufape.agiota.dtos.EmprestimoClienteDTO;
+import br.edu.ufape.agiota.dtos.EmprestimoDTO;
 import br.edu.ufape.agiota.dtos.RejeitarEmprestimoDTO;
 import br.edu.ufape.agiota.fachada.exceptions.RegistroNaoEncontradoException;
 import br.edu.ufape.agiota.infra.ChecarDataNoPassado;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 
@@ -37,8 +39,13 @@ public class EmprestimoService implements EmprestimoServiceInterface {
     private ChecarDataNoPassado checarDataNoPassado;
 
     @Override
-    public List<Emprestimo> listarEmprestimosCliente(long clienteId) {
-        return emprestimoRepository.findAllByClienteId(clienteId);
+    public List<EmprestimoDTO> listarEmprestimosCliente(long clienteId) {
+        List<Emprestimo> emprestimos = emprestimoRepository.findAllByClienteId(clienteId);
+
+        // Converter a lista de Emprestimo para EmprestimoDTO
+        return emprestimos.stream()
+                .map(EmprestimoDTO::fromEmprestimo)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -80,8 +87,13 @@ public class EmprestimoService implements EmprestimoServiceInterface {
     }
 
     @Override
-    public List<Emprestimo> listarEmprestimosAgiota(long agiotaId) {
-        return emprestimoRepository.findAllByAgiotaId(agiotaId);
+    public  List<EmprestimoDTO> listarEmprestimosAgiota(long agiotaId) {
+        List<Emprestimo> emprestimos = emprestimoRepository.findAllByAgiotaId(agiotaId);
+
+        // Converter a lista de Emprestimo para EmprestimoDTO
+        return emprestimos.stream()
+                .map(EmprestimoDTO::fromEmprestimo)
+                .collect(Collectors.toList());
     }
 
     @Override

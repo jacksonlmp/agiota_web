@@ -85,7 +85,7 @@ public class Fachada {
         return avaliacaoService.buscarAvaliacoesDoUsuario(idUsuario);
     }
 
-    public List<Emprestimo> listarEmprestimosCliente(long clienteId) {
+    public List<EmprestimoDTO> listarEmprestimosCliente(long clienteId) {
         return emprestimoService.listarEmprestimosCliente(clienteId);
     }
 
@@ -102,7 +102,7 @@ public class Fachada {
         return emprestimoService.buscarEmprestimoCliente(clienteId, idEmprestimo);
     }
 
-    public List<Emprestimo> listarEmprestimosAgiota(long agiotaId) {
+    public  List<EmprestimoDTO> listarEmprestimosAgiota(long agiotaId) {
         return emprestimoService.listarEmprestimosAgiota(agiotaId);
     }
 
