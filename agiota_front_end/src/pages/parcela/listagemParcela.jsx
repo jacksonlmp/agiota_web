@@ -3,7 +3,7 @@ import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
 import { useParams } from 'react-router-dom';
 import { Button } from '@mui/material';
-import AvaliacaoModal from "./components/avaliacaoModal"; // Importe o modal de avaliação
+import AvaliacaoModal from "./components/avaliacaoModal";
 
 const ListagemParcelas = () => {
   const { emprestimoId } = useParams(); 
