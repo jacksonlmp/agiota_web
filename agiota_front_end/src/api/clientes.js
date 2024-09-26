@@ -32,6 +32,18 @@ export const pagarParcela = async (requestData, token) => {
 
         return response.data;
     } catch (error) {
-        window.alert('Erro: ' + error?.response?.data?.erro?.mensagem);
+        let mensagemErro;
+
+        if (error?.response?.data?.erro?.mensagem) {
+            // Maior que o valor da parcela
+            mensagemErro = error.response.data.erro.mensagem;
+        } else if (error?.response?.data && error.response.data.length > 0) {
+            // Valor negativo
+            mensagemErro = 'Valor do pagamento ' + error?.response?.data[0]?.erro;
+        } else {
+            mensagemErro = 'Erro desconhecido';
+        }
+
+        window.alert('Erro: ' + mensagemErro);
     }
 }

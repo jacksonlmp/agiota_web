@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FiMail, FiLock } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 
-const Login = ({ onLogin }) => {
+const Login = ({ onLogin, goToRegister }) => {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const navigate = useNavigate();
@@ -22,10 +22,6 @@ const Login = ({ onLogin }) => {
         } catch (error) {
             alert('Login falhou. E-mail ou senha incorretos.');
         }
-    };
-
-    const goToRegister = () => {
-        navigate('/app/cadastro');
     };
 
     return (
