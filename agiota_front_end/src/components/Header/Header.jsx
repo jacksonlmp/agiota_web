@@ -33,13 +33,17 @@ const Header = () => {
                     >
                         <span>Emprestimos</span>
                     </a>
-                    <a
-                        href="/app/agiotas"
-                        className="flex items-center space-x-2 text-white hover:text-gray-400 transition-colors duration-300"
-                    >
-                        <span>Agiotas</span>
-                    </a>
-
+                    {user?.usuario?.tipo === "Cliente" && (
+                        <>
+                            <a
+                                href="/app/agiotas"
+                                className="flex items-center space-x-2 text-white hover:text-blue-400 transition-colors duration-300"
+                                aria-current="page"
+                            >
+                                <span>Agiotas</span>
+                            </a>
+                        </>
+                    )}
                     <button
                         onClick={toggleDropdown}
                         className="flex items-center text-white hover:text-gray-400 font-medium text-sm px-5 py-2.5"

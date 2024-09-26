@@ -33,7 +33,6 @@ function AgiotaList() {
 
         fetchAgiotas();
     }, []);
-
     return (
         <div className="flex flex-col items-start w-full p-4"> 
             <h1 className="text-xl font-bold mb-4">Listagem de Agiotas</h1>
