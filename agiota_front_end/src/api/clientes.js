@@ -32,6 +32,6 @@ export const pagarParcela = async (requestData, token) => {
 
         return response.data;
     } catch (error) {
-        window.alert('Error: ' + error?.response?.data);
+        window.alert('Erro: ' + error?.response?.data?.erro?.mensagem);
     }
 }
