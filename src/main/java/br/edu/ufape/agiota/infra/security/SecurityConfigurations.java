@@ -61,6 +61,7 @@ public class SecurityConfigurations {
         config.addAllowedMethod("POST");
         config.addAllowedMethod("GET");
         config.addAllowedMethod("PUT");
+        config.addAllowedMethod("PATCH");
         config.addAllowedMethod("DELETE");
         config.addAllowedMethod("OPTIONS");
         source.registerCorsConfiguration("/**", config);
