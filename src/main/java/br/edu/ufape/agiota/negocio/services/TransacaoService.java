@@ -31,17 +31,20 @@ public class TransacaoService implements TransacaoServiceInterface {
         Usuario usuarioLogado = (Usuario) applicationService.getUsuarioLogado();
         List<Parcela> parcelas = parcelaService.listarParcelasPorEmprestimo(idEmprestimo, usuarioLogado.getId());
         List<Transacao> transacoes = transacaoRepository.findByParcelaIn(parcelas);
-        if (transacoes.isEmpty()) {
+        if (transacoes.isEmpty())
             throw new RegistroNaoEncontradoException("Não foram encontradas transações para o empréstimo com identificador " + idEmprestimo);
-        }
+
         return transacoes;
     }
 
     @Override
-    public Transacao buscarTransacao(long id) {
-        Optional<Transacao> transacaoOpt = transacaoRepository.findById(id);
-        if (transacaoOpt.isPresent()) return transacaoOpt.get();
-        throw new RegistroNaoEncontradoException("Transação com o identificador " + id + " não foi encontrada!");
+    public Transacao buscarTransacao(long idTransacao) {
+        Usuario usuarioLogado = (Usuario) applicationService.getUsuarioLogado();
+        Optional<Transacao> transacaoOpt = transacaoRepository.findByTransacaoIdAndUsuarioId(idTransacao, usuarioLogado.getId());
+        if (transacaoOpt.isPresent())
+            return transacaoOpt.get();
+
+        throw new RegistroNaoEncontradoException("Transação com o identificador " + idTransacao + " não foi encontrada!");
     }
 
     @Override

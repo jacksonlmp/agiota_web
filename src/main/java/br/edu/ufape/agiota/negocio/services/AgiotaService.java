@@ -46,6 +46,7 @@ public class AgiotaService implements AgiotaServiceInterface {
         Agiota agiota = new Agiota();
         agiotaDTO.toAgiota(agiota, passwordEncoder.encode(agiotaDTO.getSenha()));
         agiota.setEndereco(novoEndereco);
+        agiota.setReputacao(5.0);
 
         return agiotaRepository.save(agiota);
     }
