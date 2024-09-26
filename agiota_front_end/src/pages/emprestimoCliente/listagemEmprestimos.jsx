@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
 import AceitarModal from "./components/aceitarModal";
-import {Button} from "@mui/material";
+import { Button } from "@mui/material";
 import RejeitarModal from "./components/rejeitarModal";
+import { useNavigate } from 'react-router-dom';
 
 function ListagemEmprestimos() {
     const [emprestimos, setEmprestimos] = useState([]);
@@ -11,12 +12,13 @@ function ListagemEmprestimos() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isRejeitarModalOpen, setisRejeitarModalOpen] = useState(false);
     const [selectedRecord, setSelectedRecord] = useState(null);
+    const navigate = useNavigate();
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 50 },
         { field: 'garantia', headerName: 'Garantia', width: 130 },
         { field: 'valorEmprestimo', headerName: 'Valor do Empréstimo', width: 200 },
-        { field: 'status', headerName: 'Situação do emprestimo', width: 200 },
+        { field: 'status', headerName: 'Situação do Empréstimo', width: 220 },
         { field: 'dataEmprestimo', headerName: 'Data de Empréstimo', width: 250 },
         { field: 'dataDeVencimentoInicial', headerName: 'Data de Vencimento', width: 250 },
         { field: 'quantidadeParcelas', headerName: 'Nº Parcelas', width: 110 },
@@ -24,7 +26,7 @@ function ListagemEmprestimos() {
         {
             field: 'actions',
             headerName: 'Ações',
-            width: 200,
+            width: 250,
             renderCell: (params) => (
                 <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
                     {user?.usuario?.tipo === "Agiota" && (
@@ -48,7 +50,7 @@ function ListagemEmprestimos() {
                                         size="small"
                                         onClick={() => {
                                             setSelectedRecord(params.row);
-                                            setisRejeitarModalOpen(true)
+                                            setisRejeitarModalOpen(true);
                                         }}
                                     >
                                         Rejeitar
@@ -57,6 +59,16 @@ function ListagemEmprestimos() {
                             )}
                         </>
                     )}
+                    {params.row.status === "APROVADO" && (
+                                <Button
+                                    variant="contained"
+                                    color="secondary"
+                                    size="small"
+                                    onClick={() => navigate(`/app/listar-parcelas/${params.row.id}`)}
+                                >
+                                    Ver Parcelas
+                                </Button>
+                            )}    
                 </div>
             )
         }
