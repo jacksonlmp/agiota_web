@@ -25,6 +25,11 @@ const AvaliacaoModal = ({ isOpen, closeModal, idAvaliado }) => {
     }
   };
 
+  const handleNotaChange = (e) => {
+    const value = Math.max(1, Math.min(5, Number(e.target.value)));
+    setNota(value);
+  };
+
   return (
     <Modal open={isOpen} onClose={closeModal}>
       <Box sx={{ width: 400, padding: 4, margin: 'auto', marginTop: '10%', backgroundColor: 'white', borderRadius: 2 }}>
@@ -36,7 +41,8 @@ const AvaliacaoModal = ({ isOpen, closeModal, idAvaliado }) => {
           label="Nota"
           type="number"
           value={nota}
-          onChange={(e) => setNota(e.target.value)}
+          onChange={handleNotaChange}
+          inputProps={{ min: 1, max: 5 }}
           sx={{ marginBottom: 2 }}
         />
         <TextField
