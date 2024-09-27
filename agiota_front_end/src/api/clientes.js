@@ -34,6 +34,8 @@ export const pagarParcela = async (requestData, token) => {
     } catch (error) {
         let mensagemErro;
 
+        console.log(error.response);
+
         if (error?.response?.data?.erro?.mensagem) {
             // Maior que o valor da parcela
             mensagemErro = error.response.data.erro.mensagem;

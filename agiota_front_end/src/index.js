@@ -10,6 +10,8 @@ import Agiotas from "./pages/agiota/listagemAgiotas";
 import Clientes from "./pages/cliente/listagemClientes";
 import CadastroCliente from "./pages/cliente/cadastroCliente";
 import ListagemParcelas from "./pages/parcela/listagemParcela"
+import SolicitarEmprestimo from './pages/emprestimoCliente/solicitarEmprestimos';
+import Home from './pages/home/home';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -33,7 +35,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/app",
-                element: <ListagemEmprestimos />
+                element: <Home />
             },
             {
                 path: "agiotas",
@@ -46,6 +48,14 @@ const router = createBrowserRouter([
             {
                 path: "cadastrar-cliente",
                 element: <CadastroCliente />
+            },
+            {
+                path: "emprestimos",
+                element: <ListagemEmprestimos />
+            },
+            {
+                path: "solicitar-emprestimo",
+                element: <SolicitarEmprestimo />
             },
             {
                 path: "listar-parcelas/:emprestimoId",
